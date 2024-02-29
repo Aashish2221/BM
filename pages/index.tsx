@@ -31,7 +31,7 @@ const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
 
-export default function Home({
+export default function Home({ 
   title,
   description,
   topProducts
