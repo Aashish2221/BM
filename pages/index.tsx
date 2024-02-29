@@ -43,22 +43,23 @@ export default function Home({
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
   useEffect(() => {
-    const check = async () => {
-      await getMaintainance();
-    };
-    check();
-    const dashboardImages = DashboardImages();
-    setDynamicImages(
-      dashboardImages.filter((image) => image.isStatic === false)
-    );
-    setStaticImage(dashboardImages.find((image) => image.isStatic === true));
-    setHydrated(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // const check = async () => {
+    //   await getMaintainance();
+    // };
+    // check();
+    console.log(!false);
+    
+    const dashboardImages = DashboardImages(),
+    filteredImages = dashboardImages.filter((image) => !image.isStatic),
+    staticImage = dashboardImages.find((image) => image.isStatic);
+  setDynamicImages(filteredImages);
+  setStaticImage(staticImage);
+  setHydrated(true);
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   useEffect(() => {
-    if (user.hasVisited === false) {
+    if (!user.hasVisited) {
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
@@ -112,18 +113,16 @@ export default function Home({
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
         <script
           async
-          defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
           key='product-jsonld'
         ></script>
-        <script
+        {/* <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        />
+        /> */}
         <script
           async
-          defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(trendingProductsSchema)
