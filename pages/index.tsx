@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
-import { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getMaintainance, getTopProducts } from '@/services/spot-prices';
 import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
@@ -16,21 +16,17 @@ import { IoGridSharp } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import Search from '@/components/Search';
 import DashboardCarousel from '@/components/DashboardCarousel';
-import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
-import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
-import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
+import { defer } from 'lodash';
 // -------------------------- Dynamic import -------------------//
-const RequestProductModal = dynamic(
-  () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
-);
-const DescText = dynamic(
-  () => import('@/components/HomePageComponents/DescText')
-);
-
+const RequestProductModal = React.lazy(() => import('@/components/ModalForm/RequestProduct/RequestProductModal'));
+const DescText = React.lazy(() => import('@/components/HomePageComponents/DescText'));
+const SubscribeModal = React.lazy(()=>import('@/components/ModalForm/Subscribe/SubscribeModal'));
+const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
+const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
 export default function Home({
   title,
   description,
@@ -83,7 +79,7 @@ export default function Home({
   const trendingProductsSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement: itemListElement
+    itemListElement
   };
   return (
     <>
@@ -101,7 +97,6 @@ export default function Home({
           }
         />
         {/*----------- Thumbnail code modified end */}
-
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:url' content={`${process.env.WEBSITE_URL}`} />
         <meta
@@ -112,17 +107,17 @@ export default function Home({
         />
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
         <script
-          async
+          defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
           key='product-jsonld'
         ></script>
-        {/* <script
+        <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        /> */}
+        />
         <script
-          async
+          defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(trendingProductsSchema)
