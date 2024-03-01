@@ -17,7 +17,6 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const user = useSelector(selectUser);
   useEffect(() => {
     setCustomerId(user.isLoggedin ? user.user.id : 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addProduct = async (imageForVenderId: any) => {
     await addProdBuyClicksLog(
@@ -39,15 +38,6 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   return (
     <>
       <Head>
-        {images.map((image: any, index: any) => (
-          <Link
-            rel='preload'
-            as='image'
-            key={index}
-            href={image.imagePath}
-            prefetch={false}
-          ></Link>
-        ))}
         <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
       </Head>
