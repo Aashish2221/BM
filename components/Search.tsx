@@ -21,7 +21,6 @@ export default function Search() {
   const router = useRouter();
   useEffect(() => {
     handleClose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.href]);
   useOnClickOutside(searchResultsRef, () => closeSearchResult());
   const closeSearchResult = () => {
