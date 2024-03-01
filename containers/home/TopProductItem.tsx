@@ -260,7 +260,7 @@ function DetaildView({
             <span className='font-semibold text-primary'>
               As low as {toCurrency(cheapestPrice)}
             </span>
-            <div className='mx-auto mt-2 hidden w-full gap-2 px-2 sm:flex'>
+            {/* <div className='mx-auto mt-2 hidden w-full gap-2 px-2 sm:flex'>
               <div className='w-full rounded border-t-2 border-gray-300'>
                 <div className='mt-2 flex justify-start'>
                   <Link
@@ -271,7 +271,6 @@ function DetaildView({
                   >
                     Compare
                   </Link>
-
                   <div className='relative'>
                     <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
                   </div>
@@ -288,28 +287,33 @@ function DetaildView({
                   </Link>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          {/* <div className='justify-left mt-1 flex-1 gap-2 sm:hidden'>
+          <div className='sm:w-full sm:rounded sm:border-t-2 sm:border-gray-300 mt-1'>
+          <div className='justify-left mt-1 flex-1 gap-2 sm:flex sm:justify-start'>
             <Link
               href={"/" + shortName}
-              className='items-left justify-left  group relative ml-2 inline-flex w-full overflow-hidden font-semibold text-blue-500 underline decoration-blue-500 hover:underline '
+              className='items-left justify-left  group relative ml-2 inline-flex w-full overflow-hidden font-semibold text-blue-500 underline decoration-blue-500 hover:underline  smm:inline-flex sm:items-center sm:justify-center hover:text-[#0F4463] '
               aria-label={`Compare ${productName}`}
               prefetch={false}
             >
               Compare
             </Link>
+            <div className='relative'>
+                    <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
+                  </div>
             <Link
               target={'_blank'}
               href={competitorProductUrl}
-              className='items-left group relative mt-1 inline-flex justify-start overflow-hidden rounded-full bg-primary px-9 py-2 text-white xl:ml-4 '
+              className='items-left group relative mt-1 inline-flex justify-start overflow-hidden rounded-full bg-primary px-9 py-2 text-white xl:ml-4 sm:ml-4 sm:inline-block sm:w-full sm:px-5  font-medium  sm:pl-24 md:pl-20 lg:pl-12 xl:pl-16 2xl:pl-20 '
               aria-label={`Buy ${productName}`}
               prefetch={false}
               onClick={addProduct}
             >
               Buy
             </Link>
-          </div> */}
+          </div>
+          </div>
         </div>
       </div>
     </>
