@@ -49,23 +49,24 @@ function GridView({
   return (
     <div
       key={productId}
-      className='relative flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[3px_12px_12px_rgba(0,0,0,0.2)] md:pb-4'
+      className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[3px_12px_12px_rgba(0,0,0,0.2)] md:pb-4'
     >
-      <div className='items-left mt-5 hidden md:block' id='Desktopview'>
-        <Link href={"/" + shortName} aria-label={productName} prefetch={false}>
+      <div className='mt-5 hidden md:block' id='Desktopview'>
+        <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
           <Image
             src={imageUrl}
             alt={productName ?? ''}
             width={500}
             height={500}
             className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
-            priority={true}
-            loading='eager'
+            // priority={true}
+            // loading='eager'
+            priority={false}
           />
         </Link>
-      </div> 
-      <div className='float-left mt-20 flex md:hidden' id='Mobileview'>
-        <Link href={"/" + shortName} aria-label={productName} prefetch={false}>
+      </div>
+      <div className='mt-20 md:hidden' id='Mobileview'>
+        <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
           <Image
             src={mobileImageurl}
             alt={productName ?? ''}
@@ -76,16 +77,19 @@ function GridView({
             loading='eager'
           />
         </Link>
-      </div> 
+      </div>
       <div
         onMouseEnter={() => setTooltipStatus(3)}
         onMouseLeave={() => setTooltipStatus(0)}
-        className='relative mx-3 sm:mx-5 flex justify-center'
       >
-        <div className='twoline mr-2 '>
-          <Link href={"/" + shortName} aria-label={productName} prefetch={false}>
-            <h3 className='my-1 h-10 text-center text-sm font-semibold leading-5 md:mt-4  lg:h-10'>
-              {productName.slice(0,25)}...
+        <div className='mr-2 '>
+          <Link
+            href={'/' + shortName}
+            aria-label={productName}
+            prefetch={false}
+          >
+            <h3 className='my-1 h-10 text-center text-sm font-semibold md:mt-4  '>
+              {productName.slice(0, 25)}...
             </h3>
           </Link>
         </div>
@@ -93,45 +97,42 @@ function GridView({
           <TooltipStatus view='grid' productName={productName} />
         )}
       </div>
-      <div className=' flex flex-col items-center px-1  text-sm md:px-4 lg:px-6'>
+      <div className=' flex flex-col items-center'>
         <span className='font-medium text-[#AF0E0E]'>
-        Premium {toCurrency(asLowAs)}
+          Premium {toCurrency(asLowAs)}
         </span>
         <span className='font-normal text-[#656565] '>
           <>{dealers ?? '-'}</>
         </span>
-        <span className='h-10 text-center font-semibold text-primary md:h-9 lg:h-6'>
+        <span className='h-10 font-semibold text-primary md:h-9 lg:h-6'>
           As low as {toCurrency(cheapestPrice)}
         </span>
 
-        <div className='-mt-3  w-full flex-1 items-end gap-2 px-3 text-center lg:ml-3 lg:mr-3  lg:items-center lg:px-6'>
-          <div className='absolute mt-5 ml-2 flex h-full w-24 items-center justify-center border-t-2 border-gray-300 sm:ml-4 lg:ml-0'></div>
+        <div className='-mt-3 w-full items-end px-3 text-center lg:ml-3 lg:mr-3   lg:px-6'>
+          {/* <div className='absolute mt-5 ml-2 flex h-full w-24 items-center justify-center border-t-2 border-gray-300 sm:ml-4 lg:ml-0'></div> */}
 
           <div className='mt-6 w-full'>
             <div className=' justify-center'>
               <Link
-                href={"/" + shortName}
-                className='group relative inline-flex items-center justify-center  overflow-hidden font-semibold text-blue-500 underline decoration-blue-500 hover:underline '
+                href={'/' + shortName}
+                className='group relative inline-flex font-semibold text-blue-500 underline   '
                 aria-label={`Compare ${productName}`}
                 prefetch={false}
               >
-                <button className='items-center hover:text-[#0F4463]'>
-                  Compare
-                </button>
+                <button className='hover:text-[#0F4463]'>Compare</button>
               </Link>
 
-              <div className='relative'>
+              {/* <div className='relative'>
                 <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
-              </div>
+              </div> */}
               <Link
                 target={'_blank'}
                 href={competitorProductUrl}
                 aria-label={`Buy ${productName}`}
                 prefetch={false}
                 onClick={addProduct}
-                className='group relative inline-block w-full overflow-hidden rounded-full bg-primary px-5 py-2 font-medium text-white'
+                className='group relative inline-block w-full rounded-full bg-primary py-2 font-medium text-white'
               >
-                <span className='absolute top-0 left-0 mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90  transition-all duration-300 ease-out group-hover:h-full'></span>
                 <span className='relative'>Buy</span>
               </Link>
             </div>
@@ -168,12 +169,11 @@ function DetaildView({
   const user = useSelector(selectUser);
   
   useEffect(() => {
-    if (user.isLoggedin === false) {
+    if (!user.isLoggedin) {
       setCustomerId(0);
     } else {
       setCustomerId(user.user.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addProduct = async () => {
@@ -273,7 +273,7 @@ function DetaildView({
                   </Link>
 
                   <div className='relative'>
-                    <div className='absolute mt-1 h-full w-full border-l-2 border-gray-300'></div>
+                    <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
                   </div>
                   <Link
                     target={'_blank'}
@@ -290,7 +290,7 @@ function DetaildView({
               </div>
             </div>
           </div>
-          <div className='justify-left mt-1 flex-1 gap-2 sm:hidden'>
+          {/* <div className='justify-left mt-1 flex-1 gap-2 sm:hidden'>
             <Link
               href={"/" + shortName}
               className='items-left justify-left  group relative ml-2 inline-flex w-full overflow-hidden font-semibold text-blue-500 underline decoration-blue-500 hover:underline '
@@ -309,7 +309,7 @@ function DetaildView({
             >
               Buy
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

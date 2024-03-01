@@ -13,25 +13,22 @@ import { GoFlame } from 'react-icons/go';
 import useToggle from '@/hooks/useToggle';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
-import dynamic from 'next/dynamic';
 import Search from '@/components/Search';
 import DashboardCarousel from '@/components/DashboardCarousel';
-import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
-import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
+import React from 'react';
 // -------------------------- Dynamic import -------------------//
-const RequestProductModal = dynamic(
-  () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
-);
-const DescText = dynamic(
-  () => import('@/components/HomePageComponents/DescText')
-);
-
-export default function Home({title,description ,
+const DescText = React.lazy(()=>import('@/components/HomePageComponents/DescText'));
+const RequestProductModal = React.lazy(()=>import('@/components/ModalForm/RequestProduct/RequestProductModal'))
+const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
+const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
+export default function Home({
+  title,
+  description,
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -39,24 +36,21 @@ export default function Home({title,description ,
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
-  const [staticImage, setStaticImage] = useState<any>();
+  const [staticImage, setStaticImage] = useState<any>(); 
   useEffect(() => {
-    const check = async () => {
-      await getMaintainance();
-    };
-    check();
+    // const check = async () => {
+    //   await getMaintainance();
+    // };
+    // check();
     const dashboardImages = DashboardImages();
-    setDynamicImages(
-      dashboardImages.filter((image) => image.isStatic === false)
-    );
-    setStaticImage(dashboardImages.find((image) => image.isStatic === true));
+    setDynamicImages(dashboardImages.filter(image => !image.isStatic));
+    setStaticImage(dashboardImages.find(image => image.isStatic));
     setHydrated(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   useEffect(() => {
-    if (user.hasVisited === false) {
+    if (!user.hasVisited) {
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
@@ -78,12 +72,10 @@ export default function Home({title,description ,
     }
   ))
   const trendingProductsSchema = {
- 
-        "@context" : "https://schema.org",
-        "@type":"ItemList",
-        "itemListElement": itemListElement
-     
-  }
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement 
+  };
   return (
     <>
       <Head>
@@ -110,7 +102,7 @@ export default function Home({title,description ,
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
           key='product-jsonld'
         ></script>
-        <script 
+         <script 
             type='application/ld+json'
             dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
           <script async
@@ -190,61 +182,25 @@ export default function Home({title,description ,
             <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
               {/* ******************** LEFT ADVERTISEMENTS ******************** */}
               <div className='flex h-auto flex-col gap-0 lg:col-span-3'>
-                <div className='mt-4 md:mt-2'>
-                  <div className='flex  w-full items-center  justify-center rounded  text-2xl md:mt-0 lg:mt-0'>
-                    <Image
-                      src='/2024-1-oz-Canadian-Gold-Maple-Leaf-Coin.jpg'
-                      height={500}
-                      width={500}
-                      alt='ads'
-                      priority={false}
-                      loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
-                    />
-                  </div>
-                </div>
-                <div className='mt-2 md:mt-4'>
-                  <div className='flex  w-full items-center  justify-center rounded  text-2xl md:mt-0 lg:mt-0 2xl:mt-3'>
-                    <Image
-                      src='/2024-American-Eagle-Coins.jpg'
-                      height={500}
-                      width={500}
-                      alt='ads'
-                      priority={false}
-                      loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
-                    />
-                  </div>
-                </div>
-                <div className='mt-2 md:mt-4'>
-                  <div className='flex w-full items-center  justify-center rounded text-2xl md:mt-0 lg:mt-0 2xl:mt-3'>
-                    <Image
-                      src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp'
-                      height={500}
-                      width={500}
-                      alt='ads'
-                      priority={false}
-                      loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[380px]'
-                    />
-                  </div>
+                  <LeftAdvertisements src='/2024-1-oz-Canadian-Gold-Maple-Leaf-Coin.jpg' />
+                  <LeftAdvertisements src='/2024-American-Eagle-Coins.jpg' />
+                  <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
                   {/* ******************* GOOGLE ADS CODE GOES HERE ******************* */}
+                  <div className='flex flex-col items-center'>
+                    <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
+                    <hr className='my-2 w-full' />
+                    <Image
+                      className='item-center h-[300px] w-[343px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
+                      onClick={toggleRequestModal}
+                      src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
+                      height={500}
+                      width={500}
+                      alt='ads'
+                      priority={false}
+                      loading='lazy'
+                    />
+                  </div>
                 </div>
-                <div className='flex flex-col items-center'>
-                  <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
-                  <hr className='my-2 w-full' />
-                  <Image
-                    className='item-center h-[300px] w-[343px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
-                    onClick={toggleRequestModal}
-                    src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
-                    height={500}
-                    width={500}
-                    alt='ads'
-                    priority={false}
-                    loading='eager'
-                  />
-                </div>
-              </div>
               {/* ******************** PRODUCT LISTING ******************** */}
               <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
                 {/* ******************** PRODUCT LIST TITLE ******************** */}
@@ -325,17 +281,29 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ res, query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
   const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.home.page
-  const description = data.site.home.description
-  return {
-    props: {
-      title , description , 
-      topProducts: topProducts
-    }
-  };
+  const title = data.site.home.page;
+  const description = data.site.home.description;
+  return { props: { title, description, topProducts } };
 };
+
+function LeftAdvertisements({ src }: any) {
+return (
+  <>
+    <div className='mt-4 md:mt-2'>
+      <div className='flex  w-full items-center  justify-center rounded  text-2xl md:mt-0 lg:mt-0'>
+        <Image
+          src={src}
+          height={500}
+          width={500}
+          priority={false}
+          loading='lazy'
+          alt='ads'
+          className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
+        />
+      </div>
+    </div>
+  </>
+);
+}
