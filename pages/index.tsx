@@ -17,14 +17,15 @@ import Search from '@/components/Search';
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
-import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
+import { defer } from 'lodash';
+import TopProductItem from '@/containers/home/TopProductItem';
+import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
+import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 // -------------------------- Dynamic import -------------------//
-const DescText = React.lazy(()=>import('@/components/HomePageComponents/DescText'));
-const RequestProductModal = React.lazy(()=>import('@/components/ModalForm/RequestProduct/RequestProductModal'))
-const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
-const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
+const RequestProductModal = React.lazy(() => import('@/components/ModalForm/RequestProduct/RequestProductModal'));
+const DescText = React.lazy(() => import('@/components/HomePageComponents/DescText'));
 export default function Home({
   title,
   description,
@@ -35,16 +36,18 @@ export default function Home({
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
-  const [staticImage, setStaticImage] = useState<any>(); 
+  const [staticImage, setStaticImage] = useState<any>();
   useEffect(() => {
     // const check = async () => {
     //   await getMaintainance();
     // };
     // check();
-    const dashboardImages = DashboardImages();
-    setDynamicImages(dashboardImages.filter(image => !image.isStatic));
-    setStaticImage(dashboardImages.find(image => image.isStatic));
-    setHydrated(true);
+    const dashboardImages = DashboardImages(),
+    filteredImages = dashboardImages.filter((image) => !image.isStatic),
+    staticImage = dashboardImages.find((image) => image.isStatic);
+  setDynamicImages(filteredImages);
+  setStaticImage(staticImage);
+  setHydrated(true);
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -53,7 +56,7 @@ export default function Home({
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
-      }, 3000);
+      }, 1000);
     }
   }, []);
   const homePageSchema = {
@@ -63,7 +66,6 @@ export default function Home({
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  
   const itemListElement = topProducts.homePageProductDetails.map(
     (product: any, index: number) => ({
       '@type': 'ListItem',
@@ -71,11 +73,10 @@ export default function Home({
       url: 'https://www.bullionmentor.com/' + product.shortName
     })
   );
-
   const trendingProductsSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    itemListElement 
+    itemListElement
   };
   return (
     <>
@@ -108,12 +109,11 @@ export default function Home({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
           key='product-jsonld'
         ></script>
-        {/* <script
+        <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        /> */}
+        />
         <script
-          
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{
@@ -138,9 +138,12 @@ export default function Home({
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
         />
       </Head>
-      <Suspense fallback={<DashboardSkeleton/>}>
+      <Suspense  fallback={<DashboardSkeleton/>}>
         {hydrated === true ? (
           <div>
+            {isSubscribeModal && (
+              <SubscribeModal closeModal={toggleSubscribeModal} />
+            )}
             {/* ******************** GRADIENT HEADING ******************** */}
             <section className='w-full bg-gradient-to-b from-secondary via-white to-white'>
               <div className='container relative mx-auto flex w-full flex-col items-center justify-center pt-4 pb-2'>
@@ -163,7 +166,7 @@ export default function Home({
               {/* ******************** HERO IMAGES ******************** */}
               <section className='mx-auto grid-cols-3 gap-4 md:container md:grid'>
                 {/********************* CAROUSEL IMAGES *********************/}
-                <div className='col-span-2'>
+                <div className='col-span-2 mt-4 md:mt-0'>
                   <DashboardCarousel images={dynamicImages} />
                 </div>
                 {/* ******************** STATIC HERO IMAGES ******************** */}
@@ -189,9 +192,7 @@ export default function Home({
                 </div>
               </section>
             </section>
-            {isSubscribeModal && (
-              <SubscribeModal closeModal={toggleSubscribeModal} />
-            )}
+            
             {/* ******************** PAGE HEADING ******************** */}
             <section className='container mx-auto mt-4 w-full text-dark-black'>
               <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
@@ -283,7 +284,9 @@ export default function Home({
             {isRequestModal && (
               <RequestProductModal closeModal={toggleRequestModal} />
             )}
-            
+            {isSubscribeModal && (
+              <SubscribeModal closeModal={toggleSubscribeModal} />
+            )}
           </div>
         ) : (
           <DashboardSkeleton />
@@ -292,20 +295,21 @@ export default function Home({
     </>
   );
 }
-  export const getServerSideProps: GetServerSideProps<{
-    title: any;
-    description: any;
-    topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-  }> = async ({ res, query }) => {
-    const getBy = query.getBy as GetTopProductsBy | undefined;
-    const searchKeyword = query.search as string | undefined;
-    res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
-    const topProducts = await getTopProducts(getBy, searchKeyword);
-    const title = data.site.home.page;
-    const description = data.site.home.description;
-    return { props: { title, description, topProducts } };
-  };
 
+export const getServerSideProps: GetServerSideProps<{
+  title: any;
+  description: any;
+  topProducts: Awaited<ReturnType<typeof getTopProducts>>;
+}> = async ({ res, query }) => {
+  const getBy = query.getBy as GetTopProductsBy | undefined;
+  const searchKeyword = query.search as string | undefined;
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
+  );
+  const topProducts = await getTopProducts(getBy, searchKeyword);
+  const title = data.site.home.page;
+  const description = data.site.home.description;
+  return {props: {title, description, topProducts: topProducts }};
+};
 
 function LeftAdvertisements({ src }: any) {
   return (
