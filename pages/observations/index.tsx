@@ -38,19 +38,18 @@ export default function ObservationList({
   const [hydrated, setHydrated] = useState(false);
   const [isLoginModal, toggleLoginModal] = useToggle();
   const [isProductModal, toggleProductModal] = useToggle();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const display = async () => {
       if (user.isLoggedin === true && user.user.id && user.user.token) {
         const response = await getObservations(user.user.id, user.user.token);
         setobservations(response);
+        setLoading(false); // Set loading to false when observations are fetched
       }
     };
     display();
-    setTimeout(() => {
-      setHydrated(true);
-    }, 4000);
   }, [user]);
+  
   useEffect(() => {
     if (user.isLoggedin === false) {
       setLoading(false)
@@ -64,12 +63,8 @@ export default function ObservationList({
       toggleProductModal();
     }
   };
-  if (hydrated === false) {
-    return (
-      <div className='grid'>
-        <Spinner />
-      </div>
-    );
+  if (loading) {
+    return <Spinner />; // Render spinner while fetching data
   } else {
     return (
       <div className='container mx-auto flex flex-col gap-4 pt-4 text-dark-black md:pt-8'>
@@ -91,7 +86,7 @@ export default function ObservationList({
                 <EmptyObservations />
               </div>
             ) :
-              user.isLoggedin === false && loading === true ?
+              user.isLoggedin === false && loading === false ?
                 (<Spinner />) :
                 (
                   <>

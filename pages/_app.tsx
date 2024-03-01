@@ -28,6 +28,8 @@ export default function App({
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:title' content={pageProps?.title} />
         <meta property='og:description' content={pageProps?.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /> */}
         {/* <meta property='og:url' content={`${process.env.WEBSITE_URL}`} /> */}
         {/* <meta
           property='og:image'
