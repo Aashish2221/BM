@@ -42,12 +42,13 @@ export default function Home({
     //   await getMaintainance();
     // };
     // check();
+    setHydrated(true);
     const dashboardImages = DashboardImages(),
     filteredImages = dashboardImages.filter((image) => !image.isStatic),
     staticImage = dashboardImages.find((image) => image.isStatic);
   setDynamicImages(filteredImages);
   setStaticImage(staticImage);
-  setHydrated(true);
+  
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
