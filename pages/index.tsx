@@ -72,12 +72,10 @@ export default function Home({
     }
   ))
   const trendingProductsSchema = {
- 
-        "@context" : "https://schema.org",
-        "@type":"ItemList",
-        "itemListElement": itemListElement
-     
-  }
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement 
+  };
   return (
     <>
       <Head>
@@ -104,7 +102,7 @@ export default function Home({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
           key='product-jsonld'
         ></script>
-        <script 
+         <script 
             type='application/ld+json'
             dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
           <script async
@@ -187,9 +185,7 @@ export default function Home({
                   <LeftAdvertisements src='/2024-1-oz-Canadian-Gold-Maple-Leaf-Coin.jpg' />
                   <LeftAdvertisements src='/2024-American-Eagle-Coins.jpg' />
                   <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
-
                   {/* ******************* GOOGLE ADS CODE GOES HERE ******************* */}
-
                   <div className='flex flex-col items-center'>
                     <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
                     <hr className='my-2 w-full' />
