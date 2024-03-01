@@ -56,7 +56,7 @@ export default function Home({
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
-      }, 1000);
+      }, 5000);
     }
   }, []);
   const homePageSchema = {
@@ -103,24 +103,7 @@ export default function Home({
           }
         />
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
-        <script
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-          key='product-jsonld'
-        ></script>
-        <script
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        />
-        <script
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(trendingProductsSchema)
-          }}
-          key='product-jsonld'
-        ></script>
+       
         <link rel='preload' as='image' href={staticImage?.imagePath} />
         <link
           rel='preload'
@@ -204,7 +187,6 @@ export default function Home({
                   <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
 
                   {/* ******************* GOOGLE ADS CODE GOES HERE ******************* */}
-
                   <div className='flex flex-col items-center'>
                     <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
                     <hr className='my-2 w-full' />
@@ -308,6 +290,8 @@ export const getServerSideProps: GetServerSideProps<{
   const topProducts = await getTopProducts(getBy, searchKeyword);
   const title = data.site.home.page;
   const description = data.site.home.description;
+  console.log(topProducts);
+  
   return {props: {title, description, topProducts: topProducts }};
 };
 
