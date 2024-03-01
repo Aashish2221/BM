@@ -13,7 +13,6 @@ import { GoFlame } from 'react-icons/go';
 import useToggle from '@/hooks/useToggle';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
-import dynamic from 'next/dynamic';
 import Search from '@/components/Search';
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardImages from '@/services/DashboardImages';
@@ -22,11 +21,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import { defer } from 'lodash';
 import TopProductItem from '@/containers/home/TopProductItem';
+import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
+import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = React.lazy(() => import('@/components/ModalForm/RequestProduct/RequestProductModal'));
 const DescText = React.lazy(() => import('@/components/HomePageComponents/DescText'));
-const SubscribeModal = React.lazy(()=>import('@/components/ModalForm/Subscribe/SubscribeModal'));
-const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
 export default function Home({
   title,
   description,
@@ -57,7 +56,7 @@ export default function Home({
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
-      }, 3000);
+      }, 1000);
     }
   }, []);
   const homePageSchema = {
@@ -142,6 +141,9 @@ export default function Home({
       <Suspense  fallback={<DashboardSkeleton/>}>
         {hydrated === true ? (
           <div>
+            {isSubscribeModal && (
+              <SubscribeModal closeModal={toggleSubscribeModal} />
+            )}
             {/* ******************** GRADIENT HEADING ******************** */}
             <section className='w-full bg-gradient-to-b from-secondary via-white to-white'>
               <div className='container relative mx-auto flex w-full flex-col items-center justify-center pt-4 pb-2'>
@@ -190,9 +192,7 @@ export default function Home({
                 </div>
               </section>
             </section>
-            {isSubscribeModal && (
-              <SubscribeModal closeModal={toggleSubscribeModal} />
-            )}
+            
             {/* ******************** PAGE HEADING ******************** */}
             <section className='container mx-auto mt-4 w-full text-dark-black'>
               <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
