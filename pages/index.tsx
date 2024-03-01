@@ -21,11 +21,11 @@ import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import { defer } from 'lodash';
+import TopProductItem from '@/containers/home/TopProductItem';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = React.lazy(() => import('@/components/ModalForm/RequestProduct/RequestProductModal'));
 const DescText = React.lazy(() => import('@/components/HomePageComponents/DescText'));
 const SubscribeModal = React.lazy(()=>import('@/components/ModalForm/Subscribe/SubscribeModal'));
-const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
 const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
 export default function Home({
   title,
@@ -43,8 +43,6 @@ export default function Home({
     //   await getMaintainance();
     // };
     // check();
-    console.log(!false);
-    
     const dashboardImages = DashboardImages(),
     filteredImages = dashboardImages.filter((image) => !image.isStatic),
     staticImage = dashboardImages.find((image) => image.isStatic);
@@ -141,7 +139,7 @@ export default function Home({
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
         />
       </Head>
-      <Suspense fallback={<DashboardSkeleton/>}>
+      <Suspense  fallback={<DashboardSkeleton/>}>
         {hydrated === true ? (
           <div>
             {/* ******************** GRADIENT HEADING ******************** */}
@@ -305,20 +303,12 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ res, query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
   const title = data.site.home.page;
   const description = data.site.home.description;
-  return {
-    props: {
-      title,
-      description,
-      topProducts: topProducts
-    }
-  };
+  return {props: {title, description, topProducts: topProducts }};
 };
 
 function LeftAdvertisements({ src }: any) {
