@@ -281,10 +281,6 @@ function DetaildView({
           >
             Compare
           </Link>
-
-          {/* <div className='relative hidden sm:block'>
-                    <div className='absolute mt-1 h-full w-full border-l-2 border-gray-300'></div>
-                  </div> */}
           <div className='mt-2'>
             <Link
               target={'_blank'}
@@ -294,7 +290,6 @@ function DetaildView({
               onClick={addProduct}
               className='relative overflow-hidden group rounded-full bg-primary px-9 py-2 font-medium text-white inline-block'
             >
-              <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
               <span className='relative'>Buy</span>
             </Link>
           </div>
