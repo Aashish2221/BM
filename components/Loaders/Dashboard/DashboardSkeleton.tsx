@@ -19,10 +19,6 @@ export default function DashboardSkeleton() {
                             the excellent ones. compare and keep track of bullion prices..
                         </p>
                     </div>
-                    <div className="flex flex-row gap-3 relative h-32 w-full sm:mt-2 md:mt-2 md:h-40 lg:h-60 xl:h-80">
-                        <span className="h-full w-full bg-gray-200 animate-pulse"></span>
-                        <span className="hidden md:block h-full w-2/4 bg-gray-200 animate-pulse"></span>
-                    </div>
                 </div>
             </section>
             {/* ******************* PAGE CONTAINER ****************** */}
