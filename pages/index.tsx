@@ -24,8 +24,15 @@ import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
 import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 // -------------------------- Dynamic import -------------------//
+<<<<<<< Updated upstream
 const RequestProductModal = React.lazy(() => import('@/components/ModalForm/RequestProduct/RequestProductModal'));
 const DescText = React.lazy(() => import('@/components/HomePageComponents/DescText'));
+=======
+const DescText = React.lazy(()=>import('@/components/HomePageComponents/DescText'));
+const RequestProductModal = React.lazy(()=>import('@/components/ModalForm/RequestProduct/RequestProductModal'))
+const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
+const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
+>>>>>>> Stashed changes
 export default function Home({
   title,
   description,
@@ -36,18 +43,25 @@ export default function Home({
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
-  const [staticImage, setStaticImage] = useState<any>();
+  const [staticImage, setStaticImage] = useState<any>(); 
   useEffect(() => {
     // const check = async () => {
     //   await getMaintainance();
     // };
     // check();
+<<<<<<< Updated upstream
     const dashboardImages = DashboardImages(),
     filteredImages = dashboardImages.filter((image) => !image.isStatic),
     staticImage = dashboardImages.find((image) => image.isStatic);
   setDynamicImages(filteredImages);
   setStaticImage(staticImage);
   setHydrated(true);
+=======
+    const dashboardImages = DashboardImages();
+    setDynamicImages(dashboardImages.filter(image => !image.isStatic));
+    setStaticImage(dashboardImages.find(image => image.isStatic));
+    setHydrated(true);
+>>>>>>> Stashed changes
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -280,6 +294,7 @@ export default function Home({
                 </div>
               </div>
             </section>
+<<<<<<< Updated upstream
             <DescText />
             {isRequestModal && (
               <RequestProductModal closeModal={toggleRequestModal} />
@@ -291,6 +306,103 @@ export default function Home({
         ) : (
           <DashboardSkeleton />
         )}
+=======
+          </section>
+          {/* ******************** PAGE HEADING ******************** */}
+          <section className='container mx-auto mt-4 w-full text-dark-black'>
+            <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
+              {/* ******************** LEFT ADVERTISEMENTS ******************** */}
+              <div className='flex h-auto flex-col gap-0 lg:col-span-3'>
+                  <LeftAdvertisements src='/2024-1-oz-Canadian-Gold-Maple-Leaf-Coin.jpg' />
+                  <LeftAdvertisements src='/2024-American-Eagle-Coins.jpg' />
+                  <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
+
+                  {/* ******************* GOOGLE ADS CODE GOES HERE ******************* */}
+
+                  <div className='flex flex-col items-center'>
+                    <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
+                    <hr className='my-2 w-full' />
+                    <Image
+                      className='item-center h-[300px] w-[343px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
+                      onClick={toggleRequestModal}
+                      src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
+                      height={500}
+                      width={500}
+                      alt='ads'
+                      priority={false}
+                      loading='lazy'
+                    />
+                  </div>
+                </div>
+              {/* ******************** PRODUCT LISTING ******************** */}
+              <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
+                {/* ******************** PRODUCT LIST TITLE ******************** */}
+                <div className='flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-0'>
+                  <h2 className='-mt-1 flex items-center gap-2 text-xl font-semibold md:-mt-0 md:text-2xl'>
+                    <GoFlame className='text-2xl text-primary md:text-3xl' />{' '}
+                    Trending Deals
+                  </h2>
+                  {/* ******************** MENU TOGGLE BUTTON ******************** */}
+                  <div className='hidden gap-6 self-end md:flex'>
+                    {/* ******************** DETAILED VIEW BUTTON ******************** */}
+                    <button
+                      onClick={() => setView('detailed')}
+                      className={`flex items-center gap-2 px-4 py-2 ${
+                        view === 'detailed'
+                          ? 'rounded-md bg-primary text-white'
+                          : 'bg-white'
+                      }`}
+                    >
+                      <GiHamburgerMenu size={25} />
+                      <span>Detailed View</span>
+                    </button>
+                    {/* ******************** GRID VIEW BUTTON ******************** */}
+                    <button
+                      onClick={() => setView('grid')}
+                      className={`flex items-center gap-2 px-4 py-2 ${
+                        view === 'grid'
+                          ? 'rounded-md bg-primary text-white'
+                          : 'bg-white'
+                      }`}
+                    >
+                      <IoGridSharp size={25} />
+                      <span>Grid View</span>
+                    </button>
+                  </div>
+                </div>
+                {/* ******************** PRODUCTS ARRAY ******************** */}
+                <Suspense fallback={<GridViewSkeleton />}>
+                  <div
+                    className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
+                      view === 'grid'
+                        ? 'grid-cols-2 xl:grid-cols-4 '
+                        : 'grid-cols-1 lg:grid-cols-2'
+                    }`}
+                  >
+                    {topProducts.homePageProductDetails.map((product: any) => (
+                      <TopProductItem
+                        view={view}
+                        key={product.productId}
+                        {...product}
+                      />
+                    ))}
+                  </div>
+                </Suspense>
+              </div>
+            </div>
+          </section>
+          <DescText />
+          {isRequestModal && (
+            <RequestProductModal closeModal={toggleRequestModal} />
+          )}
+          {isSubscribeModal && (
+            <SubscribeModal closeModal={toggleSubscribeModal} />
+          )}
+        </div>
+      ) : (
+        <DashboardSkeleton />
+      )}
+>>>>>>> Stashed changes
       </Suspense>
     </>
   );
@@ -303,12 +415,20 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ res, query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
+<<<<<<< Updated upstream
   res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
   const title = data.site.home.page;
   const description = data.site.home.description;
   return {props: {title, description, topProducts: topProducts }};
+=======
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
+  const topProducts = await getTopProducts(getBy, searchKeyword);
+  const title = data.site.home.page;
+  const description = data.site.home.description;
+  return { props: { title, description, topProducts } };
+>>>>>>> Stashed changes
 };
 
 function LeftAdvertisements({ src }: any) {
@@ -329,4 +449,8 @@ function LeftAdvertisements({ src }: any) {
       </div>
     </>
   );
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
