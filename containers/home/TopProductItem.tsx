@@ -59,8 +59,9 @@ function GridView({
             width={500}
             height={500}
             className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
-            priority={true}
-            loading='eager'
+            // priority={true}
+            // loading='eager'
+            priority={false}
           />
         </Link>
       </div>
