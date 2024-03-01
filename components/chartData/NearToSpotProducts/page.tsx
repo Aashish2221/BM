@@ -11,7 +11,9 @@ import { toCurrency } from '@/utils/utilities';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import TopProductItem from '@/containers/home/TopProductItem';
-
+interface AllproductsOnSpotProps {
+  metalType: string;
+}
 const NearToSpotProducts = ({
   productId,
   imageUrl,
@@ -144,14 +146,15 @@ const NearToSpotProducts = ({
   );
 };
 
-const AllproductsOnSpot = () => {
+const AllproductsOnSpot: React.FC<AllproductsOnSpotProps> = ({ metalType }) => {
   const [neartospotProducts, setNeartospotProducts] = useState<ProductItem[]>(
     []
   );
   const initFetch = async () => {
-    const response = await getTopProducts('NearToSpot', '');
+    const response = await getTopProducts('NearToSpot', '', metalType);
     return setNeartospotProducts(response.homePageProductDetails);
   };
+  
   useEffect(() => {
     initFetch();
   }, []);

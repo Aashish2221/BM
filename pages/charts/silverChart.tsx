@@ -213,7 +213,7 @@ const silverChart = ({title , description ,
             <div className=' flex flex-row items-center justify-end mr-3 w-28'>
               <Link
                 className='rounded-lg bg-black px-2 py-1 text-center text-[15px] text-white focus:bg-primary'
-                href={'/new-launched'}
+                href={'/near-to-spot/silver'}
                 passHref
               >View All
               </Link>
@@ -221,7 +221,7 @@ const silverChart = ({title , description ,
           </div>
           {/* -------------------- PRODUCTS LISTING -------------------- */}
           <div className='flex w-full flex-row items-start justify-start gap-2 px-3 py-2'>
-            <AllproductsOnSpot />
+          <AllproductsOnSpot metalType="Silver" />
           </div>
         </div>
         <div className='flex max-w-screen-2xl flex-col items-start justify-start gap-2 px-2 text-start'>

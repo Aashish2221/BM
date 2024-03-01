@@ -44,11 +44,23 @@ export const getTopProductsBySpesifictFilter = async (
 
 export const getTopProducts = async (
   getBy?: GetTopProductsBy,
-  searchKeyword?: string
+  searchKeyword?: string,
+  metalType?: string
 ) => {
-  if (searchKeyword) return searchProducts(searchKeyword);
-  return getTopProductsBySpesifictFilter(getBy ?? 'Trending');
+  if (searchKeyword) {
+    return searchProducts(searchKeyword);
+  }
+  const url = new URL(
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetHomePageProductsByLocation`
+  );
+  url.searchParams.set('GetBy', getBy ?? 'Trending');
+  if (metalType) {
+    url.searchParams.set('MetalType', metalType);
+  }
+  const res = await fetcher.get<ApiResponse<Product[]>>(url.toString());
+  return res.data.data;
 };
+
 
 export const getDealerSponsors = async () => {
   const res = await fetcher.get<ApiResponse<DealerSponsor[]>>(

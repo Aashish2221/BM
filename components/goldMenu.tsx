@@ -130,6 +130,9 @@ export default function GoldMenu({ hideGoldMenu }: goldMenuProps) {
       {/* Weight */}
       <div className='w-2/12 border-l border-gray-500 px-4'>
         <p className='mb-2 text-base font-medium'>Weight</p>
+        <div className='mx-auto max-w-screen-sm h-[460px] overflow-auto'>
+          <div className='custom-scrollbar h-[460px] overflow-auto'>
+
         <div className='flex flex-col gap-4'>
           <p className='-mb-1  text-[0.9rem] font-medium'>Gold Coins</p>
           {goldCoins.map((weight, weightIndex) => (
@@ -160,6 +163,8 @@ export default function GoldMenu({ hideGoldMenu }: goldMenuProps) {
             </Link>
           ))}
         </div>
+      </div>
+      </div>
       </div>
     </div>
   );

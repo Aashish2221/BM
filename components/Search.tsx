@@ -21,6 +21,7 @@ export default function Search() {
   const router = useRouter();
   useEffect(() => {
     handleClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.href]);
   useOnClickOutside(searchResultsRef, () => closeSearchResult());
   const closeSearchResult = () => {
@@ -33,15 +34,17 @@ export default function Search() {
       const { value } = e.target;
       setKeyword(e.target.value);
       setSearchKw(e.target.value);
+      if (value)
         if (value.length >= 0 && value.length <= 3) {
           setLoading(false);
           setShowSearchedData(false);
         }
       if (value.length >= 3) {
         setLoading(true);
-        setShowSearchedData(true);
       }
-       else {
+      if (value.length >= 3) {
+        setShowSearchedData(true);
+      } else {
         setSearchedData(null);
         setShowSearchedData(false);
       }
@@ -76,6 +79,7 @@ export default function Search() {
       setSearchedData(null);
       setShowSearchedData(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchedData]);
   useEffect(() => {
     // Use a timer variable to keep track of the setTimeout
@@ -98,7 +102,7 @@ export default function Search() {
         const data = await search(query ,pageSize , pageNumber);
         setLoading(false);
         setSearchedData(data);
-      }, 1000); // Adjust the delay as needed (e.g., 500ms)
+      }, 2000); // Adjust the delay as needed (e.g., 500ms)
     };
     const query = {
       searchFrom: 'advanced',

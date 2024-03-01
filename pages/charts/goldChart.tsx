@@ -90,30 +90,30 @@ const goldChart = ({
           <div className='flex flex-row justify-start items-center w-full gap-1 sm:gap-2'>
             {/* -------------------- Gold PRICE PER OUNCE -------------------- */}
             <div className="flex flex-col sm:flex-row items-center h-full bg-gray-100 p-1 sm:p-2 rounded-lg">
-              <span className="text-sm font-medium text-dark-black px-2 sm:px-0">Gold Price Per Ounce:</span>
+              <span className="text-sm font-medium text-dark-black sm:px-0">Gold Price Per Ounce:</span>
               <div className="flex items-center">
-                <span className="text-sm font-medium text-primary px-1">{toCurrency(spotPrice.gold)}</span>
+                <span className="text-xs sm:text-sm font-medium text-primary sm:px-1">{toCurrency(spotPrice.gold)}</span>
                 {spotPrice.goldChange < 0 ? (
                   <MdArrowDropDown size={24} fill="#FF2A2A" />
                 ) : (
                   <MdArrowDropUp size={24} fill="#27D24A" />
                 )}
-                <span className={`text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
+                <span className={`text-xs sm:text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
                   {Math.abs(spotPrice.goldChange)}
                 </span>
               </div>
             </div>
             {/* -------------------- Gold PRICE PER GRAM -------------------- */}
             <div className="flex flex-col sm:flex-row items-center bg-gray-100 p-1 sm:p-2 rounded-lg">
-              <span className="text-sm font-medium text-dark-black px-2 sm:px-0">Gold Price Per Gram:</span>
+              <span className="text-sm font-medium text-dark-black sm:px-0">Gold Price Per Gram:</span>
               <div className="flex items-center">
-                <span className="text-sm font-medium text-primary px-1">{toCurrency(pricePerGram(spotPrice.gold))}</span>
+                <span className="text-xs sm:text-sm font-medium text-primary sm:px-1">{toCurrency(pricePerGram(spotPrice.gold))}</span>
                 {spotPrice.goldChange < 0 ? (
                   <MdArrowDropDown size={24} fill="#FF2A2A" />
                 ) : (
                   <MdArrowDropUp size={24} fill="#27D24A" />
                 )}
-                <span className={`text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
+                <span className={`text-xs sm:text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
                   {Math.abs(pricePerGram(spotPrice.goldChange))}
                 </span>
               </div>
@@ -122,13 +122,13 @@ const goldChart = ({
             <div className="flex flex-col sm:flex-row items-center h-full bg-gray-100 p-1 sm:p-2 rounded-lg">
               <span className="text-sm font-medium text-dark-black px-2 sm:px-0"> Gold Price Per Kilo: </span>
               <div className="flex items-center sm:px-1">
-                <span className="text-sm font-medium text-primary sm:px-1">{toCurrency(pricePerKilo(spotPrice.gold))}</span>
+                <span className="text-xs sm:text-sm font-medium text-primary sm:px-1">{toCurrency(pricePerKilo(spotPrice.gold))}</span>
                 {spotPrice.goldChange < 0 ? (
                   <MdArrowDropDown size={24} fill="#FF2A2A" />
                 ) : (
                   <MdArrowDropUp size={24} fill="#27D24A" />
                 )}
-                <span className={`text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
+                <span className={`text-xs sm:text-sm font-medium ${spotPrice.goldChange < 0 ? "text-danger" : "text-success"}`}>
                   {Math.abs(pricePerKilo(spotPrice.goldChange))}
                 </span>
               </div>
@@ -192,7 +192,7 @@ const goldChart = ({
             <div className=' flex flex-row items-center justify-end mr-2 w-24'>
               <Link
                 className='rounded-lg bg-black px-1 py-1 text-center text-[15px] text-white focus:bg-primary'
-                href={'/new-launched'}
+                href={'/near-to-spot/gold'}
                 passHref
               >
                 View All
@@ -202,7 +202,7 @@ const goldChart = ({
           {/* -------------------- PRODUCTS LISTING -------------------- */}
           <div
             className='flex w-full flex-row items-start justify-start gap-2 px-3 py-2'>
-            <AllproductsOnSpot />
+          <AllproductsOnSpot metalType="Gold" />
           </div>
         </div>
         <div className='flex flex-col items-start justify-start gap-2 px-2 text-start'>

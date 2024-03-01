@@ -23,7 +23,7 @@ export default function DescText() {
           <Link
             href='/observations'
             target='_blank'
-            className='font-medium text-blue-500 decoration-2 underline-offset-4 hover:underline'
+            className='font-medium text-blue-500 decoration-2'
             prefetch={false}
           >
             Observation list
@@ -42,7 +42,7 @@ export default function DescText() {
           <Link
             href='/gold'
             target='_blank'
-            className='font-medium text-blue-500 decoration-2 underline-offset-4 hover:underline'
+            className='font-medium text-blue-500 decoration-2'
             prefetch={false}
           >
             Gold
@@ -51,7 +51,7 @@ export default function DescText() {
           <Link
             href='/silver'
             target='_blank'
-            className='font-medium text-blue-500 decoration-2 underline-offset-4 hover:underline'
+            className='font-medium text-blue-500 decoration-2'
             prefetch={false}
           >
             Silver
@@ -99,7 +99,7 @@ export default function DescText() {
           <Link
             href='/dealer-review'
             target='_blank'
-            className='font-medium text-blue-500 decoration-2 underline-offset-4 hover:underline'
+            className='font-medium text-blue-500 decoration-2'
             prefetch={false}
           >
             Reputable Dealers

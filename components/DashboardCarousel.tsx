@@ -16,7 +16,11 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [customerId, setCustomerId] = useState(0);
   const user = useSelector(selectUser);
   useEffect(() => {
-    setCustomerId(user.isLoggedin ? user.user.id : 0);
+    if (user.isLoggedin === false) {
+      setCustomerId(0);
+    } else {
+      setCustomerId(user.user.id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addProduct = async (imageForVenderId: any) => {
@@ -28,6 +32,8 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
     );
   };
   const settings = {
+    dots: false,
+    arrows: true,
     infinite: true,
     autoplay: true,
     speed: 1000,
@@ -46,18 +52,15 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
             prefetch={false}
           ></Link>
         ))}
-        <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
-        <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
       </Head>
-      <Suspense
-        fallback={
-          <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>
-        }
-      >
+      <Suspense fallback={<section className='relative h-40 w-full  sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80 bg-gray-400'></section>}>
         <Slider {...settings}>
           {images.map((image, index) => (
-            <section key={index} aria-hidden='true'>
-              <div className='relative flex h-40 w-full overflow-hidden rounded-lg sm:h-44 sm:object-cover md:mt-2 md:h-40 lg:h-60 xl:h-80 '>
+            <section
+              className='relative h-40 w-full  sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'
+              key={index}
+              aria-hidden='true'>
+              <div className='hidden md:block'>
                 <Link
                   target='_blank'
                   href={image.eventRedirectiveUrl}
@@ -66,15 +69,25 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                   onClick={() => addProduct(image.imageForVenderId)}
                 >
                   <Image
-                    className='hidden sm:block'
+                    className='rounded-lg sm:h-44 sm:object-cover md:h-40 lg:h-60 lg:object-fill xl:h-80'
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
                     priority={true}
                     loading='eager'
                   />
+                </Link>
+              </div>
+              <div className='flex md:hidden'>
+                <Link
+                  target='_blank'
+                  href={image.eventRedirectiveUrl}
+                  passHref
+                  prefetch={false}
+                  onClick={() => addProduct(image.imageForVenderId)}
+                >
                   <Image
-                    className='block sm:hidden'
+                    className='h-40 visible w-full rounded-lg'
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}

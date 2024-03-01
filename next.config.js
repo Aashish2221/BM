@@ -310,10 +310,10 @@ const nextConfig = {
       'online.kitco.com',
       'lh3.googleusercontent.com'
     ],
-    unoptimized: false
+    unoptimized: true
   },
   env: {
-    BASE_URL: 'http://106.201.231.27:8082',
+    BASE_URL: 'https://bbdapi.bestbulliondeals.com',
     WEBSITE_URL: 'https://www.bullionmentor.com',
     NEXTAUTH_URL: 'https://www.bullionmentor.com'
   }

@@ -55,36 +55,73 @@ const LineAreaChart = ({
   const [chartdata, setChartData] = useState(initialchartData);
   const [Number, setNumber] = useState(3);
   const [TimeFrame, setTimeFrame] = useState('month');
+  const [size, setSize] = useState<number | undefined>(20); 
   const [initialdata, setInitialData] = useState(true);
-  const [from, setFrom] = useState(initfrom);
-  const [to, setTo] = useState(initto);
-  const [high, setHigh] = useState(initHigh);
-  const [low, setLow] = useState(initlow);
+  // const [from, setFrom] = useState(initfrom);
+  // const [to, setTo] = useState(initto);
+  // const [high, setHigh] = useState(initHigh);
+  // const [low, setLow] = useState(initlow);
   const select = useSelector(selectUser)
+//   const getDateDifferenceFromWeek = (weeks: number) => {
+//     const currentDate = new Date();
+//     const startDate = new Date(currentDate.getTime() - weeks * 7 * 24*  60*  60 * 1000);
+//     return { startDate };
+//   }
+//   const getDateDifferenceFromMonth = (months: number) => {
+//     const currentDate = new Date();
+//     const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - months, currentDate.getDate());
+//     return { startDate, currentDate};
+//   }
+//   const getDateDifferenceFromYear = (years: number) => {
+//     const currentDate = new Date();
+//     const startDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth(), currentDate.getDate());
+//     return { startDate };
+// }
   useEffect(() => {
     initFetch(Number, TimeFrame);
-    metal === 'Silver'
-      ? setHigh(Math.max(...chartdata.map((x) => x.silver)))
-      : setHigh(Math.max(...chartdata.map((x) => x.gold)));
-    metal === 'Silver'
-      ? setLow(Math.min(...chartdata.map((x) => x.silver)))
-      : setLow(Math.min(...chartdata.map((x) => x.gold)));
-    if (TimeFrame == 'month' || TimeFrame == 'week') {
-      setFrom(dayjs(chartdata.map((x) => x.dateNTime)[0]).format('MM/DD/YYYY'));
-    } else {
-      setFrom(chartdata.map((x) => x.dateNTime.replaceAll(' 00:00:00', ''))[0]);
-    }
-    if (currentSpotPrice.dateNTime !== '') {
-      setTo(dayjs(currentSpotPrice.dateNTime).format('MM/DD/YYYY'));
-     }  }, [metal, Number, TimeFrame]);
+    // metal === 'Silver'
+    //   ? setHigh(Math.max(...chartdata.map((x) => x.silver)))
+    //   : setHigh(Math.max(...chartdata.map((x) => x.gold)));
+    // metal === 'Silver'
+    //   ? setLow(Math.min(...chartdata.map((x) => x.silver)))
+    //   : setLow(Math.min(...chartdata.map((x) => x.gold)));
+
+    // if (TimeFrame === 'week') {
+    //   let dateDifference = getDateDifferenceFromWeek(Number);
+    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    //   let date = dateDifference.startDate.toLocaleDateString('en-US', options);
+    //   setFrom(date)
+    // }
+    // else if (TimeFrame === 'month') {
+    //   let dateDifferenceMonth = getDateDifferenceFromMonth(Number);
+    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    //   const date = dateDifferenceMonth.startDate.toLocaleDateString('en-US', options);
+    //   setFrom(date);
+    //   const curreDate = dateDifferenceMonth.currentDate.toLocaleDateString('en-US', options);
+    //   setTo(curreDate);
+    // }
+    // else if(TimeFrame === 'year'){
+    //   let dateDifferenceYear = getDateDifferenceFromYear(Number);
+    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    //   const date = dateDifferenceYear.startDate.toLocaleDateString('en-US', options);
+    //   setFrom(date);
+    // }
+    // else {
+    //    setFrom(chartdata.map((x) => x.dateNTime.replaceAll(' 00:00:00', ''))[0]);
+    // }
+  }, [metal, Number, TimeFrame]);
 
   const initFetch = async (Number: number, TimeFrame: string) => {
     setNumber(Number);
     setTimeFrame(TimeFrame);
     const response = await getChartData(Number, TimeFrame, false);
     const allreponse = [...response.data, currentSpotPrice];
+    // const allreponse = [...response.data];
     setChartData(allreponse);
   };
+  
+  console.log(currentSpotPrice)
+  console.log(chartdata)
   return (
     <div className='sm:m-2 mt-2 flex h-fit flex-col items-center justify-center rounded-xl bg-gray-100 shadow-lg w-full'>
       <div className='mt-2 flex w-full flex-col justify-start text-[15px] font-semibold text-dark-black md:flex-row md:justify-between lg:text-[20px]'>
@@ -94,52 +131,48 @@ const LineAreaChart = ({
         <ul className='flex h-fit w-full flex-row items-start justify-start gap-1 px-1 py-1 text-sm text-gray-700 md:items-end md:justify-end'>
           <li
             onClick={() => {
-              initFetch(1, 'week'), setInitialData(false);
+              initFetch(1, 'week'), setInitialData(false),setSize(7);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='week'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               1W
             </button>
           </li>
           <li
             onClick={() => {
-              initFetch(2, 'week'), setInitialData(false);
+              initFetch(2, 'week'), setInitialData(false),setSize(14);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='week'&&Number===2)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               2W
             </button>
           </li>
           <li
             onClick={() => {
-              initFetch(1, 'month'), setInitialData(false);
+              initFetch(1, 'month'), setInitialData(false),setSize(15);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               1M
             </button>
           </li>
           <li
             onClick={() => {
-              initFetch(3, 'month'), setInitialData(false);
+              initFetch(3, 'month'), setInitialData(false),setSize(18);
             }}
           >
-            <button
-              className={
-                initialdata
-                  ? 'rounded-lg bg-primary px-1 sm:px-2 py-1 sm:py-2'
-                  : 'rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'
-              }
-            >
+          <button
+          className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===3)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               3M
-            </button>
+          </button>
+
           </li>
           <li
             onClick={() => {
-              initFetch(6, 'month'), setInitialData(false);
+              initFetch(6, 'month'), setInitialData(false),setSize(16);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===6)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               6M
             </button>
           </li>
@@ -148,7 +181,7 @@ const LineAreaChart = ({
               initFetch(1, '1-Year'), setInitialData(false);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='1-Year'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               1Y
             </button>
           </li>
@@ -157,7 +190,7 @@ const LineAreaChart = ({
               initFetch(5, 'year'), setInitialData(false);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='year'&&Number===5)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               5Y
             </button>
           </li>
@@ -166,7 +199,7 @@ const LineAreaChart = ({
               initFetch(10, 'year'), setInitialData(false);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='year'&&Number===10)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               10Y
             </button>
           </li>
@@ -175,7 +208,7 @@ const LineAreaChart = ({
               initFetch(0, 'All'), setInitialData(false);
             }}
           >
-            <button className='rounded-lg bg-gray-300 px-1 sm:px-2 py-1 sm:py-2 focus:bg-primary'>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='All'&&Number===0)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               All
             </button>
           </li>
@@ -190,10 +223,10 @@ const LineAreaChart = ({
               : currentSpotPrice?.gold}
           </span>
           <div className="flex items-center">
-          {initchange < 0 ? (
-            <MdArrowDropDown size={24} fill="#FF2A2A" />
+            {initchange < 0 ? (
+              <MdArrowDropDown size={24} fill="#FF2A2A" />
             ) : (
-            <MdArrowDropUp size={24} fill="#27D24A" />
+              <MdArrowDropUp size={24} fill="#27D24A" />
             )}
             <span className={`text-sm font-semibold ${initchange < 0 ? "text-red-600" : "text-green-600"}`}>
               {Math.abs(initchange)}
@@ -202,19 +235,19 @@ const LineAreaChart = ({
         </div>
         <div className='items-between flex w-full flex-col justify-between  gap-2 md:flex-row'>
           <div className='flex flex-row items-start justify-start gap-2 lg:gap-8'>
-          <span className='text-sm font-medium text-gray-700'>
-            Bid ${select.spotPrices && metal === 'Silver' ? (select.spotPrices.silverBid || 'N/A') : (select.spotPrices && select.spotPrices.goldBid || 'N/A')}
-           </span>
+            <span className='text-sm font-medium text-gray-700'>
+              Bid ${select.spotPrices && metal === 'Silver' ? (select.spotPrices.silverBid || 'N/A') : (select.spotPrices && select.spotPrices.goldBid || 'N/A')}
+            </span>
 
 
             <span className='text-sm font-medium text-gray-700'>
-               Ask ${select.spotPrices && metal === 'Silver' ? (select.spotPrices.silver || 'N/A') : (select.spotPrices && select.spotPrices.gold || 'N/A')}
+              Ask ${select.spotPrices && metal === 'Silver' ? (select.spotPrices.silver || 'N/A') : (select.spotPrices && select.spotPrices.gold || 'N/A')}
             </span>
 
-            <div className='text-sm font-medium text-gray-700 flex gap-1 items-center text-center'>
+            <div className='text-sm font-medium text-gray-700 flex gap-1 items-center text-center fix'>
               Change Percent
               <span className={`flex items-center space-x-1 ${metal === "Silver" ? (select.spotPrices.silverChangePercent >= 0 ? 'text-green-600' : 'text-red-600') : (select.spotPrices.goldChangePercent >= 0 ? 'text-green-600' : 'text-red-600')}`}>
-                {metal === "Silver" ? 
+                {metal === "Silver" ?
                   (select.spotPrices.silverChangePercent > 0 ? <MdArrowDropUp size={16} fill="#27D24A" /> : <MdArrowDropDown size={16} fill="#FF2A2A" />)
                   :
                   (select.spotPrices.goldChangePercent > 0 ? <MdArrowDropUp size={16} fill="#27D24A" /> : <MdArrowDropDown size={16} fill="#FF2A2A" />)
@@ -228,11 +261,11 @@ const LineAreaChart = ({
           <div className='flex flex-row items-end justify-end gap-2 whitespace-normal text-sm font-medium'>
             From{' '}
             <span className='relative bg-gray-300 text-gray-700'>
-              {from.replaceAll('/', '-')}
+              {chartdata[0].dateNTime.slice(0,10)}
             </span>
             To{' '}
             <span className='relative bg-gray-300 text-gray-700'>
-              {to.replaceAll('/', '-')}
+              {currentSpotPrice.dateNTime}
             </span>
           </div>
         </div>
@@ -252,10 +285,10 @@ const LineAreaChart = ({
                   (TimeFrame === 'year' && Number === 1)
                   ? chartdata
                     .filter((x) => x.dateNTime)
-                    .map((x) => dayjs(x.dateNTime).format('D MMM'))
+                    .map((x) => dayjs(x.dateNTime.slice(0,10)).format('D MMM'))
                   : chartdata
                     .filter((x) => x.dateNTime)
-                    .map((x) => x.dateNTime),
+                    .map((x) => x.dateNTime.slice(0,10)),
               datasets: [
                 {
                   label: `${metal} Spot Prices`,
@@ -297,7 +330,7 @@ const LineAreaChart = ({
                   },
                   ticks: {
                     color: 'black',
-                    maxTicksLimit: 15,
+                    maxTicksLimit: size,
                     padding: 1,
                     font: {
                       size: 10
