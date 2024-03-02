@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { Suspense, useEffect, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
+import { link } from 'fs';
 
 export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [productName, setProductName] = useState('');
@@ -32,12 +33,19 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
     arrows: true,
     infinite: true,
     autoplay: true,
-    speed: 1000,
+    speed: 2000,
     slidesToShow: 1,
     slidesToScroll: 1
   };
   return (
     <>
+    <head>
+      {images.map(image=>(
+        <>
+        <link rel="preload" href={image.mobileImageurl} />
+        </>
+      ))}
+    </head>
       <Suspense
         fallback={
           <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>
