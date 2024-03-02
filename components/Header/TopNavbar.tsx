@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import IconMenu from '../icons/IconMenu';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { RegisterLoginModal } from '../ModalForm';
@@ -17,13 +17,12 @@ import { CgShare } from 'react-icons/cg';
 import { GetCustomerDetails, createUser, login } from '@/services/spot-prices';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, signin, signout } from '@/features/userSlice';
-import dynamic from 'next/dynamic';
 
-const ShareModal = dynamic(() => import('../ModalForm/ShareModal/shareModal'));
-const GoldMenu = dynamic(() => import('../goldMenu'));
-const SilverMenu = dynamic(() => import('../silverMenu'));
-const NearToSpotMenu = dynamic(()=> import('../NearToSpotMenu'));
-const MobileMenu = dynamic(() => import('../MobileMenu'));
+const ShareModal = React.lazy(() => import('../ModalForm/ShareModal/shareModal'));
+const GoldMenu = React.lazy(() => import('../goldMenu'));
+const SilverMenu = React.lazy(() => import('../silverMenu'));
+const NearToSpotMenu = React.lazy(()=> import('../NearToSpotMenu'));
+const MobileMenu = React.lazy(() => import('../MobileMenu'));
 
 export default function TopNavbar() {
   const { data: session } = useSession();
@@ -42,25 +41,17 @@ export default function TopNavbar() {
   const user = useSelector(selectUser);
   useEffect(() => {
     const getUserName = async () => {
-      if (user.isLoggedin === true) {
+      if (user.isLoggedin) {
         const response = await GetCustomerDetails(user.user.email);
-        if (user.user.name === null) {
-          setUserInfo(`${response.data.emailId.slice(0, 8)}...`);
-        } else {
-          setUserInfo(response.data.name);
+        (user.user.name === null) ? (setUserInfo(`${response.data.emailId.slice(0, 8)}...`)) : (setUserInfo(response.data.name))
         }
-      }
     };
     getUserName();
   }, [user]);
   const handleGoogleLogin = async () => {
     if (session?.user?.email !== undefined) {
-      const response = await login(
-        session?.user?.email as string,
-        '',
-        isGoogleUser
-      );
-      if (response.success === true) {
+      const response = await login(session?.user?.email as string, '', isGoogleUser);
+      if (response.success) {
         dispatch(
           signin({
             name: response.data.name,
@@ -71,23 +62,17 @@ export default function TopNavbar() {
           })
         );
       }
-    }
-    9;
+    } 
   };
   const handleGoogleRegistration = async () => {
     const res = await createUser(session?.user?.email as string, '', '', true);
-    if (res.success === true) {
-      handleGoogleLogin();
-    } else {
-      handleGoogleLogin();
-    }
+     (res.success) ? handleGoogleLogin() :  handleGoogleLogin();
   };
   useEffect(() => {
     if ((session?.user?.email?.length as number) > 0) {
       handleGoogleLogin();
       handleGoogleRegistration();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [(session?.user?.email?.length as number) > 0]);
 
   const hideSilverMenu = () => {
@@ -107,12 +92,11 @@ export default function TopNavbar() {
       <Head>
         <link
           rel='preload'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Icons/avatar_lpmhnb.webp'
+          href='https://res.cloudinary.com/bullionmentor/image/upload/v1690806037/Images-Icons/BBD-horizontal.webp'
         />
         <link
-          rel='preload'
-          href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
-        />
+        rel='preload'
+        href='https://res.cloudinary.com/bullionmentor/image/upload/Icons/avatar_lpmhnb.webp' />
         <link
           rel='preload'
           href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo-mob.webp'
@@ -210,7 +194,6 @@ export default function TopNavbar() {
                 )}
               </AnimatePresence>
             </div>
-
             <div 
               onMouseOver={() => setshowNearSpotMenu(true)}
               onMouseLeave={() => setshowNearSpotMenu(false)}
@@ -238,8 +221,6 @@ export default function TopNavbar() {
                 )}
               </AnimatePresence>
               </div>
-
-
             <Link
               className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/new-launched'
                 ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
@@ -293,7 +274,7 @@ export default function TopNavbar() {
                 <CgShare size={22} />
               </button>
               {/* ******************** USER PROFILE ******************** */}
-              {user.isLoggedin === true ? (
+              {user.isLoggedin ? (
                 <span
                   className='flex cursor-pointer flex-row items-center justify-end gap-1'
                   onClick={() => setDropdown(true)}
@@ -352,7 +333,7 @@ export default function TopNavbar() {
                         className='py-2 hover:cursor-pointer hover:text-primary'
                       >
                         Logout
-                                             </li>
+                                             z</li>
                     </ul>
                   </div>
                 </AnimatePresence>
