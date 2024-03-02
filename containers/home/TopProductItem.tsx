@@ -107,10 +107,8 @@ function GridView({
         <span className='h-10 font-semibold text-primary md:h-9 lg:h-6'>
           As low as {toCurrency(cheapestPrice)}
         </span>
-
         <div className='-mt-3 w-full items-end px-3 text-center lg:ml-3 lg:mr-3   lg:px-6'>
           {/* <div className='absolute mt-5 ml-2 flex h-full w-24 items-center justify-center border-t-2 border-gray-300 sm:ml-4 lg:ml-0'></div> */}
-
           <div className='mt-6 w-full'>
             <div className=' justify-center'>
               <Link
@@ -121,10 +119,6 @@ function GridView({
               >
                 <button className='hover:text-[#0F4463]'>Compare</button>
               </Link>
-
-              {/* <div className='relative'>
-                <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
-              </div> */}
               <Link
                 target={'_blank'}
                 href={competitorProductUrl}
@@ -141,8 +135,7 @@ function GridView({
       </div>
     </div>
     </>
-  );
-  
+  ); 
 }
 
 function DetaildView({
@@ -171,12 +164,7 @@ function DetaildView({
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    if (user.isLoggedin === false) {
-      setCustomerId(0);
-    } else {
-      setCustomerId(user.user.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    (!user.isLoggedin) ? setCustomerId(0) : setCustomerId(user.user.id);
   }, []);
 
   const addProduct = async () => {
@@ -268,7 +256,6 @@ function DetaildView({
               <TooltipStatus view='detailed' productName={productName} />
             )}
           </div>
-
           <span className='font-medium text-[#AF0E0E]'>
             Premium {toCurrency(asLowAs)}
           </span>
@@ -278,7 +265,6 @@ function DetaildView({
           <span className='font-semibold text-primary'>
             As low as {toCurrency(cheapestPrice)}
           </span>
-
           <Link
             href={'/' + shortName}
             className='group font-semibold text-blue-500 underline decoration-blue-500 hover:text-[#0F4463] hover:underline '
@@ -294,8 +280,7 @@ function DetaildView({
               aria-label={`Buy ${productName}`}
               prefetch={false}
               onClick={addProduct}
-              className='relative overflow-hidden group rounded-full bg-primary px-9 py-2 font-medium text-white inline-block'
-            >
+              className='relative overflow-hidden group rounded-full bg-primary px-9 py-2 font-medium text-white inline-block'>
               <span className='relative'>Buy</span>
             </Link>
           </div>
