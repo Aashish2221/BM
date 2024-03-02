@@ -96,7 +96,6 @@ export default function Home({
         <meta property='og:image'content={'https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp'}/>
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
         <script
-          async
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
@@ -105,12 +104,15 @@ export default function Home({
          <script 
             type='application/ld+json'
             dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
-          <script async
+          <script
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
-                   key='product-jsonld'></script>
+         key='product-jsonld'></script>
         <link rel='preload' as='image' href={staticImage?.imagePath} />
+        <link rel="preload" href={dynamicImages[0].mobileImageurl} />
+        <link rel="preload" href={dynamicImages[1].mobileImageurl} />
+        <link rel="preload" href={dynamicImages[2].mobileImageurl} />
         <link
           rel='preload'
           as='image'

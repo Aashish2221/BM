@@ -30,12 +30,7 @@ function GridView({
   const [customerId, setCustomerId] = useState(0);
   const user = useSelector(selectUser);
   useEffect(() => {
-    if (user.isLoggedin === false) {
-      setCustomerId(0);
-    } else {
-      setCustomerId(user.user.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    (!user.isLoggedin) ? setCustomerId(0) : setCustomerId(user.user.id);
   }, []);
 
   const addProduct = async () => {
@@ -47,6 +42,11 @@ function GridView({
     );
   };
   return (
+    <>
+    <head>
+      <link rel="preload" href={imageUrl} />
+      <link rel="preload" href={mobileImageurl} />
+    </head>
     <div
       key={productId}
       className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[3px_12px_12px_rgba(0,0,0,0.2)] md:pb-4'
@@ -59,9 +59,9 @@ function GridView({
             width={500}
             height={500}
             className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
-            // priority={true}
-            // loading='eager'
-            priority={false}
+            priority={true}
+            loading='eager'
+            
           />
         </Link>
       </div>
@@ -140,7 +140,9 @@ function GridView({
         </div>
       </div>
     </div>
+    </>
   );
+  
 }
 
 function DetaildView({
@@ -187,6 +189,10 @@ function DetaildView({
   };
   return (
     <>
+     <head>
+      <link rel="preload" href={imageUrl} />
+      <link rel="preload" href={mobileImageurl} />
+    </head>
       <div
         key={productId}
         className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[0px_3px_3px_rgba(0,0,0,0.16)]'
