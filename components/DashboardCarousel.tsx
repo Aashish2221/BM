@@ -39,13 +39,13 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   };
   return (
     <>
-    <head>
+    {/* <head>
       {images.map(image=>(
         <>
         <link rel="preload" href={image.mobileImageurl} />
         </>
       ))}
-    </head>
+    </head> */}
       <Suspense
         fallback={
           <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>

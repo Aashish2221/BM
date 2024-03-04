@@ -177,10 +177,10 @@ function DetaildView({
   };
   return (
     <>
-     <head>
+     {/* <head>
       <link rel="preload" href={imageUrl} />
       <link rel="preload" href={mobileImageurl} />
-    </head>
+    </head> */}
       <div
         key={productId}
         className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[0px_3px_3px_rgba(0,0,0,0.16)]'
