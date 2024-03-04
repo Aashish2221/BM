@@ -11,11 +11,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
-import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
+import data from '@/data';
 
 export default function Blogs({
   title,
@@ -23,26 +23,23 @@ export default function Blogs({
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>();
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated, setHydrated] = useState(true);
   useEffect(() => {
     setHydrated(true);
     setShare(window.location.href);
   }, []);
-  function wordCount(text: string) {
-    if (text === null) {
-      return 0;
-    }
-    return text.trim().split(/\s+/).length;
-  }
-
-  // const blog = data.site.blog;
-  const canonicalUrl = data.WEBSITEUrl + '/blogs';
+  // function wordCount(text: string) {
+  //   if (text === null) {
+  //     return 0;
+  //   }
+  //   return text.trim().split(/\s+/).length;
+  // }
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
-        <link rel='canonical' href={canonicalUrl} />
+        <meta property='og:url' content={data.WEBSITEUrl + '/blogs'} key={data.WEBSITEUrl + '/blogs'} />
+        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blogs:Blog)=>(
             <><link rel="preload" as='image' href={blogs.image} /></>
@@ -94,7 +91,7 @@ export default function Blogs({
                       className='h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500'
                       dangerouslySetInnerHTML={{
                         __html:
-                          wordCount(blogs.description) <= 29
+                          (blogs.description.length <= 39)
                             ? blogs.description
                             : blogs.description.slice(0, 175) + '...'
                       }}
