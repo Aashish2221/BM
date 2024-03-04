@@ -107,7 +107,7 @@ export default function Home({
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
          key='product-jsonld' />
-        <link rel='preload' as='image' href={staticImage?.imagePath} />
+        {/* <link rel='preload' as='image' href={staticImage?.imagePath} />
         <link
           rel='preload'
           as='image'
@@ -122,7 +122,7 @@ export default function Home({
           rel='preload'
           as='image'
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
-        />
+        /> */}
       </Head>
       <Suspense fallback={<DashboardSkeleton/>}>
       {hydrated === true ? (
