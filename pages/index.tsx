@@ -101,13 +101,8 @@ export default function Home({
           key='product-jsonld' />
          {/* <script 
             type='application/ld+json'
-<<<<<<< Updated upstream
             dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} /> */}
           <script
-=======
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
-          <script 
->>>>>>> Stashed changes
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
