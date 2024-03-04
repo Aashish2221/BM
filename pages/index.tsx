@@ -13,19 +13,19 @@ import { GoFlame } from 'react-icons/go';
 import useToggle from '@/hooks/useToggle';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
-import Search from '@/components/Search';
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
-import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import React from 'react';
+import TopProductItem from '@/containers/home/TopProductItem';
+import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
 // -------------------------- Dynamic import -------------------//
 const DescText = React.lazy(()=>import('@/components/HomePageComponents/DescText'));
 const RequestProductModal = React.lazy(()=>import('@/components/ModalForm/RequestProduct/RequestProductModal'))
-const TopProductItem = React.lazy(()=>import('@/containers/home/TopProductItem'));
-const DashboardSkeleton = React.lazy(()=>import('@/components/Loaders/Dashboard/DashboardSkeleton'))
+const SubscribeModal = React.lazy(()=>import('@/components/ModalForm/Subscribe/SubscribeModal'));
+const Search = React.lazy(()=>import('@/components/Search'))
 export default function Home({
   title,
   description,
@@ -101,8 +101,13 @@ export default function Home({
           key='product-jsonld' />
          {/* <script 
             type='application/ld+json'
+<<<<<<< Updated upstream
             dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} /> */}
           <script
+=======
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
+          <script 
+>>>>>>> Stashed changes
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
