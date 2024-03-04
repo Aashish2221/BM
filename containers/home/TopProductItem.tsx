@@ -183,29 +183,24 @@ function DetaildView({
     </head>
       <div
         key={productId}
-        className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[0px_3px_3px_rgba(0,0,0,0.16)]'
-      >
-        <div
-          className='items-left col-span-1 hidden py-2 md:block'
-          id='desktopview'
-        >
+        className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[0px_3px_3px_rgba(0,0,0,0.16)]'>
+        <div className='items-left col-span-1 hidden py-2 md:block'>
           <Link
             href={'/' + shortName}
             aria-label={productName}
             prefetch={false}
-          >
+            >
             <Image
               src={imageUrl}
               alt={productName ?? ''}
               width={500}
               height={500}
               className='sm:h-28 md:h-auto'
-              priority={true}
               loading='eager'
             />
           </Link>
         </div>
-        <div className='flex md:col-span-1 md:hidden md:py-2' id='mobileview'>
+        <div className='flex md:col-span-1 md:hidden md:py-2'>
           <Link
             href={'/' + shortName}
             aria-label={productName}
@@ -217,7 +212,6 @@ function DetaildView({
               width={100}
               height={100}
               className='h-auto w-auto'
-              priority={true}
               loading='eager'
             />
           </Link>
@@ -228,7 +222,7 @@ function DetaildView({
             onMouseLeave={() => setTooltipStatus(0)}
             className='relative flex cursor-pointer flex-col justify-start gap-1 '
           >
-            <div className='oneline'>
+            {/* <div className='oneline'> */}
               <Link
                 href={'/' + shortName}
                 aria-label={productName}
@@ -242,15 +236,15 @@ function DetaildView({
                   }`}
                 </h3>
               </Link>
-            </div>
+            {/* </div> */}
             <h3 className='mt-0  h-10 text-sm font-semibold sm:h-6 md:mt-4 md:hidden lg:mt-1 lg:h-8'>
               {productNameSlice}
             </h3>
-            <div className='twoline'>
+            {/* <div className='twoline'> */}
               <article className='text-normal mt-3 leading-4 text-[#404040] sm:mt-1 md:text-sm md:leading-4 lg:mt-6 lg:leading-4 xl:mt-2 2xl:mt-1 2xl:leading-5'>
                 {shortDescription.slice(0, 65)}...
               </article>
-            </div>
+            {/* </div> */}
 
             {tooltipStatus == 3 && (
               <TooltipStatus view='detailed' productName={productName} />

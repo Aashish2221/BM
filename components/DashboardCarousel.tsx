@@ -3,13 +3,13 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
 import { Suspense, useEffect, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
-import { link } from 'fs';
+import { Head } from 'next/document';
+
 
 export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [productName, setProductName] = useState('');
@@ -39,13 +39,11 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   };
   return (
     <>
-    <head>
+    <Head>
       {images.map(image=>(
-        <>
-        <link rel="preload" href={image.mobileImageurl} />
-        </>
+        <Link rel="preload" href={image.mobileImageurl} />
       ))}
-    </head>
+    </Head>
       <Suspense
         fallback={
           <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>
@@ -67,7 +65,6 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
-                    priority={true}
                     loading='eager'
                   />
                   <Image
@@ -75,7 +72,6 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
-                    priority={true}
                     loading='eager'
                   />
                 </Link>
