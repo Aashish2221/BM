@@ -16,7 +16,6 @@ import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
-import { link } from 'fs';
 
 export default function Blogs({
   title,
@@ -81,8 +80,8 @@ export default function Blogs({
 
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
                       height={400} 
-                      width={400}
-                      priority
+                      width={400} 
+                      loading='eager'
                     />
                   </CardHeader>
 
@@ -152,11 +151,9 @@ export const getServerSideProps: GetServerSideProps<{
   const blogs = await getBlogData();
   const blog = data.site.blog;
   const title = blog.page;
-  const description = blog.description;
   return {
     props: {
       title,
-      description,
       blogs
     }
   };
