@@ -1,4 +1,3 @@
-import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
 import {
   Card,
@@ -8,15 +7,14 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
-import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getBlogData } from '@/services/spot-prices';
-import { Blog } from '@/interfaces/typeinterfaces';
 import data from '@/data';
-
+import { getBlogData } from '@/services/spot-prices';
+const ShareModal = React.lazy(()=>import('@/components/ModalForm/ShareModal/shareModal'))
+const Spinner = React.lazy(()=>import('@/components/Spinner'))
 export default function Blogs({
   title,
   blogs
@@ -41,7 +39,7 @@ export default function Blogs({
         <meta property='og:url' content={data.WEBSITEUrl + '/blogs'} key={data.WEBSITEUrl + '/blogs'} />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
-          blogs.map((blogs:Blog)=>(
+          blogs.map((blogs:any)=>(
             <><link rel="preload" as='image' href={blogs.image} /></>
           ))
         }
@@ -55,7 +53,7 @@ export default function Blogs({
           </h1>
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
-            {blogs.map((blogs: Blog) => (
+            {blogs.map((blogs: any) => (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
