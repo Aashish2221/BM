@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -16,9 +16,11 @@ import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
+import { link } from 'fs';
 
 export default function Blogs({
-  title ,blogs
+  title,
+  blogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>();
@@ -52,12 +54,12 @@ export default function Blogs({
         <Spinner />
       ) : (
         <div className='text-dark-black'>
-          <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
+          <h1 className='container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
-            {blogs.map((blogs:Blog ) => (
+            {blogs.map((blogs: Blog) => (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -73,16 +75,17 @@ export default function Blogs({
                     floated={true}
                     className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
                   >
-                    {' '}
                     <Image
                       src={blogs.image}
                       alt={blogs.title}
-                      className='h-40 w-full rounded-[17px] px-1 sm:h-40 md:h-48 lg:h-48 xl:h-52'
-                      height={400}
+
+                      className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
+                      height={400} 
                       width={400}
                       priority
                     />
                   </CardHeader>
+
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
                     <h3 className='text-[1.125rem] font-semibold leading-5 h-10'>
                       {blogs.title}
@@ -148,11 +151,12 @@ export const getServerSideProps: GetServerSideProps<{
   );
   const blogs = await getBlogData();
   const blog = data.site.blog;
-  const title = blog.page
-  const description = blog.description
+  const title = blog.page;
+  const description = blog.description;
   return {
     props: {
-      title ,description,
+      title,
+      description,
       blogs
     }
   };
