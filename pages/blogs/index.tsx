@@ -43,11 +43,11 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {blogs.map((blogs: Blog) => (
-          <>  
-            <link rel='preload' as='image' href={blogs.image}/>
-          </>
-        ))}
+        {
+          blogs.map((blogs:Blog)=>(
+            <><link rel="preload" as='image' href={blogs.image} /></>
+          ))
+        }
       </Head>
       {!hydrated ? (
         <Spinner />
@@ -61,8 +61,8 @@ export default function Blogs({
             {blogs.map((blogs: Blog) => (
               <Card
                 key={blogs.id}
-                className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
-                   lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 xl:col-span-4 2xl:col-span-3 2xl:h-[22rem]'
+                className='col-span-12 mx-auto mt-6 mb-10 w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
+                   lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96'
               >
                 <Link
                   href={`/blogs/${blogs.code}`}
@@ -77,6 +77,7 @@ export default function Blogs({
                     <Image
                       src={blogs.image}
                       alt={blogs.title}
+
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
                       height={400} 
                       width={400} 
@@ -85,7 +86,7 @@ export default function Blogs({
                   </CardHeader>
 
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
-                    <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
+                    <h3 className='text-[1.125rem] font-semibold leading-5 h-10'>
                       {blogs.title}
                     </h3>
 
