@@ -54,7 +54,7 @@ export default function Home({
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
-      }, 3000);
+      }, 6000);
     }
   }, []);
   const homePageSchema = {
@@ -90,7 +90,6 @@ export default function Home({
           content={'https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp'}
         />
         {/*----------- Thumbnail code modified end */}
-
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:url' content={`${process.env.WEBSITE_URL}`} />
         <meta property='og:image'content={'https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp'}/>
@@ -99,20 +98,16 @@ export default function Home({
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-          key='product-jsonld'
-        ></script>
-         <script 
+          key='product-jsonld' />
+         {/* <script 
             type='application/ld+json'
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} />
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }} /> */}
           <script
           defer
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
-         key='product-jsonld'></script>
+         key='product-jsonld' />
         <link rel='preload' as='image' href={staticImage?.imagePath} />
-        <link rel="preload" href={dynamicImages[0].mobileImageurl} />
-        <link rel="preload" href={dynamicImages[1].mobileImageurl} />
-        <link rel="preload" href={dynamicImages[2].mobileImageurl} />
         <link
           rel='preload'
           as='image'
