@@ -22,12 +22,9 @@ export default function Blogs({
   blogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
+  const [share, setShare] = useState<any>(window.location.href);
   const [hydrated, setHydrated] = useState(true);
-  useEffect(() => {
-    setHydrated(true);
-    setShare(window.location.href);
-  }, []);
+  
   // function wordCount(text: string) {
   //   if (text === null) {
   //     return 0;
