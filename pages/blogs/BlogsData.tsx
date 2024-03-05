@@ -6,7 +6,10 @@ import Image from "next/image";
 const BlogsData = (blogs:any)=>{
     return(
         <>
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
         <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blog: any) => (
               <Card
