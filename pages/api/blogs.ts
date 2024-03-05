@@ -2,7 +2,7 @@ import { getBlogData } from "@/services/spot-prices";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-    const data = await getBlogData();
+    const data = await getBlogData(8, 1);
     return res.send(data);
 }
 
