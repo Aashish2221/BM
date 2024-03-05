@@ -78,12 +78,15 @@ export const getDealers = async () => {
 
 // Blog
 
+<<<<<<< Updated upstream
 export const getBlogData = async (pageSize: number, pageNumber: number) => {
   const res = await fetcher.get<ApiResponse<Blog[]>>(
     `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs?size=${pageSize}&pagenumber=${pageNumber}`
   );
   return res.data.data;
 };
+=======
+>>>>>>> Stashed changes
 
 export const getBlogDetails = async (code: string) => {
   const url = new URL(
