@@ -61,7 +61,6 @@ export const getTopProducts = async (
   return res.data.data;
 };
 
-
 export const getDealerSponsors = async () => {
   const res = await fetcher.get<ApiResponse<DealerSponsor[]>>(
     `${process.env.BASE_URL}/api/BestBullionDeals/GetDealerSponsorImages`
@@ -76,17 +75,20 @@ export const getDealers = async () => {
   return res.data.data;
 };
 
-// Blog
 
-<<<<<<< Updated upstream
 export const getBlogData = async (pageSize: number, pageNumber: number) => {
   const res = await fetcher.get<ApiResponse<Blog[]>>(
     `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs?size=${pageSize}&pagenumber=${pageNumber}`
   );
   return res.data.data;
 };
-=======
->>>>>>> Stashed changes
+
+export const getBlogsData = async (pageSize: number, pageNumber: number) => {
+  const res = await fetcher.get<ApiResponse<Blog[]>>(
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs?size=${pageSize}&pagenumber=${pageNumber}`
+  );
+  return res.data.data;
+};
 
 export const getBlogDetails = async (code: string) => {
   const url = new URL(

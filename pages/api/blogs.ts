@@ -2,9 +2,6 @@ import { getBlogData } from "@/services/spot-prices";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-<<<<<<< Updated upstream
-    const data = await getBlogData();
-=======
     const { pageSize, pageNumber } = req.query; 
     // Check if parameters are provided
     if (!pageSize || !pageNumber) {
@@ -12,8 +9,6 @@ async function getHandler(req: NextApiRequest, res: NextApiResponse) {
     }
     // Call getBlogData with parameters
     const data = await getBlogData(Number(pageSize), Number(pageNumber));
-    
->>>>>>> Stashed changes
     return res.send(data);
 }
 

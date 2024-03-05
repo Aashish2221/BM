@@ -5,7 +5,7 @@ import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getBlogData } from '@/services/spot-prices';
+import { getBlogsData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogsData from './BlogsData';
@@ -26,7 +26,7 @@ export default function Blogs({
 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
-    const newBlogs = await getBlogData(pageSize, nextPage);
+    const newBlogs = await getBlogsData(pageSize, nextPage);
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
@@ -67,14 +67,14 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  initialBlogs: Awaited<ReturnType<typeof getBlogData>>;
+  initialBlogs: Awaited<ReturnType<typeof getBlogsData>>;
 }> = async ({ res }) => {
   res.setHeader(
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
   );
   const pageNumber=1;
-  const initialBlogs = await getBlogData(pageSize, pageNumber); // Fetch the first page with 8 items per page
+  const initialBlogs = await getBlogsData(pageSize, pageNumber); // Fetch the first page with 8 items per page
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
