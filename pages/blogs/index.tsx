@@ -97,9 +97,9 @@ export default function Blogs({
                       className='h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500'
                       dangerouslySetInnerHTML={{
                         __html:
-                         (blog.shortDescription.length <= 29)
-                            ? blog.shortDescription
-                            : blog.shortDescription.slice(0, 100) + '...'
+                         (blog.description.length <= 29)
+                            ? blog.description
+                            : blog.description.slice(0, 100) + '...'
                       }}
                     ></p>
                     <h4 className='pt-24  text-xs font-normal italic text-[#5c5b5b] md:pt-20 lg:pt-24 2xl:pt-[4.5rem]'>
