@@ -1,12 +1,12 @@
 import { search } from '@/services/dashboard';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import SearchResults from './SearchResults';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
+import SearchSpinner from './Loaders/SearchSpinner';
 
-const SearchSpinner = React.lazy(()=>import('./Loaders/SearchSpinner'))
 const  pageSize=12;
 const  pageNumber= 1;
 export default function Search() {
@@ -124,7 +124,8 @@ export default function Search() {
     }
     // Cleanup the timer when the component unmounts
     return () => clearTimeout(timer);
-  }, [keyword]); 
+  }, [keyword]);
+  
   return (
     <>
       <div className='relative w-full'>

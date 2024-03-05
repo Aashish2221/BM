@@ -75,12 +75,13 @@ export default function ProductPage({
   const wordCount = (str: string) => {
     return str.split(' ').length;
   };
+  const priceTier1 = data.competitorProductPrices && data.competitorProductPrices[0] && data.competitorProductPrices[0].priceTier1;
 
   // get Current Date logic for Schema for 'priceValidUntil'
   const dateObject = new Date();
   let date = dateObject.toISOString();
   // -----------------------
-
+console.log(productData.data.competitorProductPrices)
   return (
     <>
       <Head>
@@ -134,7 +135,7 @@ export default function ProductPage({
                   data.shortName
                 }`,
                 priceCurrency: 'USD',
-                price: data.competitorProductPrices[0].priceTier1,
+                price:priceTier1 || null,
                 priceValidUntil: date
               },
               review: []

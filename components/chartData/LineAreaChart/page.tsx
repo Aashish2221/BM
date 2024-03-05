@@ -55,71 +55,37 @@ const LineAreaChart = ({
   const [chartdata, setChartData] = useState(initialchartData);
   const [Number, setNumber] = useState(3);
   const [TimeFrame, setTimeFrame] = useState('month');
-  const [size, setSize] = useState<number | undefined>(20); 
   const [initialdata, setInitialData] = useState(true);
-  // const [from, setFrom] = useState(initfrom);
-  // const [to, setTo] = useState(initto);
-  // const [high, setHigh] = useState(initHigh);
-  // const [low, setLow] = useState(initlow);
+
   const select = useSelector(selectUser)
-//   const getDateDifferenceFromWeek = (weeks: number) => {
-//     const currentDate = new Date();
-//     const startDate = new Date(currentDate.getTime() - weeks * 7 * 24*  60*  60 * 1000);
-//     return { startDate };
-//   }
-//   const getDateDifferenceFromMonth = (months: number) => {
-//     const currentDate = new Date();
-//     const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - months, currentDate.getDate());
-//     return { startDate, currentDate};
-//   }
-//   const getDateDifferenceFromYear = (years: number) => {
-//     const currentDate = new Date();
-//     const startDate = new Date(currentDate.getFullYear() - years, currentDate.getMonth(), currentDate.getDate());
-//     return { startDate };
-// }
+
   useEffect(() => {
     initFetch(Number, TimeFrame);
-    // metal === 'Silver'
-    //   ? setHigh(Math.max(...chartdata.map((x) => x.silver)))
-    //   : setHigh(Math.max(...chartdata.map((x) => x.gold)));
-    // metal === 'Silver'
-    //   ? setLow(Math.min(...chartdata.map((x) => x.silver)))
-    //   : setLow(Math.min(...chartdata.map((x) => x.gold)));
-
-    // if (TimeFrame === 'week') {
-    //   let dateDifference = getDateDifferenceFromWeek(Number);
-    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
-    //   let date = dateDifference.startDate.toLocaleDateString('en-US', options);
-    //   setFrom(date)
-    // }
-    // else if (TimeFrame === 'month') {
-    //   let dateDifferenceMonth = getDateDifferenceFromMonth(Number);
-    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
-    //   const date = dateDifferenceMonth.startDate.toLocaleDateString('en-US', options);
-    //   setFrom(date);
-    //   const curreDate = dateDifferenceMonth.currentDate.toLocaleDateString('en-US', options);
-    //   setTo(curreDate);
-    // }
-    // else if(TimeFrame === 'year'){
-    //   let dateDifferenceYear = getDateDifferenceFromYear(Number);
-    //   const options: any = { month: '2-digit', day: '2-digit', year: 'numeric' };
-    //   const date = dateDifferenceYear.startDate.toLocaleDateString('en-US', options);
-    //   setFrom(date);
-    // }
-    // else {
-    //    setFrom(chartdata.map((x) => x.dateNTime.replaceAll(' 00:00:00', ''))[0]);
-    // }
   }, [metal, Number, TimeFrame]);
 
   const initFetch = async (Number: number, TimeFrame: string) => {
     setNumber(Number);
     setTimeFrame(TimeFrame);
     const response = await getChartData(Number, TimeFrame, false);
-    const allreponse = [...response.data, currentSpotPrice];
-    // const allreponse = [...response.data];
-    setChartData(allreponse);
+    const allResponse = [...response.data];
+
+    let filteredData = allResponse;
+    if (Number === 1 && TimeFrame === 'month') {
+      filteredData = allResponse.filter((_, index) => index % 3 === 0);
+    } else if (Number === 3 && TimeFrame === 'month') {
+      filteredData = allResponse.filter((_, index) => index % 5 === 0);
+    } else if (Number === 6 && TimeFrame === 'month') {
+      filteredData = allResponse.filter((_, index) => index % 11 === 1);
+    }else if (Number === 12 && TimeFrame === 'month') {
+      filteredData = allResponse.filter((_, index) => index % 11 === 1);
+    }else if (Number === 60 && TimeFrame === 'month') {
+      filteredData = allResponse.filter((_, index) => index % 11 === 1);
+    } else if (Number === 5 && TimeFrame === '1-Year') {
+      filteredData = allResponse.filter((_, index) => index % 6  === 1);
+    }
+
+    setChartData(filteredData);
   };
-  
   console.log(currentSpotPrice)
   console.log(chartdata)
   return (
@@ -131,7 +97,7 @@ const LineAreaChart = ({
         <ul className='flex h-fit w-full flex-row items-start justify-start gap-1 px-1 py-1 text-sm text-gray-700 md:items-end md:justify-end'>
           <li
             onClick={() => {
-              initFetch(1, 'week'), setInitialData(false),setSize(7);
+              initFetch(1, 'week'), setInitialData(false);
             }}
           >
             <button className={`relative block rounded-[30%] ${(TimeFrame==='week'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
@@ -140,7 +106,7 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(2, 'week'), setInitialData(false),setSize(14);
+              initFetch(2, 'week'), setInitialData(false);
             }}
           >
             <button className={`relative block rounded-[30%] ${(TimeFrame==='week'&&Number===2)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
@@ -149,7 +115,7 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(1, 'month'), setInitialData(false),setSize(15);
+              initFetch(1, 'month'), setInitialData(false);
             }}
           >
             <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
@@ -158,7 +124,7 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(3, 'month'), setInitialData(false),setSize(18);
+              initFetch(3, 'month'), setInitialData(false);
             }}
           >
           <button
@@ -169,7 +135,7 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(6, 'month'), setInitialData(false),setSize(16);
+              initFetch(6, 'month'), setInitialData(false);
             }}
           >
             <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===6)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
@@ -178,19 +144,19 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(1, '1-Year'), setInitialData(false);
+              initFetch(12, 'month'), setInitialData(false);
             }}
           >
-            <button className={`relative block rounded-[30%] ${(TimeFrame==='1-Year'&&Number===1)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===12)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               1Y
             </button>
           </li>
           <li
             onClick={() => {
-              initFetch(5, 'year'), setInitialData(false);
+              initFetch(60, 'month'), setInitialData(false);
             }}
           >
-            <button className={`relative block rounded-[30%] ${(TimeFrame==='year'&&Number===5)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===60)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               5Y
             </button>
           </li>
@@ -279,16 +245,25 @@ const LineAreaChart = ({
           <Line
             className='h-[200px] items-start bg-gray-100 sm:w-[700px] md:h-[300px] 2xl:w-[1050px]'
             data={{
-              labels:
-                TimeFrame == 'week' ||
-                  TimeFrame == 'month' ||
-                  (TimeFrame === 'year' && Number === 1)
-                  ? chartdata
-                    .filter((x) => x.dateNTime)
-                    .map((x) => dayjs(x.dateNTime.slice(0,10)).format('D MMM'))
-                  : chartdata
-                    .filter((x) => x.dateNTime)
-                    .map((x) => x.dateNTime.slice(0,10)),
+              labels: [
+                ...chartdata
+                  .filter((x) => x.dateNTime)
+                  .map((x) => {
+                    if (TimeFrame === 'week') {
+                      return dayjs(x.dateNTime.slice(0, 10)).format('D MMM');
+                    } else if (TimeFrame === 'month' && Number===12 || TimeFrame === 'month' && Number===60) {
+                      return dayjs(x.dateNTime.slice(0, 10)).format('MMM YY');
+                    }else if (TimeFrame === 'month') {
+                      return dayjs(x.dateNTime.slice(0, 10)).format('D MMM');
+                    } else if (TimeFrame === 'year' && Number === 1) {
+                      return dayjs(x.dateNTime.slice(0, 10)).format('MMM YY');
+                    } else {
+                      return x.dateNTime.slice(0, 10);
+                    }
+                  }), currentSpotPrice.dateNTime.slice(0, 10)
+              ],
+              
+              
               datasets: [
                 {
                   label: `${metal} Spot Prices`,
@@ -303,12 +278,12 @@ const LineAreaChart = ({
                   },
                   borderColor: 'rgb(255, 175, 71)',
                   borderWidth: 2,
-                  data:
-                    metal === 'Silver'
-                      ? chartdata.filter((x) => x.silver).map((x) => x.silver)
-                      : chartdata.filter((x) => x.gold).map((x) => x.gold)
+                  data: chartdata.map((dataPoint) => {
+                    return metal === 'Silver' ? dataPoint.silver : dataPoint.gold;
+                  }).concat([metal === 'Silver' ? currentSpotPrice.silver : currentSpotPrice.gold])
                 }
               ]
+              
             }}
             options={{
               maintainAspectRatio: false,
@@ -330,7 +305,7 @@ const LineAreaChart = ({
                   },
                   ticks: {
                     color: 'black',
-                    maxTicksLimit: size,
+                    maxTicksLimit: 14,
                     padding: 1,
                     font: {
                       size: 10

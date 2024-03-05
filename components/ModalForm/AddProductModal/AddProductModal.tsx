@@ -17,15 +17,15 @@ import queryString from 'query-string';
 import { addProduct } from '@/services/observations';
 import { AddProductModalProps } from '@/interfaces/typeinterfaces';
 import { search } from '@/services/dashboard';
-
+const pageNumber=1
+const pageSize=12
 export default function AddProductModal({
   closeModal,
   products
 }: AddProductModalProps) {
   const user = useSelector(selectUser);
-  {
-    /* ******************** REFS & CLOSE HANDLERS ******************** */
-  }
+
+  // Refs & Close Handlers
   const outsideref = useRef<HTMLDivElement>(null);
   const handleClose = () => {
     closeModal();
@@ -33,48 +33,38 @@ export default function AddProductModal({
   };
   useOnClickOutside(outsideref, handleClose);
   useEscapeKey(handleClose);
-  {
-    /* ******************** STATE MANAGEMENT VARIABLES ******************** */
-  }
-  const [observationData, setObservationData] = useState<
-    Product[] | SearchResult[] | any
-  >();
+
+  // State Management Variables
+  const [observationData, setObservationData] = useState<Product[] | SearchResult[] | any>();
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   const [loading, setLoading] = useState(false);
   const [addStatus, setAddStatus] = useState(false);
-  {
-    /* ******************** USE EFFECT HOOK CALLS ******************** */
-  }
+
+  // Debounce implementation
+  const [typingTimeout, setTypingTimeout] = useState<NodeJS.Timeout | null>(null);
+  const searchDebouncedRef = useRef<Function | null>(null);
+
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    setTitle('Recommended list');
-    setObservationData(products);
-    return () => {
-      document.body.removeAttribute('style');
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  {
-    /* ******************** DEBOUNCE SEARCH HANDLER ******************** */
-  }
-  let  pageSize: 100;
- let  pageNumber: 1;
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    let messageTimer: NodeJS.Timeout;
-    const handleSearchDebounced = async (query: any) => {
+    searchDebouncedRef.current = async () => {
       setLoading(true);
-      clearTimeout(timer);
-      clearTimeout(messageTimer);
-      timer = setTimeout(async () => {
-        const data = await search(query ,pageSize ,pageNumber).then((data) => {
-           if (data.success === true) {
-                setLoading(false);
-              }
-              return data;
-        });
+      const query = {
+        "searchFrom": "advanced",
+        "searchKW": keyword.replaceAll("%20", " ").replace("%28", "(").replace("%29", ")"),
+        "metal": "",
+        "productType": "",
+        "itemWeight": "",
+        "series": "",
+        "size": pageSize,
+        "pageNumber": pageNumber,
+      };
+      try {
+        const data = await search(query,pageSize,pageNumber
+        );
+        if (data.success === true) {
+          setLoading(false);
+        }
         if (data.data.countOfProducts.noOfItems > 0 && keyword.length >= 3) {
           setObservationData(data.data.searchProducts);
           setMessage('');
@@ -82,35 +72,42 @@ export default function AddProductModal({
         } else {
           setObservationData(products);
           setTitle('Recommended list');
-          if(keyword.length >= 4 )
-          {
+          if (keyword.length >= 4) {
             setMessage('No results found');
           } else {
             setMessage('');
           }
         }
-      }, 2500);
+      } catch (error) {
+        console.error('Error occurred while searching:', error);
+        setLoading(false);
+      }
     };
-    const query = {
-      "searchFrom": "advanced",
-      "searchKW": keyword.replaceAll("%20"," ").replace("%28","(").replace("%29",")"),
-      "metal": "",
-      "productType": "",
-      "itemWeight": "",
-      "series": "",
-      "size":pageSize,
-      "pageNumber": pageNumber,
-    }
+  }, [keyword, products]);
 
-    if (keyword.length > 2) {
-      handleSearchDebounced(query);
+  const handleSearchDebounced = () => {
+    if (typingTimeout) {
+      clearTimeout(typingTimeout);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keyword]);
-  {
-    /* ******************** SEARCH HANDLER ******************** */
-  }
-  const searchHandler = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setTypingTimeout(setTimeout(() => {
+      if (searchDebouncedRef.current) {
+        searchDebouncedRef.current();
+      }
+    }, 1000)); // Adjust debounce delay as needed
+  };
+
+  // Use Effect Hook Calls
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    setTitle('Recommended list');
+    setObservationData(products);
+    return () => {
+      document.body.removeAttribute('style');
+    };
+  }, []);
+
+  // Search Handler
+  const searchHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const value = (e.target as HTMLInputElement).value;
     setKeyword(value);
@@ -119,6 +116,8 @@ export default function AddProductModal({
       setTitle('Recommended list');
       setMessage('');
       setLoading(false);
+    } else {
+      handleSearchDebounced();
     }
   };
   {

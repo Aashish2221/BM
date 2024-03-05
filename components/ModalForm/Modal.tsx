@@ -18,7 +18,7 @@ export default function Modal({ closeModal, productId }: ModalProps) {
   useOnClickOutside(outsideRef, closeModal);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'auto';
 
     return () => {
       document.body.removeAttribute('style');
@@ -43,7 +43,7 @@ export default function Modal({ closeModal, productId }: ModalProps) {
             : formType === 'reset'
             ? 'h-[20rem] md:h-80'
             : 'h-[26rem] md:h-[27rem] lg:h-[29rem]'
-        } mx-2 w-full overflow-hidden rounded-3xl`}
+        } mx-2 w-full overflow-auto rounded-3xl`}
       >
         <div
           className='absolute top-4 right-2 cursor-pointer bg-slate-50 p-1 hover:bg-slate-100 hover:text-red-600'
