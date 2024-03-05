@@ -313,7 +313,7 @@ const nextConfig = {
     unoptimized: true
   },
   env: {
-    BASE_URL: 'https://bbdapi.bestbulliondeals.com',
+    BASE_URL: 'http://106.201.231.27:8082',
     WEBSITE_URL: 'https://www.bullionmentor.com',
     NEXTAUTH_URL: 'https://www.bullionmentor.com'
   }
