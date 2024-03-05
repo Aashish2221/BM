@@ -78,9 +78,9 @@ export const getDealers = async () => {
 
 // Blog
 
-export const getBlogData = async () => {
+export const getBlogData = async (pageSize: number, pageNumber: number) => {
   const res = await fetcher.get<ApiResponse<Blog[]>>(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs`
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs?size=${pageSize}&pagenumber=${pageNumber}`
   );
   return res.data.data;
 };
