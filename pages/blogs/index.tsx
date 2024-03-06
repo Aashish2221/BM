@@ -5,7 +5,7 @@ import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getBlogsData } from '@/services/spot-prices';
+import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
@@ -30,7 +30,7 @@ export default function Blogs({
   
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
-    const newBlogs = await getBlogsData(pageSize, nextPage);
+    const newBlogs = await getBlogData(pageSize, nextPage);
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
@@ -146,7 +146,7 @@ export default function Blogs({
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
     const pageNumber = 1;
-    const initialBlogs = await getBlogsData(pageSize, pageNumber);
+    const initialBlogs = await getBlogData(pageSize, pageNumber);
     const blog = data.site.blog;
     const { page: title, description } = blog;
     return {
