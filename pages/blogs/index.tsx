@@ -27,6 +27,7 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  
   useEffect(() => {
     setShare(window.location.href);
   }, []);
