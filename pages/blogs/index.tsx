@@ -56,7 +56,7 @@ export default function Blogs({
         ))}
       </Head>
       <div className='text-dark-black'>
-        <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
+        <h1 className='container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5'>
           Blog
         </h1>
         <InfiniteScroll
@@ -65,12 +65,12 @@ export default function Blogs({
           hasMore={hasMore}
           loader={<Spinner />}
         >
-          <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
+          <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 2xl:mt-28'>
             {blogs.map((blog: any) => (
               <Card
                 key={blog.id}
-                className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
-                         lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 xl:col-span-4 2xl:col-span-3 2xl:h-[22rem]'
+                className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:h-[23rem]
+                         lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'
               >
                 <Link
                   href={`/blogs/${blog.code}`}
@@ -91,8 +91,8 @@ export default function Blogs({
                       priority
                     />
                   </CardHeader>
-                  <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
-                    <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
+                  <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
+                    <h3 className='text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blog.title}
                     </h3>
                     <p
@@ -104,7 +104,7 @@ export default function Blogs({
                             : blog.description.slice(0, 100) + '...'
                       }}
                     ></p>
-                    <h4 className='pt-24  text-xs font-normal italic text-[#5c5b5b] md:pt-20 lg:pt-24 2xl:pt-[4.5rem]'>
+                    <h4 className='pt-24 md:pt-20 lg:pt-24 2xl:pt-[4.5rem] text-xs font-normal italic text-[#5c5b5b]'>
                       By BullionMentor on{' '}
                       {new Intl.DateTimeFormat('en-US', {
                         month: 'long',
@@ -113,11 +113,11 @@ export default function Blogs({
                       }).format(new Date(blog.publishdate))}
                     </h4>
                   </CardBody>
-                  <CardFooter className='mt-0 flex sm:mt-1 xl:mt-1 2xl:mt-2'>
+                  <CardFooter className=' flex sm:mt-1 2xl:mt-2'>
                     <Link
                       href={`/blogs/${blog.code}`}
                       as={`/blogs/${blog.code}`}
-                      className='flex px-4 py-2 font-semibold text-primary shadow-none hover:underline hover:underline-offset-2 md:px-6 md:py-2 md:text-sm lg:px-4 lg:py-1 lg:text-sm'
+                      className='flex px-4 py-2 font-semibold text-primary hover:underline md:px-6 md:text-sm lg:px-4 lg:py-1'
                       passHref
                       prefetch={false}
                     >
@@ -151,7 +151,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     const pageNumber = 1;
     const initialBlogs = await getBlogsData(pageSize, pageNumber);
     const blog = data.site.blog;
-    const { page: title, description } = blog;
+    const title = blog.page;
+    const description = blog.description;
     return {
       props: {
         title,
