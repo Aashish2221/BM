@@ -41,7 +41,7 @@ export default function Blogs({
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{title}</title> 
         <meta
           property='og:url'
           content={data.WEBSITEUrl + '/blogs'}
