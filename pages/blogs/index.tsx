@@ -5,8 +5,12 @@ import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+<<<<<<< Updated upstream
 import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
+=======
+import { getBlogsData } from '@/services/spot-prices';
+>>>>>>> Stashed changes
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   Card,
@@ -24,7 +28,7 @@ export default function Blogs({
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
+  const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
@@ -34,7 +38,7 @@ export default function Blogs({
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
-      setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);
+      setBlogs((prevBlogs:any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
     }
   };
@@ -48,7 +52,7 @@ export default function Blogs({
           key={data.WEBSITEUrl + '/blogs'}
         />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
-        {blogs.map((blog) => (
+        {blogs.map((blog:any) => (
           <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
