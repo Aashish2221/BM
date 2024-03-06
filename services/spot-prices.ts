@@ -78,7 +78,7 @@ export const getDealers = async () => {
 
 export const getBlogData = async (pageSize: number, pageNumber: number) => {
   const res = await fetcher.get<ApiResponse<Blog[]>>(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogs?size=${pageSize}&pagenumber=${pageNumber}`
+    `https://bbdapi.bestbulliondeals.com/api/BestBullionDeals/GetBlogsTemp?size=${pageSize}&pagenumber=${pageNumber}`
   );
   return res.data.data;
 };
