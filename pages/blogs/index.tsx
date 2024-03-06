@@ -143,23 +143,18 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  initialBlogs: Awaited<ReturnType<typeof getBlogsData>>;
-}> = async ({ res }) => {
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
-  const pageNumber = 1;
-  const initialBlogs = await getBlogsData(pageSize, pageNumber);
-  const blog = data.site.blog;
-  const title = blog.page;
-  const description = blog.description;
-  return {
-    props: {
-      title,
-      description,
-      initialBlogs
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+    res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
+    const pageNumber = 1;
+    const initialBlogs = await getBlogsData(pageSize, pageNumber);
+    const blog = data.site.blog;
+    const { page: title, description } = blog;
+    return {
+      props: {
+        title,
+        description,
+        initialBlogs
+      },
     }
-  };
-};
+  }
+  
