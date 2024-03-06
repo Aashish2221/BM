@@ -1,6 +1,6 @@
 import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
