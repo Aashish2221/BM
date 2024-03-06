@@ -23,14 +23,11 @@ export default function Blogs({
   initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
+  const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
-  useEffect(() => {
-    setShare(window.location.href);
-  }, []);
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
@@ -122,10 +119,7 @@ export default function Blogs({
                       prefetch={false}
                     >
                       Read More
-                      <BsArrowRight
-                        className='ml-1 text-primary'
-                        size={20}
-                      ></BsArrowRight>
+                      <BsArrowRight className='ml-1 text-primary' size={20}></BsArrowRight>
                     </Link>
                   </CardFooter>
                 </Link>
@@ -154,11 +148,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     const title = blog.page;
     const description = blog.description;
     return {
-      props: {
-        title,
-        description,
-        initialBlogs
-      },
+      props: {title, description, initialBlogs}
     }
   }
   
