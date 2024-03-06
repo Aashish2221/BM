@@ -1,6 +1,6 @@
 import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
@@ -85,7 +85,7 @@ export default function Blogs({
                       src={blog.image}
                       alt={blog.title}
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      priority
+                      loading='eager'
                     />
                   </CardHeader>
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
