@@ -1,6 +1,6 @@
 import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
@@ -23,11 +23,13 @@ export default function Blogs({
   initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>(window.location.href);
+  const [share, setShare] = useState<any>();
   const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
+  useEffect(() => {
+    setShare(window.location.href);
+  }, []);
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
