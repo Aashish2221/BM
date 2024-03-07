@@ -5,12 +5,8 @@ import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-<<<<<<< Updated upstream
 import { getBlogData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
-=======
-import { getBlogsData } from '@/services/spot-prices';
->>>>>>> Stashed changes
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   Card,
@@ -52,15 +48,13 @@ export default function Blogs({
           key={data.WEBSITEUrl + '/blogs'}
         />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
-        {blogs.map((blog:any) => (
-          <link key={blog.id} rel='preload' as='image' href={blog.image} />
-        ))}
       </Head>
       <div className='text-dark-black'>
         <h1 className='container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5'>
           Blog
         </h1>
         <InfiniteScroll
+        className='mt-[-220pz]'
           dataLength={blogs.length}
           next={loadMoreBlogs}
           hasMore={hasMore}

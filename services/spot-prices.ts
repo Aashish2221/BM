@@ -78,18 +78,11 @@ export const getDealers = async () => {
 
 export const getBlogData = async (pageSize: number, pageNumber: number) => {
   const res = await fetcher.get<ApiResponse<Blog[]>>(
-<<<<<<< Updated upstream
-    `https://bbdapi.bestbulliondeals.com/api/BestBullionDeals/GetBlogsTemp?size=${pageSize}&pagenumber=${pageNumber}`
-  );
-  return res.data.data;
-};
-=======
     `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogsTemp?size=${pageSize}&pagenumber=${pageNumber}`
   );
   return res.data.data;
 };
 
->>>>>>> Stashed changes
 
 export const getBlogDetails = async (code: string) => {
   const url = new URL(
