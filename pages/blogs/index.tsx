@@ -24,7 +24,7 @@ export default function Blogs({
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<Blog[]>(initialBlogs);
+  const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
@@ -34,7 +34,7 @@ export default function Blogs({
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
-      setBlogs((prevBlogs) => [...prevBlogs, ...newBlogs]);
+      setBlogs((prevBlogs:any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
     }
   };
@@ -48,7 +48,6 @@ export default function Blogs({
           key={data.WEBSITEUrl + '/blogs'}
         />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
-        
       </Head>
       <div className='text-dark-black'>
         <h1 className='container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5'>
