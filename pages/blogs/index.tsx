@@ -3,7 +3,7 @@ import useToggle from '@/hooks/useToggle';
 import { useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
-import Spinner from '@/components/Spinner';
+import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import {
@@ -15,7 +15,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 const pageSize = 8;
 export default function Blogs({
   title,
@@ -39,7 +39,7 @@ export default function Blogs({
   };
   return (
     <>
-      <Head children={undefined}>
+      <Head>
         <title>{title}</title> 
         <meta
           property='og:url'
@@ -57,7 +57,7 @@ export default function Blogs({
           dataLength={blogs.length}
           next={loadMoreBlogs}
           hasMore={hasMore}
-          loader={<Spinner />}
+          loader={<SpinnerBlog />}
         >
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 2xl:mt-28'>
             {blogs.map((blog: any) => (
