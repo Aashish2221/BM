@@ -1,9 +1,7 @@
-import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
 import { useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
-import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import {
@@ -16,6 +14,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import dynamic from 'next/dynamic';
+const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'));
+const SpinnerBlog = dynamic(()=>import( '@/components/Spinner'));
 const pageSize = 8;
 export default function Blogs({
   title,
@@ -43,10 +44,10 @@ export default function Blogs({
         <title>{title}</title> 
         <meta
           property='og:url'
-          content={data.WEBSITEUrl + '/blogs'}
-          key={data.WEBSITEUrl + '/blogs'}
+          content={'https://www.bullionmentor.com/blogs'}
+          key={'https://www.bullionmentor.com/blogs'}
         />
-        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        <link rel='canonical' href={'https://www.bullionmentor.com/blogs'} />
         {
           blogs.map((blog:any)=>(
            <link key={blog.id} rel="preload" as="image" href={blog.image} />
