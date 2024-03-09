@@ -47,6 +47,11 @@ export default function Blogs({
           key={data.WEBSITEUrl + '/blogs'}
         />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        {
+          blogs.map((blog:any)=>(
+           <link rel="preload" as="image" href={blog.image} />
+          ))
+        }
       </Head>
       <div className='text-dark-black'>
         <h1 className='container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5'>
@@ -78,11 +83,12 @@ export default function Blogs({
                   >
                     {' '}
                     <Image
-                      fill
                       src={blog.image}
                       alt={blog.title}
+                      width={400}
+                      height={400}
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      loading='eager'
+                      priority
                     />
                   </CardHeader>
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
