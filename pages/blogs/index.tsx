@@ -6,8 +6,6 @@ import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
-import { Blog } from '@/interfaces/typeinterfaces';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   Card,
   CardBody,
@@ -17,6 +15,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
+import InfiniteScroll from 'react-infinite-scroller';
 const pageSize = 8;
 export default function Blogs({
   title,
@@ -40,7 +39,7 @@ export default function Blogs({
   };
   return (
     <>
-      <Head>
+      <Head children={undefined}>
         <title>{title}</title> 
         <meta
           property='og:url'
