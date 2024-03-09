@@ -60,9 +60,7 @@ const Blog = ({
   } else {
     return (
       <>
-
         <Head>
-
           <title>{title}</title>
           <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
           <link rel='canonical' href={canonicalUrl} />

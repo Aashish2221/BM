@@ -86,9 +86,10 @@ export default function Blogs({
                     fill
                       src={blog.image}
                       alt={blog.title}
+
                       className='h-44 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
                       loading='lazy'
-                    />
+     />
                   </CardHeader>
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
                     <h3 className='text-[1.125rem] font-semibold leading-5 md:h-9'>
