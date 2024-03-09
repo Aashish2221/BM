@@ -15,7 +15,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 const pageSize = 8;
 export default function Blogs({
   title,
@@ -39,7 +39,7 @@ export default function Blogs({
   };
   return (
     <>
-      <Head children={undefined}>
+      <Head >
         <title>{title}</title> 
         <meta
           property='og:url'
