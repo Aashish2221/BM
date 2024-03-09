@@ -88,7 +88,7 @@ export default function Blogs({
                       width={400}
                       height={400}
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      priority
+                      loading='eager'
                     />
                   </CardHeader>
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
@@ -101,7 +101,7 @@ export default function Blogs({
                         __html:
                           blog.description.length <= 29
                             ? blog.description
-                            : blog.description.slice(0, 100) + '...'
+                            : blog.description.slice(0, 200) + '...'
                       }}
                     ></p>
                     <h4 className='pt-24 md:pt-20 lg:pt-24 2xl:pt-[4.5rem] text-xs font-normal italic text-[#5c5b5b]'>
