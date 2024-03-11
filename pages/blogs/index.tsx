@@ -12,7 +12,6 @@ import {
   CardFooter,
   CardHeader
 } from '@material-tailwind/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -46,9 +45,10 @@ export default function Blogs({
           content={data.WEBSITEUrl + '/blogs'}
           key={data.WEBSITEUrl + '/blogs'}
         />
-        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
+
            <Link key={blog.id} rel="preload" as="image" href={blog.image} />
           ))
         }
@@ -78,7 +78,7 @@ export default function Blogs({
                 >
                   <CardHeader
                     floated={true}
-                    className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
+                    className='mx-2 rounded-[17px] -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
                   >
                     {' '}
                     <img
@@ -87,7 +87,7 @@ export default function Blogs({
                       loading='eager'
                      />
                   </CardHeader>
-                  <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
+                  <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3  lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
                     </h3>
