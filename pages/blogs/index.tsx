@@ -86,7 +86,7 @@ export default function Blogs({
                       src={blogs.image}
                       alt={blogs.title}
                       className='w-full rounded-[17px]'
-                      priority={true}
+                      priority
                       loading='eager'
                      />
                   </CardHeader>
