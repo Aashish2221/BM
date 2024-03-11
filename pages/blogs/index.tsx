@@ -12,7 +12,6 @@ import {
   CardFooter,
   CardHeader
 } from '@material-tailwind/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -49,7 +48,11 @@ export default function Blogs({
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
+<<<<<<< Updated upstream
            <link rel="preload" as="image" href={blog.image} />
+=======
+           <Link key={blog.id} rel="preload" as="image" href={blog.image} />
+>>>>>>> Stashed changes
           ))
         }
       </Head>
