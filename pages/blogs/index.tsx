@@ -46,7 +46,7 @@ export default function Blogs({
           content={data.WEBSITEUrl + '/blogs'}
           key={data.WEBSITEUrl + '/blogs'}
         />
-        <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
            <Link key={blog.id} rel="preload" as="image" href={blog.image} />
