@@ -84,7 +84,7 @@ export default function Blogs({
                     <img
                       src={blogs.image}
                       alt={blogs.title}
-                      loading='eager'
+                      loading='lazy'
                      />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3  lg:-mt-2 xl:mt-1'>
