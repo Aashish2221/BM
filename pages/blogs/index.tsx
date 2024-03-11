@@ -46,7 +46,6 @@ export default function Blogs({
           <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
-     
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -76,6 +75,7 @@ export default function Blogs({
                   >
                     {' '}
                     <Image
+                      fill
                       src={blogs.image}
                       alt={blogs.title}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52'
