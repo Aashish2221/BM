@@ -84,6 +84,7 @@ export default function Blogs({
                       loading='eager'
                     />
                   </CardHeader>
+
                   <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
@@ -129,7 +130,10 @@ export default function Blogs({
           </section>
         </InfiniteScroll>
         {shareModal && (
-          <ShareModal closeModal={toggleShareModal} shareUrl={share} p1={''} p2={''} />
+
+          <ShareModal closeModal={toggleShareModal} shareUrl={share} p1={''} p2={''}
+          />
+
         )}
       </div>
     </>
