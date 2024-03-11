@@ -63,15 +63,15 @@ export default function Blogs({
           loader={<SpinnerBlog />}
         >
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 2xl:mt-28'>
-            {blogs.map((blogs:any ) => (
+            {blogs.map((blog:any ) => (
               <Card
-                key={blogs.id}
+                key={blog.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
                    lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'
               >
                 <Link
-                  href={`/blogs/${blogs.code}`}
-                  as={`/blogs/${blogs.code}`}
+                  href={`/blogs/${blog.code}`}
+                  as={`/blogs/${blog.code}`}
                   passHref
                   prefetch={false}
                 >
@@ -81,22 +81,24 @@ export default function Blogs({
                   >
                     {' '}
                     <img
-                      src={blogs.image}
-                      alt={blogs.title}
-                      loading='lazy'
+
+                      src={blog.image}
+                      alt={blog.title}
+                      loading='eager'
+
                      />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3  lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
-                      {blogs.title}
+                      {blog.title}
                     </h3>
                     <p
                       className='h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500'
                       dangerouslySetInnerHTML={{
                         __html:
-                          blogs.shortDescription.length <= 29
-                            ? blogs.shortDescription
-                            : blogs.shortDescription.slice(0, 100) + '...'
+                          blog.shortDescription.length <= 29
+                            ? blog.shortDescription
+                            : blog.shortDescription.slice(0, 100) + '...'
                       }}
                     ></p>
                     <h4 className='pt-24  text-xs font-normal italic text-[#5c5b5b] md:pt-20 lg:pt-24 2xl:pt-[4.5rem]'>
@@ -105,13 +107,13 @@ export default function Blogs({
                         month: 'long',
                         day: 'numeric',
                         year: 'numeric'
-                      }).format(new Date(blogs.publishdate))}
+                      }).format(new Date(blog.publishdate))}
                     </h4>
                   </CardBody>
                   <CardFooter className='mt-0 flex sm:mt-1 xl:mt-1 2xl:mt-2'>
                     <Link
-                      href={`/blogs/${blogs.code}`}
-                      as={`/blogs/${blogs.code}`}
+                      href={`/blogs/${blog.code}`}
+                      as={`/blogs/${blog.code}`}
                       className='flex px-4 py-2 font-semibold text-primary shadow-none hover:underline hover:underline-offset-2 md:px-6 md:py-2 md:text-sm lg:px-4 lg:py-1 lg:text-sm'
                       passHref
                       prefetch={false}
