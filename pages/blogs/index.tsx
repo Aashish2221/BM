@@ -48,7 +48,6 @@ export default function Blogs({
         <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
-
            <Link key={blog.id} rel="preload" as="image" href={blog.image} />
           ))
         }
@@ -78,7 +77,7 @@ export default function Blogs({
                 >
                   <CardHeader
                     floated={true}
-                    className='mx-2 rounded-[17px] -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
+                    className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
                   >
                     {' '}
                     <img
@@ -142,15 +141,14 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-    res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
-    const pageNumber = 1;
-    const initialBlogs = await getBlogData(pageSize, pageNumber);
-    const blog = data.site.blog;
-    const title = blog.page;
-    const description = blog.description;
-    return {
-      props: {title, description, initialBlogs}
-    }
-  }
-  
+export const getServerSideProps: GetServerSideProps<{
+  blogs: Awaited<ReturnType<typeof getBlogData>>;
+}> = async ({ res }) => {
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
+  const blogs = await getBlogData(1, 8);
+  const blog = data.site.blog;
+  const title = blog.page
+  const description = blog.description
+  return { props: {title ,description, blogs}
+  };
+};
