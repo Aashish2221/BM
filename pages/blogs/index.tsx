@@ -85,7 +85,6 @@ export default function Blogs({
                       fill
                       src={blogs.image}
                       alt={blogs.title}
-                      // className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
                       priority={true}
                       loading='eager'
                      />
