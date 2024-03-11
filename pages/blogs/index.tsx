@@ -48,7 +48,8 @@ export default function Blogs({
         <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
-           <link rel="preload" as="image" href={blog.image} />
+
+           <Link key={blog.id} rel="preload" as="image" href={blog.image} />
           ))
         }
       </Head>
@@ -82,7 +83,7 @@ export default function Blogs({
                     {' '}
                     <img
                       src={blogs.image}
-                      alt={blogs.title} 
+                      alt={blogs.title}
                       loading='eager'
                      />
                   </CardHeader>
