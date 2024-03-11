@@ -79,13 +79,10 @@ export default function Blogs({
                     className='mx-1 -mt-16 shadow-none sm:mt-[-4rem] md:-mt-20  xl:mx-2 xl:-mt-20'
                   >
                     {' '}
-                    <Image
+                    <img
                       src={blogs.image}
                       alt={blogs.title}
-                      width='400'
-                      height='400'
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      priority={true}
                       loading='eager'
                     />
                   </CardHeader>
