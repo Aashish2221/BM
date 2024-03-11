@@ -48,7 +48,6 @@ export default function Blogs({
         <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
-
            <Link key={blog.id} rel="preload" as="image" href={blog.image} />
           ))
         }
