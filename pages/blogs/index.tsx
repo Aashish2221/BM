@@ -54,7 +54,7 @@ export default function Blogs({
         }
       </Head>
       <div className='text-dark-black'>
-      <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
+      <h1 className=' container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
         <InfiniteScroll
@@ -63,12 +63,12 @@ export default function Blogs({
           hasMore={hasMore}
           loader={<SpinnerBlog />}
         >
-          <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
+          <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
-                   lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 xl:col-span-4 2xl:col-span-3 2xl:h-[22rem]'
+                   lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'
               >
                 <Link
                   href={`/blogs/${blogs.code}`}
@@ -85,12 +85,12 @@ export default function Blogs({
                       fill
                       src={blogs.image}
                       alt={blogs.title}
-                      className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
+                      className='w-full rounded-[17px]'
                       priority={true}
                       loading='eager'
                      />
                   </CardHeader>
-                  <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
+                  <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
                     </h3>
