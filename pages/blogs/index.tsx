@@ -45,14 +45,10 @@ export default function Blogs({
           content={data.WEBSITEUrl + '/blogs'}
           key={data.WEBSITEUrl + '/blogs'}
         />
-        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        <Link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
         {
           blogs.map((blog:any)=>(
-<<<<<<< Updated upstream
            <link rel="preload" as="image" href={blog.image} />
-=======
-           <Link key={blog.id} rel="preload" as="image" href={blog.image} />
->>>>>>> Stashed changes
           ))
         }
       </Head>
