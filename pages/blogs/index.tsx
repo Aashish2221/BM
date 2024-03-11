@@ -26,37 +26,35 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
+
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogData(pageSize, nextPage);
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
-      setBlogs((prevBlogs:any) => [...prevBlogs, ...newBlogs]);
+      setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
     }
   };
   return (
     <>
       <Head>
-        <title>{title}</title> 
+        <title>{title}</title>
         <meta
           property='og:url'
           content={data.WEBSITEUrl + '/blogs'}
           key={data.WEBSITEUrl + '/blogs'}
         />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
-        {
-          blogs.map((blog:any)=>(
-           <Link key={blog.id} rel="preload" as="image" href={blog.image} />
-          ))
-        }
+        {blogs.map((blog: any) => (
+          <link key={blog.id} rel='preload' as='image' href={blog.image} />
+        ))}
       </Head>
       <div className='text-dark-black'>
-      <h1 className=' container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
-            Blog
-          </h1>
+        <h1 className=' container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
+          Blog
+        </h1>
         <InfiniteScroll
           dataLength={blogs.length}
           next={loadMoreBlogs}
@@ -64,7 +62,7 @@ export default function Blogs({
           loader={<SpinnerBlog />}
         >
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 2xl:mt-28'>
-            {blogs.map((blogs:any ) => (
+            {blogs.map((blogs: any) => (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -81,12 +79,15 @@ export default function Blogs({
                     className='mx-1 -mt-16 shadow-none sm:mt-[-4rem] md:-mt-20  xl:mx-2 xl:-mt-20'
                   >
                     {' '}
-                    <img
+                    <Image
                       src={blogs.image}
-                      alt={blogs.title} 
+                      alt={blogs.title}
+                      width='400'
+                      height='400'
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
+                      priority={true}
                       loading='eager'
-                     />
+                    />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3  lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
@@ -144,14 +145,11 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-    res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
-    const pageNumber = 1;
-    const initialBlogs = await getBlogData(pageSize, pageNumber);
-    const blog = data.site.blog;
-    const title = blog.page;
-    const description = blog.description;
-    return {
-      props: {title, description, initialBlogs}
-    }
-  }
-  
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const pageNumber = 1;
+  const initialBlogs = await getBlogData(pageSize, pageNumber);
+  const blog = data.site.blog;
+  const title = blog.page;
+  const description = blog.description;
+  return {props: { title, description, initialBlogs }};
+};
