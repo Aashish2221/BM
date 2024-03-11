@@ -76,20 +76,19 @@ export default function Blogs({
                 >
                   <CardHeader
                     floated={true}
-                    className='mx-1 -mt-16 shadow-none sm:mt-[-4rem] md:-mt-20  xl:mx-2 xl:-mt-20'
+                    className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
                   >
                     {' '}
-                    <Image
+                    <img
                       src={blogs.image}
                       alt={blogs.title}
                       width='400'
                       height='400'
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      priority={true}
                       loading='eager'
                     />
                   </CardHeader>
-                  <CardBody className='px-4 pt-2 sm:pt-3  lg:-mt-2 xl:mt-1'>
+                  <CardBody className='mt-0 px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
                     </h3>
