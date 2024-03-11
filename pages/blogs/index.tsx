@@ -82,8 +82,8 @@ export default function Blogs({
                     <Image
                       src={blogs.image}
                       alt={blogs.title}
-                      width='400'
-                      height='400'
+                      width='800'
+                      height='450'
                       className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
                       priority={true}
                       loading='eager'
