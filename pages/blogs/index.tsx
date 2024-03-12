@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -16,7 +16,6 @@ import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { log } from 'console';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 const pageSize = 8;
 export default function Blogs({
@@ -62,7 +61,6 @@ export default function Blogs({
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
-         
           <InfiniteScroll
           dataLength={blogs.length}
           next={loadMoreBlogs}

@@ -9,7 +9,7 @@ const BlogIndexSkeleton = () => {
         <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
           Blog
         </h1>
-        <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
+        <section className='container mx-auto mt-12 grid grid-cols-12 gap-4 sm:mt-26 lg:mt-20 xl:mt-20 2xl:mt-24'>
           {blogs.map((blog: any) => (
             <Card
               key={blog.id}
