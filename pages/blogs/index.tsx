@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -16,24 +16,21 @@ import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { log } from 'console';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
-import { Blog } from '@/interfaces/typeinterfaces';
 const pageSize = 8;
 export default function Blogs({
-  title ,initialBlogs
+  title ,
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>();
-  const [blogs, setBlogs] = useState<any>();
+  const [blogs, setBlogs] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(()=>{
-    const pageNumber = 1;
     const initialData = async()=>{
-      const initialBlogs = await getBlogData(pageSize, pageNumber);
+      const initialBlogs = await getBlogData(pageSize, 1);
       setBlogs(initialBlogs)
       setHydrated(true) 
     }
@@ -57,16 +54,17 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {blogs?.map((blog:any)=>
-          <link rel="preload" as="image" href={blog.image} />
-          )}
+        {
+          blogs.map((blog:any)=>(
+            <link key={blog.id} rel="preload" as='image' href={blog.image} />
+          ))
+        }
       </Head>
       {hydrated === true ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
-         
           <InfiniteScroll
           dataLength={blogs.length}
           next={loadMoreBlogs}
@@ -97,8 +95,8 @@ export default function Blogs({
                       height={400}
                       width={400}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52'
-                      priority
                       loading='eager'
+                      priority
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
@@ -155,7 +153,6 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
