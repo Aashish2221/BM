@@ -29,6 +29,11 @@ export default function Blogs({
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(()=>{
+    setTimeout(() => {
+      setHydrated
+    }, 100);
+  })
+  useEffect(()=>{
     const pageNumber = 1;
     const initialData = async()=>{
       const initialBlogs = await getBlogData(pageSize, pageNumber);
@@ -91,9 +96,9 @@ export default function Blogs({
                     fill
                       src={blogs.image}
                       alt={blogs.title}
-                      className='rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full'
+                      className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
                       loading='eager'
-                      priority
+                     priority
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
@@ -138,6 +143,7 @@ export default function Blogs({
               </Card>
               </>
             ))}
+            
           </section>
         </InfiniteScroll>
         {shareModal && (
@@ -151,8 +157,11 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const pageNumber = 1;    
+  const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description}};
+  return {props: { title, description, initialBlogs}};
 };
