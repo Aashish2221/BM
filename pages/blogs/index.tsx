@@ -93,9 +93,9 @@ export default function Blogs({
                       src={blogs.image}
                       alt={blogs.title}
                       height={150}
-                      width={400}
+                      width={300}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
-                      loading='lazy'
+                      loading='eager'
                       priority
                     />
                   </CardHeader>
