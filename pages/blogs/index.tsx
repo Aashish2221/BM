@@ -95,7 +95,7 @@ export default function Blogs({
                       height={150}
                       width={400}
                       className='rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full'
-                      // loading='eager'
+                      loading='eager'
                       priority
                     />
                   </CardHeader>
