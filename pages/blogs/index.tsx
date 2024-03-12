@@ -92,8 +92,8 @@ export default function Blogs({
                     <Image
                       src={blogs.image}
                       alt={blogs.title}
-                      height={400}
-                      width={600}
+                      height={200}
+                      width={400}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
                       loading='eager'
                       priority
