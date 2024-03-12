@@ -90,10 +90,11 @@ export default function Blogs({
                   >
                     {' '}
                     <Image
-                      fill
                       src={blogs.image}
                       alt={blogs.title}
-                      className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
+                      height={400}
+                      width={400}
+                      className='rounded-[17px] px-1  lg:h-48 xl:h-52'
                       loading='eager'
                       priority
                     />
