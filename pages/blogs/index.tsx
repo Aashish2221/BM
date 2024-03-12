@@ -24,14 +24,20 @@ export default function Blogs({
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any>(initialBlogs);
+  const [blogs, setBlogs] = useState<any>();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(()=>{
-    setHydrated(true)
-  },[blogs])
+    const pageNumber = 1;
+    const initialData = async()=>{
+      const initialBlogs = await getBlogData(pageSize, pageNumber);
+      setBlogs(initialBlogs)
+      setHydrated(true) 
+    }
+    initialData(); 
+  },[])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogData(pageSize, nextPage);
@@ -49,16 +55,13 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {blogs.map((blog: any) => (
-          <link key={blog.id} rel='preload' as='image' href={blog.image} />
-        ))}
       </Head>
-      
+      {hydrated === true ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
-          {hydrated === true ? (
+         
           <InfiniteScroll
           dataLength={blogs.length}
           next={loadMoreBlogs}
@@ -135,22 +138,20 @@ export default function Blogs({
             ))}
           </section>
         </InfiniteScroll>
-         ): <BlogIndexSkeleton/>}
         {shareModal && (
           <ShareModal closeModal={toggleShareModal} shareUrl={share} p1={''} p2={''}
           />
         )}
       </div>
+       ): <BlogIndexSkeleton/>}
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-  const pageNumber = 1;
-  const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description, initialBlogs }};
+  return {props: { title, description}};
 };
