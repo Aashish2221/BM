@@ -23,15 +23,14 @@ export default function Blogs({
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>();
-  const [blogs, setBlogs] = useState<any>();
+  const [blogs, setBlogs] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(()=>{
-    const pageNumber = 1;
     const initialData = async()=>{
-      const initialBlogs = await getBlogData(pageSize, pageNumber);
+      const initialBlogs = await getBlogData(pageSize, 1);
       setBlogs(initialBlogs)
       setHydrated(true) 
     }
@@ -55,6 +54,11 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
+        {
+          blogs.map((blog:any)=>(
+            <link rel="preload" as='image' href={blog.image} />
+          ))
+        }
       </Head>
       {hydrated === true ? (
         <div className='text-dark-black'>
@@ -69,8 +73,6 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
-              <>
-              <link rel="preload" as='image' href={blogs.image} />
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -88,12 +90,12 @@ export default function Blogs({
                   >
                     {' '}
                     <Image
-                    fill
+                      fill
                       src={blogs.image}
                       alt={blogs.title}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
                       loading='eager'
-                     priority
+                      priority
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
@@ -136,9 +138,7 @@ export default function Blogs({
                   </CardFooter>
                 </Link>
               </Card>
-              </>
             ))}
-            
           </section>
         </InfiniteScroll>
         {shareModal && (
@@ -152,7 +152,6 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
