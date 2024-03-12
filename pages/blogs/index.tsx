@@ -95,8 +95,8 @@ export default function Blogs({
                       alt={blogs.title}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
                       loading='eager'
-                      height={4000}
-                      width={8000}
+                      height={500}
+                      width={800}
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
