@@ -2,10 +2,16 @@ import { Card, CardBody, CardFooter } from "@material-tailwind/react";
 import { useState } from "react";
 
 const BlogIndexSkeleton = () => {
- 
+ const [blogs, setBlogs] = useState([1,2,3,4,5,6,8]);
   return (
     <>
-    
+    <div className='text-dark-black'>
+          <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
+            Blog
+          </h1>
+          <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
+    {
+            blogs.map((blog =>
       <Card className='col-span-12 mx-auto mt-2 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
         <div className='animate-pulse'>
           <div className='h-40 rounded-t-lg bg-gray-200'></div>
@@ -21,6 +27,9 @@ const BlogIndexSkeleton = () => {
           </CardFooter>
         </div>
       </Card>
+      ))}
+      </section>
+      </div>
     </>
   );
 };
