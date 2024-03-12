@@ -18,6 +18,7 @@ import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { log } from 'console';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
+import { Blog } from '@/interfaces/typeinterfaces';
 const pageSize = 8;
 export default function Blogs({
   title ,initialBlogs
@@ -56,6 +57,9 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
+        {blogs?.map((blog:any)=>
+          <link rel="preload" as="image" href={blog.image} />
+          )}
       </Head>
       {hydrated === true ? (
         <div className='text-dark-black'>
