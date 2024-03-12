@@ -17,6 +17,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
+import { link } from 'fs';
 const pageSize = 8;
 export default function Blogs({
   title ,
@@ -69,6 +70,8 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
+              <>
+              <link rel="preload" as='image' href={blogs.image} />
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -90,8 +93,8 @@ export default function Blogs({
                       alt={blogs.title}
                       className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
                       loading='eager'
-                      height={4000}
-                      width={6000}
+                      height={400}
+                      width={400}
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
@@ -134,7 +137,9 @@ export default function Blogs({
                   </CardFooter>
                 </Link>
               </Card>
+              </>
             ))}
+            
           </section>
         </InfiniteScroll>
         {shareModal && (
