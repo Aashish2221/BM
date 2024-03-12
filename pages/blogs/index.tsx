@@ -29,11 +29,6 @@ export default function Blogs({
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(()=>{
-    setTimeout(() => {
-      setHydrated
-    }, 100);
-  })
-  useEffect(()=>{
     const pageNumber = 1;
     const initialData = async()=>{
       const initialBlogs = await getBlogData(pageSize, pageNumber);
@@ -157,11 +152,9 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-  const pageNumber = 1;    
-  const initialBlogs = await getBlogData(pageSize, pageNumber);
+  
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description, initialBlogs}};
+  return {props: { title, description}};
 };
