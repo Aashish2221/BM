@@ -23,7 +23,7 @@ export default function Blogs({
   title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>(window.location.href);
+  const [share, setShare] = useState<any>();
   const [blogs, setBlogs] = useState<any>();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -37,6 +37,7 @@ export default function Blogs({
       setHydrated(true) 
     }
     initialData(); 
+    setShare(window.location.href);
   },[])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
