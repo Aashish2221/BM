@@ -56,7 +56,7 @@ export default function Blogs({
         <link rel='canonical' href={canonicalUrl} />
         {
           blogs.map((blog:any)=>(
-            <link rel="preload" as='image' href={blog.image} />
+            <link key={blog.id} rel="preload" as='image' href={blog.image} />
           ))
         }
       </Head>
