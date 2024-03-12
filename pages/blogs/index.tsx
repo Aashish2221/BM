@@ -17,7 +17,6 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
-import { link } from 'fs';
 const pageSize = 8;
 export default function Blogs({
   title ,
@@ -71,7 +70,6 @@ export default function Blogs({
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
               <>
-              <link rel="preload" as='image' href={blogs.image} />
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -88,10 +86,10 @@ export default function Blogs({
                     className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
                   >
                     {' '}
-                    <Image
+                    <img
                       src={blogs.image}
                       alt={blogs.title}
-                      className='rounded-[17px] px-1  lg:h-48 xl:h-52 w-full'
+                      className='rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full'
                       loading='eager'
                       height={400}
                       width={400}
@@ -139,7 +137,6 @@ export default function Blogs({
               </Card>
               </>
             ))}
-            
           </section>
         </InfiniteScroll>
         {shareModal && (
@@ -153,7 +150,6 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
