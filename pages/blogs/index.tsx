@@ -58,6 +58,7 @@ export default function Blogs({
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
+          {hydrated === true ? (
           <InfiniteScroll
           dataLength={blogs.length}
           next={loadMoreBlogs}
@@ -93,7 +94,6 @@ export default function Blogs({
                       loading='eager'
                     />
                   </CardHeader>
-
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
@@ -139,6 +139,7 @@ export default function Blogs({
             ))}
           </section>
         </InfiniteScroll>
+         ): <BlogIndexSkeleton/>}
         {shareModal && (
           <ShareModal closeModal={toggleShareModal} shareUrl={share} p1={''} p2={''}
           />
