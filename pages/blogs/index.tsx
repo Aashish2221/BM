@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -16,6 +16,8 @@ import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { log } from 'console';
+import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 const pageSize = 8;
 export default function Blogs({
   title ,initialBlogs
@@ -25,6 +27,14 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(()=>{
+    setTimeout(() => {
+         setHydrated(true)
+         console.log('hii');
+    }, 2000);
+  },[blogs])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogData(pageSize, nextPage);
@@ -46,6 +56,7 @@ export default function Blogs({
           <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
+      
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -58,6 +69,9 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
+              // <Suspense fallback={<BlogIndexSkeleton/>}>
+              <>
+              {hydrated === true ? (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -88,7 +102,6 @@ export default function Blogs({
                     <h3 className='h-10 text-[1.125rem] font-semibold leading-5 md:h-9'>
                       {blogs.title}
                     </h3>
-
                     <p
                       className='h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500'
                       dangerouslySetInnerHTML={{
@@ -125,14 +138,15 @@ export default function Blogs({
                   </CardFooter>
                 </Link>
               </Card>
+               ): <BlogIndexSkeleton/>}
+               </>
+              //  </Suspense>
             ))}
           </section>
         </InfiniteScroll>
         {shareModal && (
-
           <ShareModal closeModal={toggleShareModal} shareUrl={share} p1={''} p2={''}
           />
-
         )}
       </div>
     </>
