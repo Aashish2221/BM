@@ -70,9 +70,7 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blogs:any ) => (
-              // <Suspense fallback={<BlogIndexSkeleton/>}>
-              <>
-              {hydrated === true ? (
+              
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
@@ -138,9 +136,6 @@ export default function Blogs({
                   </CardFooter>
                 </Link>
               </Card>
-               ): <BlogIndexSkeleton/>}
-               </>
-              //  </Suspense>
             ))}
           </section>
         </InfiniteScroll>
