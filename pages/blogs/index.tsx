@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -27,7 +27,6 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
@@ -37,7 +36,6 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
-      setHydrated(true)
     }
   };
  
@@ -53,7 +51,7 @@ export default function Blogs({
           <link key={blog.id} rel="preload" as="image" href={blog.image} />
         ))}
       </Head>
-      {hydrated === true ? (
+      {blogs[0].length != 0 ? (
         <div className="text-dark-black">
           <h1 className="semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5">
             Blog
