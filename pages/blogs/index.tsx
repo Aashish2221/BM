@@ -45,10 +45,9 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {memoizedBlogs.map((blog: any) => (
-          <Link key={blog.id} rel='preload' as='image' href={blog.image} />
+          <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
-      <Suspense fallback={<BlogIndexSkeleton/>}>
       {memoizedBlogs[0].image.length != 0 ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
@@ -82,7 +81,7 @@ export default function Blogs({
                       <Image
                         src={blogs.image}
                         alt={blogs.title}
-                        height={400}
+                        height={300}
                         width={400}
                         className='h-40 w-full rounded-[17px] px-1 sm:h-44 lg:h-48 xl:h-52'
                         loading='eager'
@@ -131,20 +130,15 @@ export default function Blogs({
               ))}
             </section>
           </InfiniteScroll>
-         
         </div>
       ) : (
         <BlogIndexSkeleton />
       )}
-      </Suspense>
     </>
   );
 }
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59'
-  );
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   const pageNumber = 1;
   const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
