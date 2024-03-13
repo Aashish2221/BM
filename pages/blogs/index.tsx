@@ -10,12 +10,14 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
-
+import useToggle from '@/hooks/useToggle';
+import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 const pageSize = 8;
-
 const Blogs = ({
   title,
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) => {
+  const [shareModal, toggleShareModal] = useToggle();
+  const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any[]>([]);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -115,6 +117,14 @@ const Blogs = ({
             {renderBlogs()}
           </section>
         </InfiniteScroll>
+        {shareModal && (
+            <ShareModal
+              closeModal={toggleShareModal}
+              shareUrl={share}
+              p1={''}
+              p2={''}
+            />
+          )}
       </div>
       ) : <BlogIndexSkeleton/>}
     </>
