@@ -90,8 +90,7 @@ export default function Blogs({
                       src={blogs.image}
                       alt={blogs.title}
                       className='rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full'
-                      loading='eager'
-                      priority
+                      loading='lazy'
                     />
                   </CardHeader>
                   <CardBody className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
