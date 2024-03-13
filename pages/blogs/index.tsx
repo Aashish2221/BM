@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -25,7 +25,7 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-
+  const [hydrated, setHydrated] = useState(false)
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogData(pageSize, nextPage);
@@ -36,6 +36,9 @@ export default function Blogs({
       setPage(nextPage);
     }
   };
+  useEffect(()=>{
+     setHydrated(true);
+  },[])
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
   return (
@@ -44,11 +47,8 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {memoizedBlogs.map((blog: any) => (
-          <link key={blog.id} rel='preload' as='image' href={blog.image} />
-        ))}
       </Head>
-      {memoizedBlogs[0].image.length != 0 ? (
+      {hydrated === true ? (
         <div className='text-dark-black'>
           <h1 className='container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5'>
             Blog
