@@ -40,6 +40,7 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
+      setHydrated(true)
     }
   };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
@@ -51,11 +52,11 @@ export default function Blogs({
         <link rel='canonical' href={canonicalUrl} />
         {
           blogs.map((blog:any)=>(
-            <link key={blog.id} rel="preload" as='image' href={blog.image} />
+            <Link key={blog.id} rel="preload" as='image' href={blog.image} />
           ))
         }
       </Head>
-      {(blogs.length != 0) ? (
+      {hydrated === true ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -85,7 +86,7 @@ export default function Blogs({
                   >
                     {' '}
                     <Image
-                    fill
+                      fill
                       src={blogs.image}
                       alt={blogs.title}
                       className='rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full'
