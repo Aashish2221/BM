@@ -20,12 +20,12 @@ import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 const pageSize = 8;
 
 export default function Blogs({
-  title,
+  title,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
-  const [blogs, setBlogs] = useState<any>([]);
-  const [page, setPage] = useState(0);
+  const [share, setShare] = useState<any>(window.location.href);
+  const [blogs, setBlogs] = useState<any>(initialBlogs);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
@@ -37,14 +37,8 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
-      setHydrated(true)
     }
   };
-  useEffect(() => {
-    loadMoreBlogs();
-    setShare(window.location.href);
-  }, []);
-
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
@@ -94,8 +88,7 @@ export default function Blogs({
                         height={150}
                         width={400}
                         className="rounded-[17px] px-1 h-40 sm:h-44 lg:h-48 xl:h-52 w-full"
-                        loading="eager"
-                        priority
+                        loading='lazy'
                       />
                     </CardHeader>
                     <CardBody className="px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1">
@@ -157,8 +150,11 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const pageNumber = 1;
+  const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description}};
+  return {props: { title, description, initialBlogs }};
 };
