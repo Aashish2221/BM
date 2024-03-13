@@ -22,9 +22,6 @@ export default function Blogs({
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    loadMoreBlogs();
-  }, []);
 
   const loadMoreBlogs = async () => {
     try {
@@ -145,7 +142,6 @@ export default function Blogs({
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   try {
-
     const initialBlogs = await getBlogData(pageSize, 1);
     const blog = data.site.blog;
     const title = blog.page;
