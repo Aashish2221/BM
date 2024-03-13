@@ -40,18 +40,17 @@ export default function Blogs({
       setHydrated(true)
     }
   };
- 
-
-  const canonicalUrl = data.WEBSITEUrl + '/blogs';
+  useEffect(()=>{
+    loadMoreBlogs();
+  })
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
-
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:url" content={canonicalUrl} key={canonicalUrl} />
-        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={data.WEBSITEUrl + '/blogs'} key={data.WEBSITEUrl + '/blogs'} />
+        <link rel="canonical" href={data.WEBSITEUrl + '/blogs'} />
         {memoizedBlogs.map((blog: any) => (
           <link key={blog.id} rel="preload" as="image" href={blog.image} />
         ))}
