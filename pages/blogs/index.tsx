@@ -20,13 +20,14 @@ import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 const pageSize = 8;
 
 export default function Blogs({
-  title,initialBlogs
+  title,
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any>(initialBlogs);
+  const [blogs, setBlogs] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
@@ -36,11 +37,15 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
+      setHydrated(true)
     }
   };
+ 
+
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
+
   return (
     <>
       <Head>
@@ -51,7 +56,7 @@ export default function Blogs({
           <link key={blog.id} rel="preload" as="image" href={blog.image} />
         ))}
       </Head>
-      {blogs[0].length != 0 ? (
+      {hydrated === true ? (
         <div className="text-dark-black">
           <h1 className="semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5">
             Blog
@@ -148,11 +153,8 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-  const pageNumber = 1;
-  const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description, initialBlogs }};
+  return {props: { title, description}};
 };
