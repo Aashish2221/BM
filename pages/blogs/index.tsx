@@ -20,11 +20,11 @@ import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 const pageSize = 8;
 
 export default function Blogs({
-  title,
+  title,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any>([]);
+  const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
@@ -40,9 +40,7 @@ export default function Blogs({
       setHydrated(true)
     }
   };
-  useEffect(()=>{
-    loadMoreBlogs();
-  },[])
+ 
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
   return (
@@ -152,8 +150,11 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const pageNumber = 1;
+  const initialBlogs = await getBlogData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
-  return {props: { title, description}};
+  return {props: { title, description, initialBlogs }};
 };
