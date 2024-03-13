@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useState } from 'react';
+import {useMemo, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -26,7 +26,6 @@ export default function Blogs({
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
 
 
   const loadMoreBlogs = async () => {
@@ -40,6 +39,7 @@ export default function Blogs({
     }
   };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
+  const memoizedBlogs = useMemo(() => blogs, [blogs]);
   return (
     <>
       <Head>
@@ -47,24 +47,24 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {
-          blogs.map((blog:any)=>(
+          memoizedBlogs.map((blog:any)=>(
             <link key={blog.id} rel="preload" as='image' href={blog.image} />
           ))
         }
       </Head>
-      {blogs.length != 0 ? (
+      {memoizedBlogs[0].image.length != 0 ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
           <InfiniteScroll
-          dataLength={blogs.length}
+          dataLength={memoizedBlogs.length}
           next={loadMoreBlogs}
           hasMore={hasMore}
           loader={<SpinnerBlog />} >
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
-            {blogs.map((blogs:any ) => (
+            {memoizedBlogs.map((blogs:any ) => (
               <Card
                 key={blogs.id}
                 className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem]
