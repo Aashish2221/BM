@@ -94,14 +94,14 @@ const Blogs = ({
 
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>{title}</title>
         <meta property='og:url' content={`${data.WEBSITEUrl}/blogs`} key={`${data.WEBSITEUrl}/blogs`} />
         <link rel='canonical' href={`${data.WEBSITEUrl}/blogs`} />
         {blogs.map((blog) => (
           <Link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
-      </Head> */}
+      </Head>
       {blogs.length != 0 ? (
       <div className='text-dark-black'>
         <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
