@@ -6,12 +6,12 @@ import { useEffect, useState, useMemo } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
-import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
-
+import dynamic from 'next/dynamic';
+const BlogIndexSkeleton= dynamic(()=>import('@/components/Loaders/Blogs/BlogIndexSkeleton'));
+const SpinnerBlog = dynamic(()=>import('@/components/Spinner'))
 const pageSize = 8;
 
 export default function Blogs({
