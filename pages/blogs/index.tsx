@@ -37,8 +37,11 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
+      setHydrated(true)
     }
   };
+ 
+
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
