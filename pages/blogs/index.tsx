@@ -25,19 +25,9 @@ export default function Blogs({
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>();
   const [blogs, setBlogs] = useState<any>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    const initialData = async () => {
-      const initialBlogs = await getBlogData(pageSize, 1);
-      setBlogs(initialBlogs);
-      setHydrated(true);
-    };
-    initialData();
-    setShare(window.location.href);
-  }, []);
 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
@@ -47,11 +37,15 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
+      setHydrated(true)
     }
   };
+  useEffect(() => {
+    loadMoreBlogs();
+    setShare(window.location.href);
+  }, []);
 
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
-
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
 
