@@ -8,7 +8,7 @@ import {
 } from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -22,8 +22,6 @@ export default function Blogs({
   title,
   initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
-  const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -47,9 +45,10 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {memoizedBlogs.map((blog: any) => (
-          <link key={blog.id} rel='preload' as='image' href={blog.image} />
+          <Link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
+      <Suspense fallback={<BlogIndexSkeleton/>}>
       {memoizedBlogs[0].image.length != 0 ? (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
@@ -83,7 +82,7 @@ export default function Blogs({
                       <Image
                         src={blogs.image}
                         alt={blogs.title}
-                        height={150}
+                        height={400}
                         width={400}
                         className='h-40 w-full rounded-[17px] px-1 sm:h-44 lg:h-48 xl:h-52'
                         loading='eager'
@@ -137,6 +136,7 @@ export default function Blogs({
       ) : (
         <BlogIndexSkeleton />
       )}
+      </Suspense>
     </>
   );
 }
