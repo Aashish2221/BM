@@ -25,7 +25,7 @@ export default function Blogs({
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
@@ -42,7 +42,7 @@ export default function Blogs({
   };
   useEffect(()=>{
     loadMoreBlogs();
-  })
+  },[])
   // Memoize the blogs state variable to avoid unnecessary re-renders
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
   return (
