@@ -25,7 +25,7 @@ export default function Blogs({
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any>(initialBlogs);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
