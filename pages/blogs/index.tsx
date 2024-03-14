@@ -7,9 +7,7 @@ import { BlogCard } from '@/components/BlogCard';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 import { SpinnerBlog } from '@/components/Spinner';
 import data from '@/data';
-
 const pageSize = 8;
-
 export default function Blogs({
   title,
   initialBlogs,
@@ -19,7 +17,7 @@ export default function Blogs({
   const [hasMore, setHasMore] = useState(true);
 
   const loadMoreBlogs = async () => {
-    try {
+
       const nextPage = page + 1;
       const newBlogs = await getBlogData(pageSize, nextPage);
       if (newBlogs.length === 0) {
@@ -28,15 +26,17 @@ export default function Blogs({
         setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
         setPage(nextPage);
       }
-    } catch (error) {
-      console.error('Error fetching blogs:', error);
-    }
   };
 
   return (
     <>
       <Head>
         <title>{title}</title>
+        <meta property='og:url' content={data.WEBSITEUrl + '/blogs'} key={data.WEBSITEUrl + '/blogs'} />
+        <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
+        {blogs.map((blog: any) => (
+          <link key={blog.id} rel='preload' as='image' href={blog.image} />
+        ))}
       </Head>
       {blogs.length > 0 ? (
         <div className="text-dark-black">
@@ -63,14 +63,9 @@ export default function Blogs({
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-  try {
     const initialBlogs = await getBlogData(pageSize, 1);
     const blog = data.site.blog;
     const title = blog.page;
     const description = blog.description;
     return { props: { title, description, initialBlogs } };
-  } catch (error) {
-    console.error('Error fetching initial data:', error);
-    return { props: { title: '', description: '', initialBlogs: [] } };
-  }
 };
