@@ -76,15 +76,15 @@ export default function Blogs({
                       <h3 className="h-10 text-[1.125rem] font-semibold leading-5 md:h-9">
                         {blog.title}
                       </h3>
-                      <p
-                        className="h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500"
+                      <div
+                        className="h-10 mt-2 text-[0.95rem] leading-[1.4rem] text-gray-500"
                         dangerouslySetInnerHTML={{
                           __html:
                             blog.shortDescription.length <= 29
                               ? blog.shortDescription
                               : blog.shortDescription.slice(0, 100) + '...',
                         }}
-                      ></p>
+                      ></div>
                       <h4 className="pt-24 text-xs font-normal italic text-[#5c5b5b] md:pt-20 lg:pt-24 2xl:pt-[4.5rem]">
                         By BullionMentor on{' '}
                         {new Intl.DateTimeFormat('en-US', {
