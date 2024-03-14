@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
-import { getBlogData } from '@/services/spot-prices';
+import {getBlogsData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 import { SpinnerBlog } from '@/components/Spinner';
@@ -18,7 +18,7 @@ export default function Blogs({
   
   const loadMoreBlogs = async () => {
       const nextPage = page + 1;
-      const newBlogs = await getBlogData(pageSize, nextPage);
+      const newBlogs = await getBlogsData(pageSize, nextPage);
       if (newBlogs.length === 0) {
         setHasMore(false);
       } else {
