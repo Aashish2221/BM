@@ -6,22 +6,32 @@ import {useEffect, useState } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
-import Spinner from '@/components/Spinner';
+import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
+import InfiniteScroll from 'react-infinite-scroll-component';
 const pageSize = 8;
 export default function Blogs({
-  title ,blogs
+  title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
+  const [share, setShare] = useState<any>(window.location.href);
+  const [blogs, setBlogs] = useState<any[]>(initialBlogs);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-    setShare(window.location.href);
-  }, []);
-
+ 
+  const loadMoreBlogs = async () => {
+    const nextPage = page + 1;
+    const newBlogs = await getBlogsData(pageSize, nextPage);
+    if (newBlogs.length === 0) {
+      setHasMore(false);
+    } else {
+      setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
+      setPage(nextPage);
+    }
+};
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   return (
     <>
@@ -30,13 +40,16 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
       </Head>
-      {hydrated === false ? (
-        <Spinner />
-      ) : (
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
           </h1>
+          <InfiniteScroll
+            dataLength={blogs.length}
+            next={loadMoreBlogs}
+            hasMore={hasMore}
+            loader={<SpinnerBlog />}
+          >
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blog:Blog ) => (
@@ -86,6 +99,7 @@ export default function Blogs({
             </div>
             ))}
           </section>
+          </InfiniteScroll>
           {shareModal && (
             <ShareModal
               closeModal={toggleShareModal}
@@ -95,20 +109,19 @@ export default function Blogs({
             />
           )}
         </div>
-      )}
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  blogs: Awaited<ReturnType<typeof getBlogsData>>;
+  initialBlogs: Awaited<ReturnType<typeof getBlogsData>>;
 }> = async ({ res }) => {
     res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
     const pageNumber = 1;
-    const blogs = await getBlogsData(pageSize, pageNumber);
+    const initialBlogs = await getBlogsData(pageSize, pageNumber);
     const blog = data.site.blog;
     const title = blog.page;
     const description = blog.description;
-    return {props: { title, description, blogs }};
+    return {props: { title, description, initialBlogs }};
   };
 

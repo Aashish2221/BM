@@ -15,3 +15,19 @@ export default function Spinner() {
         </div>
     )
 }
+
+export function SpinnerBlog() {
+    return (
+        <div className="h-[150px] -mt-[100px]  relative flex flex-col justify-center items-center px-5 text-sm">
+            <FadeLoader
+                color="#303030"
+                cssOverride={{}}
+                height={25}
+                margin={22}
+                radius={100}
+                speedMultiplier={1}
+                width={25}
+            />
+        </div>
+    )
+}
