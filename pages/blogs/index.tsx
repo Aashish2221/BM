@@ -62,7 +62,7 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  // res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   const pageNumber = 1;
   const initialBlogs = await getBlogsData(pageSize, pageNumber);
   const blog = data.site.blog;
