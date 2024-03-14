@@ -1,11 +1,5 @@
 import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter
-} from '@material-tailwind/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useEffect, useState } from 'react';
@@ -14,9 +8,9 @@ import Head from 'next/head';
 import data from '@/data';
 import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getBlogData } from '@/services/spot-prices';
+import { getBlogsData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
-
+const pageSize=8;
 export default function Blogs({
   title ,blogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
@@ -109,13 +103,12 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  blogs: Awaited<ReturnType<typeof getBlogData>>;
-}> = async ({ res }) => {
-  res.setHeader( 'Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
-  const blogs = await getBlogData();
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  const pageNumber = 1;
+  const blogs = await getBlogsData(pageSize, pageNumber);
   const blog = data.site.blog;
-  const title = blog.page
-  const description = blog.description
-  return {props: {title ,description,blogs} };
+  const title = blog.page;
+  const description = blog.description;
+  return {props: { title, description, blogs }};
 };
