@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { getBlogData } from '@/services/spot-prices';
@@ -40,6 +40,7 @@ export default function Blogs({
           <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
+      <Suspense fallback={<DashboardSkeleton/>}>
       {blogs.length > 0 ? (
         <div className="text-dark-black">
           <h1 className="container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5">Blog</h1>
@@ -59,6 +60,7 @@ export default function Blogs({
       ) : (
         <BlogIndexSkeleton />
       )}
+      </Suspense>
     </>
   );
 }
