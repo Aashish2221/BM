@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
-import {getBlogsData } from '@/services/spot-prices';
+import { getBlogsData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogIndexSkeleton from '@/components/Loaders/Blogs/BlogIndexSkeleton';
 import { SpinnerBlog } from '@/components/Spinner';
@@ -13,7 +13,7 @@ export default function Blogs({
 
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [blogs, setBlogs] = useState<any[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
   const loadMoreBlogs = async () => {
@@ -26,10 +26,7 @@ export default function Blogs({
         setPage(nextPage);
       }
   };
-  useEffect(()=>{
-    loadMoreBlogs();
-  },[])
-
+ 
   return (
     <>
       <Head>
@@ -67,10 +64,10 @@ export default function Blogs({
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-   
-    const blog = data.site.blog;
-    const title = blog.page;
-    const description = blog.description;
-    return { props: { title, description} };
+  const pageNumber = 1;
+  const initialBlogs = await getBlogsData(pageSize, pageNumber);
+  const blog = data.site.blog;
+  const title = blog.page;
+  const description = blog.description;
+  return {props: { title, description, initialBlogs }};
 };
-
