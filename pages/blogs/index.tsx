@@ -9,10 +9,9 @@ import data from '@/data';
 import { BlogCard } from '@/components/BlogCard';
 const pageSize = 8;
 export default function Blogs({
-  title,
-
+  title,initialBlogs 
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<any[]>(initialBlogs );
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
