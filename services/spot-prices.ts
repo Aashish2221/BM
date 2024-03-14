@@ -83,6 +83,12 @@ export const getBlogData = async (pageSize: number, pageNumber: number) => {
   return res.data.data;
 };
 
+export const getBlogsData = async (pageSize: number, pageNumber: number) => {
+  const res = await fetcher.get<ApiResponse<Blog[]>>(
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogsTemp?size=${pageSize}&pagenumber=${pageNumber}`
+  );
+  return res.data.data;
+};
 
 export const getBlogDetails = async (code: string) => {
   const url = new URL(
