@@ -13,15 +13,17 @@ import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
 const pageSize = 8;
 export default function Blogs({
-  title ,initialBlogs
+  title ,
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any[]>(initialBlogs);
-  const [page, setPage] = useState(1);
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [hydrated, setHydrated] = useState(false);
- 
+  useEffect(()=>{
+    loadMoreBlogs();
+},[])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
@@ -113,15 +115,10 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  initialBlogs: Awaited<ReturnType<typeof getBlogsData>>;
-}> = async ({ res }) => {
-    res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-    const pageNumber = 1;
-    const initialBlogs = await getBlogsData(pageSize, pageNumber);
+export const getServerSideProps: GetServerSideProps = async () => {
     const blog = data.site.blog;
     const title = blog.page;
     const description = blog.description;
-    return {props: { title, description, initialBlogs }};
+    return {props: { title, description,}};
   };
 
