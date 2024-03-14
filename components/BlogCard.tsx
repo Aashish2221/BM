@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsArrowRight } from 'react-icons/bs';
-import Card from '@material-tailwind/react/components/Card';
 
 export function BlogCard({ blog }: any) {
   return (
-     <Card className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
+     <div className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-md sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
         <Link
           href={`/blogs/${blog.code}`}
           as={`/blogs/${blog.code}`}
@@ -48,6 +47,6 @@ export function BlogCard({ blog }: any) {
             </span>
           </div>
         </Link>
-      </Card>
+      </div>
   );
 }
