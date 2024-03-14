@@ -32,9 +32,8 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={data.WEBSITEUrl + '/blogs'} key={data.WEBSITEUrl + '/blogs'} />
         <link rel='canonical' href={data.WEBSITEUrl + '/blogs'} />
-        {blogs.map((blog: any) => (
-          <link key={blog.id} rel='preload' as='image' href={blog.image} />
-        ))}
+        <link rel="preload" as='image' href={blogs[0].image} />
+        <link rel="preload" as='image' href={blogs[1].image} />
       </Head>
       <Suspense fallback={<BlogIndexSkeleton/>}>
       {blogs.length > 0 ? (
