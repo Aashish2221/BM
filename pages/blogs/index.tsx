@@ -46,7 +46,6 @@ export default function Blogs({
         <title>{title}</title>
         <meta property="og:url" content={canonicalUrl} key={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
-        
       </Head>
       {memoizedBlogs.length > 0 ? (
         <div className="text-dark-black">
