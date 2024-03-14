@@ -40,7 +40,7 @@ export default function Blogs({
           <link key={blog.id} rel='preload' as='image' href={blog.image} />
         ))}
       </Head>
-      <Suspense fallback={<DashboardSkeleton/>}>
+      <Suspense fallback={<BlogIndexSkeleton/>}>
       {blogs.length > 0 ? (
         <div className="text-dark-black">
           <h1 className="container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5">Blog</h1>
