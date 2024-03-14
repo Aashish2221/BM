@@ -15,7 +15,17 @@ export default function Blogs({
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   
-  
+  const loadMoreBlogs = async () => {
+      const nextPage = page + 1;
+      const newBlogs = await getBlogsData(pageSize, nextPage);
+      if (newBlogs.length === 0) {
+        setHasMore(false);
+      } else {
+        setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
+        setPage(nextPage);
+      }
+  };
+ 
   return (
     <>
       <Head>
@@ -30,13 +40,18 @@ export default function Blogs({
       {blogs.length > 0 ? (
         <div className="text-dark-black">
           <h1 className="container mx-auto mt-14 text-xl font-semibold md:mt-16 md:text-2xl lg:mt-5">Blog</h1>
-          
+          <InfiniteScroll
+            dataLength={blogs.length}
+            next={loadMoreBlogs}
+            hasMore={hasMore}
+            loader={<SpinnerBlog />}
+          >
             <section className="container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28">
               {blogs.map((blog: any) => (
                 <BlogCard key={blog.id} blog={blog} />
               ))}
             </section>
-          
+          </InfiniteScroll>
         </div>
       ) : (
         <BlogIndexSkeleton />
@@ -47,7 +62,7 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+  // res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
   const pageNumber = 1;
   const initialBlogs = await getBlogsData(pageSize, pageNumber);
   const blog = data.site.blog;
