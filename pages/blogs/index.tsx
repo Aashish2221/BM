@@ -1,8 +1,8 @@
 
 import { Card, CardHeader, CardBody, CardFooter } from '@material-tailwind/react';
-import Link from 'next/link';
 import Image from 'next/image';
-import {useState, useMemo } from 'react';
+import Link from 'next/link';
+import { useEffect, useState, useMemo } from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
@@ -47,6 +47,9 @@ export default function Blogs({
         <title>{title}</title>
         <meta property="og:url" content={canonicalUrl} key={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
+        {memoizedBlogs.map((blog: any) => (
+          <link key={blog.id} rel="preload" as="image" href={blog.image} />
+        ))}
       </Head>
       {memoizedBlogs.length > 0 ? (
         <div className="text-dark-black">
@@ -72,25 +75,25 @@ export default function Blogs({
                     prefetch={false}
                   >
                     <CardHeader
-                    floated={true}
-                    className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'
-                  >
-                    {' '}
-                    <Image
-                      src={blogs.image}
-                      alt={blogs.title}
-                      className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                      height={400}
-                      width={400}
-                      loading='eager'
-                    />
-                  </CardHeader>
+                      floated={true}
+                      className="mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20"
+                    >
+                      <Image
+                        src={blog.image}
+                        alt={blog.title}
+                        height={200}
+                        width={350}
+                        className="h-40 w-full rounded-[17px] px-1 sm:h-44 lg:h-48 xl:h-52"
+                        loading="eager"
+                        priority
+                      />
+                    </CardHeader>
                     <CardBody className="px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1">
                       <h3 className="h-10 text-[1.125rem] font-semibold leading-5 md:h-9">
-                        {(blog.title.length >= 48) ? blog.title.slice(0, 42)+ '...' : blog.title}
+                        {blog.title}
                       </h3>
                       <p
-                        className=" mt-2 text-[0.95rem] text-gray-500"
+                        className="h-10 pt-6 text-[0.95rem] leading-[1.4rem] text-gray-500"
                         dangerouslySetInnerHTML={{
                           __html:
                             blog.shortDescription.length <= 29
@@ -98,7 +101,7 @@ export default function Blogs({
                               : blog.shortDescription.slice(0, 100) + '...',
                         }}
                       ></p>
-                      <h4 className="pt-14 text-xs font-normal italic text-[#5c5b5b] md:pt-18 lg:pt-22 2xl:pt-[3rem]">
+                      <h4 className="pt-24 text-xs font-normal italic text-[#5c5b5b] md:pt-20 lg:pt-24 2xl:pt-[4.5rem]">
                         By BullionMentor on{' '}
                         {new Intl.DateTimeFormat('en-US', {
                           month: 'long',
