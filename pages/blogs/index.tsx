@@ -29,9 +29,6 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {blogs.map((blog:any)=> (
-          <link rel="preload" as='image' href={blog.image} />
-        ))}
       </Head>
       {hydrated === false ? (
         <Spinner />
