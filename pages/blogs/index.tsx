@@ -112,18 +112,10 @@ export default function Blogs({
 export const getServerSideProps: GetServerSideProps<{
   blogs: Awaited<ReturnType<typeof getBlogData>>;
 }> = async ({ res }) => {
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
+  res.setHeader( 'Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
   const blogs = await getBlogData();
   const blog = data.site.blog;
   const title = blog.page
   const description = blog.description
-  return {
-    props: {
-      title ,description,
-      blogs
-    }
-  };
+  return {props: {title ,description,blogs} };
 };
