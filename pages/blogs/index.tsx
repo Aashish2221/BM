@@ -10,7 +10,7 @@ import Spinner from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
-const pageSize=8;
+const pageSize = 8;
 export default function Blogs({
   title ,blogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
@@ -29,6 +29,9 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
+        {blogs.map((blog:any)=> (
+          <link rel="preload" as='image' href={blog.image} />
+        ))}
       </Head>
       {hydrated === false ? (
         <Spinner />
@@ -100,12 +103,15 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
-  const pageNumber = 1;
-  const blogs = await getBlogsData(pageSize, pageNumber);
-  const blog = data.site.blog;
-  const title = blog.page;
-  const description = blog.description;
-  return {props: { title, description, blogs }};
-};
+export const getServerSideProps: GetServerSideProps<{
+  blogs: Awaited<ReturnType<typeof getBlogsData>>;
+}> = async ({ res }) => {
+    res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59');
+    const pageNumber = 1;
+    const blogs = await getBlogsData(pageSize, pageNumber);
+    const blog = data.site.blog;
+    const title = blog.page;
+    const description = blog.description;
+    return {props: { title, description, blogs }};
+  };
+
