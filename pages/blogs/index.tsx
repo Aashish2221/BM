@@ -75,7 +75,7 @@ export default function Blogs({
                         {(blog.title.length >= 48) ? blog.title.slice(0, 42)+ '...' : blog.title}
                       </h3>
                       <p
-                        className="h-10 mt-2 text-[0.95rem] leading-[1.4rem] text-gray-500"
+                        className="h-15 mt-2 text-[0.95rem] leading-[1.4rem] text-gray-500"
                         dangerouslySetInnerHTML={{
                           __html:
                             blog.shortDescription.length <= 29
