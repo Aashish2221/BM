@@ -46,7 +46,6 @@ export default function Blogs({
         <title>{title}</title>
         <meta property="og:url" content={canonicalUrl} key={canonicalUrl} />
         <link rel="canonical" href={canonicalUrl} />
-        
       </Head>
       {memoizedBlogs.length > 0 ? (
         <div className="text-dark-black">
@@ -71,10 +70,9 @@ export default function Blogs({
                     passHref
                     prefetch={false}
                   >
-                    
                     <CardBody className="px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1">
                       <h3 className="h-10 text-[1.125rem] font-semibold leading-5 md:h-9">
-                        {blog.title.length >= 48 ? blog.title.slice(0, 42)+ '...': blog.title}
+                        {(blog.title.length >= 48) ? blog.title.slice(0, 42)+ '...' : blog.title}
                       </h3>
                       <p
                         className="h-10 mt-2 text-[0.95rem] leading-[1.4rem] text-gray-500"
