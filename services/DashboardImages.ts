@@ -5,12 +5,12 @@ const DashboardImages = () => {
       imageName: 'Banner1',
       imageForVenderId: 1,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/silver-philharmonics-sale.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/2024-Britannias-On-Sale.webp',
       mobileImageurl:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/silver-philharmonics-sale-mob.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/2024-Britannias-On-Sale-Mob-Db.webp',
       isStatic: false,
       eventRedirectiveUrl:
-        'https://www.apmex.com/category/24305/austrian-silver-philharmonics?f_onsale=true&page=1&_campaign=02262024-category24305-priceplay-corebullion-homepagehero'
+        'https://www.apmex.com/category/96310/2024-britannias?f_onsale=true&page=1&_campaign=03042024-category96310-priceplay-corebullion-homepagehero'
     },
     {
       id: 3,
@@ -64,11 +64,11 @@ const DashboardImages = () => {
       imageName: 'Banner8',
       imageForVenderId: 4,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/american-gold-eagles.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/Cow-Boy-Rounds.webp',
       mobileImageurl:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/american-gold-eagles-mob.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/Cow-Boy-Rounds-Mob-Db.webp',
       isStatic: false,
-      eventRedirectiveUrl: 'https://sdbullion.com/1-oz-american-gold-eagle-coin-random-year-bu'
+      eventRedirectiveUrl:'https://sdbullion.com/1-oz-scottsdale-mint-cowboy-silver-round-tube-of-20'
     },
     {
       id: 9,

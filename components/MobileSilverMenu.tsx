@@ -36,7 +36,7 @@ export default function MobileSilverMenu({ onHide }: MobileSilverMenuProps) {
         </button>
         <p className='text-sm font-semibold text-white'>Silver</p>
       </div>
-      <div className='flex flex-col divide-y divide-gray-200 py-4'>
+      <div className='flex flex-col divide-y divide-gray-200 py-4 '>
         {/* -------------------- SILVER PRODUCT TYPE --------------------- */}
         <Accordion title='Product type'>
           <div className='grid grid-cols-2 gap-4 py-4'>

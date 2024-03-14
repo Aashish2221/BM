@@ -74,9 +74,9 @@ export default function MobileMenu({ onHide }: MobileMenuProps) {
         }
       }}
       id='scrollable-content'
-      className='container fixed inset-y-0 inset-x-0 z-50 w-9/12 overflow-y-auto bg-secondary-dark shadow-md'
+      className='container fixed inset-y-0 inset-x-0 z-50 w-9/12  bg-secondary-dark shadow-md'
     >
-      <div className='flex flex-col divide-y divide-gray-500'>
+      <div className='flex flex-col divide-y  divide-gray-500 '>
         <div className='my-3 flex items-center justify-between'>
           <Link onClick={clickHandler} href={'/'} passHref prefetch={false}>
             <Image

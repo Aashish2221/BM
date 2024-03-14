@@ -2,18 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Suspense, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-  ScriptableContext
-} from 'chart.js';
+import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Filler,Legend,ScriptableContext} from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { chartData } from '@/interfaces/typeinterfaces';
 import { getChartData } from '@/services/spot-prices';
@@ -21,72 +10,83 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '@/features/userSlice';
 import { toCurrency, toPercent } from '@/utils/utilities';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
+ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Filler,Legend
 );
-
 type metalProps = {
-  metal: string;
-  currentSpotPrice: chartData;
-  initialchartData: chartData[];
-  initfrom: string;
-  initto: string;
-  initchange: number;
-  initHigh: number;
-  initlow: number;
+metal: string;
+currentSpotPrice: chartData;
+initialchartData: chartData[];
+initfrom: string;
+initto: string;
+initchange: number;
+initHigh: number;
+initlow: number;
 };
 const LineAreaChart = ({
-  metal,
-  currentSpotPrice,
-  initialchartData,
-  initfrom,
-  initto,
-  initchange,
-  initHigh,
-  initlow
+  metal,currentSpotPrice,initialchartData,initfrom,initto,initchange,initHigh,initlow
 }: metalProps) => {
   const [chartdata, setChartData] = useState(initialchartData);
   const [Number, setNumber] = useState(3);
   const [TimeFrame, setTimeFrame] = useState('month');
   const [initialdata, setInitialData] = useState(true);
-
   const select = useSelector(selectUser)
-
+  const [isTabletOrLarger, setIsTabletOrLarger] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTabletOrLarger(window.innerWidth >= 550);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   useEffect(() => {
     initFetch(Number, TimeFrame);
   }, [metal, Number, TimeFrame]);
-
   const initFetch = async (Number: number, TimeFrame: string) => {
     setNumber(Number);
     setTimeFrame(TimeFrame);
     const response = await getChartData(Number, TimeFrame, false);
     const allResponse = [...response.data];
-
     let filteredData = allResponse;
-    if (Number === 1 && TimeFrame === 'month') {
-      filteredData = allResponse.filter((_, index) => index % 3 === 0);
-    } else if (Number === 3 && TimeFrame === 'month') {
-      filteredData = allResponse.filter((_, index) => index % 5 === 0);
-    } else if (Number === 6 && TimeFrame === 'month') {
-      filteredData = allResponse.filter((_, index) => index % 11 === 1);
-    }else if (Number === 12 && TimeFrame === 'month') {
-      filteredData = allResponse.filter((_, index) => index % 11 === 1);
-    }else if (Number === 60 && TimeFrame === 'month') {
-      filteredData = allResponse.filter((_, index) => index % 11 === 1);
-    } else if (Number === 5 && TimeFrame === '1-Year') {
-      filteredData = allResponse.filter((_, index) => index % 6  === 1);
+    if (isTabletOrLarger) {
+      if (Number === 1 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 3 === 0);
+      } else if (Number === 3 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 5 === 0);
+      } else if (Number === 6 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 11 === 1);
+      } else if (Number === 12 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 11 === 1);
+      } else if (Number === 60 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 18 === 1);
+      } else if (Number === 120 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 50 === 0);
+      } else if (Number === 500 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 400 === 0);
+      }
+    }else {
+      if (Number === 2 && TimeFrame === 'week') {
+        filteredData = allResponse.filter((_, index) => index % 3 === 0);
+      } else if (Number === 1 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 5 === 0);
+      } else if (Number === 3 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 15 === 0);
+      } else if (Number === 6 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 30 === 1);
+      } else if (Number === 12 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 60 === 1);
+      } else if (Number === 60 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 300 === 1);
+      } else if (Number === 120 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 600 === 0);
+      } else if (Number === 500 && TimeFrame === 'month') {
+        filteredData = allResponse.filter((_, index) => index % 700 === 0);
+      }
     }
-
     setChartData(filteredData);
   };
-  console.log(currentSpotPrice)
   console.log(chartdata)
   return (
     <div className='sm:m-2 mt-2 flex h-fit flex-col items-center justify-center rounded-xl bg-gray-100 shadow-lg w-full'>
@@ -162,19 +162,19 @@ const LineAreaChart = ({
           </li>
           <li
             onClick={() => {
-              initFetch(10, 'year'), setInitialData(false);
+              initFetch(120, 'month'), setInitialData(false);
             }}
           >
-            <button className={`relative block rounded-[30%] ${(TimeFrame==='year'&&Number===10)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===120)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               10Y
             </button>
           </li>
           <li
             onClick={() => {
-              initFetch(0, 'All'), setInitialData(false);
+              initFetch(500, 'month'), setInitialData(false);
             }}
           >
-            <button className={`relative block rounded-[30%] ${(TimeFrame==='All'&&Number===0)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
+            <button className={`relative block rounded-[30%] ${(TimeFrame==='month'&&Number===500)?('bg-primary'):('bg-gray-300')} px-1 sm:px-2 py-1 sm:py-2`}>
               All
             </button>
           </li>
@@ -236,7 +236,7 @@ const LineAreaChart = ({
           </div>
         </div>
       </div>
-      <div className='flex h-fit w-full items-start justify-start px-1 py-1'>
+      <div className='flex h-fit w-full items-start justify-start  py-1'>
         <Suspense
           fallback={
             <section className='h-[200px] items-start bg-gray-100 w-full sm:w-[350px] md:h-[300px] 2xl:w-[1050px]'></section>
@@ -251,7 +251,7 @@ const LineAreaChart = ({
                   .map((x) => {
                     if (TimeFrame === 'week') {
                       return dayjs(x.dateNTime.slice(0, 10)).format('D MMM');
-                    } else if (TimeFrame === 'month' && Number===12 || TimeFrame === 'month' && Number===60) {
+                    } else if (TimeFrame === 'month' && Number===12 || TimeFrame === 'month' && Number===60 || TimeFrame==='month' && Number===120 || TimeFrame === 'month' && Number === 500) {
                       return dayjs(x.dateNTime.slice(0, 10)).format('MMM YY');
                     }else if (TimeFrame === 'month') {
                       return dayjs(x.dateNTime.slice(0, 10)).format('D MMM');
@@ -262,8 +262,6 @@ const LineAreaChart = ({
                     }
                   }), currentSpotPrice.dateNTime.slice(0, 10)
               ],
-              
-              
               datasets: [
                 {
                   label: `${metal} Spot Prices`,
@@ -283,7 +281,6 @@ const LineAreaChart = ({
                   }).concat([metal === 'Silver' ? currentSpotPrice.silver : currentSpotPrice.gold])
                 }
               ]
-              
             }}
             options={{
               maintainAspectRatio: false,

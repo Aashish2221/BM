@@ -199,7 +199,7 @@ export default function Home({title,description ,
                       alt='ads'
                       priority={false}
                       loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
+                      className='h-[300px] w-[500px] justify-center rounded-lg md:h-[250px]  xl:h-[300px] 2xl:h-[360px]'
                     />
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export default function Home({title,description ,
                       alt='ads'
                       priority={false}
                       loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
+                      className='h-[300px] w-[500px] justify-center rounded-lg md:h-[250px] xl:h-[300px] 2xl:h-[360px]'
                     />
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default function Home({title,description ,
                       alt='ads'
                       priority={false}
                       loading='eager'
-                      className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[380px]'
+                      className='h-[300px] w-[500px] justify-center rounded-lg md:h-[250px] xl:h-[300px] 2xl:h-[380px]'
                     />
                   </div>
                   {/* ******************* GOOGLE ADS CODE GOES HERE ******************* */}
@@ -234,7 +234,7 @@ export default function Home({title,description ,
                   <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
                   <hr className='my-2 w-full' />
                   <Image
-                    className='item-center h-[300px] w-[343px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
+                    className='item-center h-[300px] w-[500px] cursor-pointer md:h-[250px] xl:h-[300px] '
                     onClick={toggleRequestModal}
                     src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
                     height={500}

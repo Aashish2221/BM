@@ -156,7 +156,7 @@ console.log(productData.data.competitorProductPrices)
               />
             </div>
             <div className='px-1 text-center text-white md:mt-8 md:px-4 md:text-left lg:mt-2 lg:-ml-6 lg:pt-9'>
-              <h1 className='mt-2 text-left text-sm font-bold sm:mt-6 md:mt-0 md:text-xl lg:text-xl'>
+              <h1 className='mt-2 text-left text-lg font-bold sm:mt-6 md:mt-0 md:text-xl sm:text-xl'>
                 {data.name}
               </h1>
               <div className='-mt-2 flex flex-row gap-1 sm:m-2 lg:absolute lg:top-10 lg:right-3 xl:right-7'>
@@ -207,13 +207,13 @@ console.log(productData.data.competitorProductPrices)
               <h2 className='text-lg font-semibold md:text-xl '>
                 Compare Prices
               </h2>
-              <p className='flex justify-items-end text-[0.7rem] font-medium md:text-sm'>
+              <p className='flex justify-items-end font-medium text-sm'>
                 Prices last updated :{' '}
                 <span>{data.pulldate.pricePulledHours}</span>
               </p>
               <div className='relative'>
                 <p
-                  className='flex text-[0.7rem] font-medium md:text-sm'
+                  className='flex font-medium text-sm'
                   onMouseEnter={() => setShowTooltip(true)}
                   onMouseLeave={() => setShowTooltip(false)}
                 >

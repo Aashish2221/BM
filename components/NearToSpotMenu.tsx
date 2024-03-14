@@ -2,7 +2,7 @@
   import Link from 'next/link';
 
   export default function NearToSpotMenu(hideNearToSpotMenu: any) {
-
+NearToSpotMenu
     return (
       <div className='flex flex-col gap-2 '>
           <div className='ml-2 mr-10 text-center'> 

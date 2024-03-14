@@ -263,6 +263,7 @@ export type Observation = {
     metatitle: string;
     metaDescription: string;
     code: string;
+    shortDescription: string;
   };
 
   export type DealersReview = {
