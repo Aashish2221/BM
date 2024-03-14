@@ -5,7 +5,7 @@ import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { toCurrency } from '@/utils/utilities';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ProductItem } from '@/interfaces/typeinterfaces';
 
@@ -49,8 +49,9 @@ function GridView({
   return (
     <div
       key={productId}
-      className='relative flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[3px_12px_12px_rgba(0,0,0,0.2)] md:pb-4'
+      className='relative flex flex-col items-center rounded-[13px]  pt-2 pb-3 text-sm shadow-[3px_3px_3px_rgba(0,0,0,0.2)] md:pb-4'
     >
+      <Suspense fallback={<div className='items-left mt-5 bg-gray-400'></div>}>
       <div className='items-left mt-5 hidden md:block' id='Desktopview'>
         <Link href={"/" + shortName} aria-label={productName} prefetch={false}>
           <Image
@@ -77,6 +78,7 @@ function GridView({
           />
         </Link>
       </div> 
+      </Suspense>
       <div
         onMouseEnter={() => setTooltipStatus(3)}
         onMouseLeave={() => setTooltipStatus(0)}

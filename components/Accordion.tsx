@@ -23,7 +23,7 @@ export default function Accordion({ title, children }: AccordionProps) {
       </button>
       <motion.div
         ref={ref}
-        initial={{ height: 0, overflow: "hidden" }}
+        initial={{ height: 0, overflow: "scroll" }}
         animate={{ height: !expanded ? 0 : ref?.current?.scrollHeight }}
       >
         {children}
