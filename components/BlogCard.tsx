@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BsArrowRight } from 'react-icons/bs';
 
-export function BlogCard({ blog }: any) {
+export default function BlogCard({ blog }: any) {
   return (
      <div className='col-span-12 shadow rounded-[10px] mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
         <Link
