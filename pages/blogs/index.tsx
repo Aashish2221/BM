@@ -14,25 +14,25 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
 const pageSize = 8;
 export default function Blogs({
-  title ,
+  title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any[]>([]);
-  let page = 0;
-  let hydrated = false;
-  let hasMore = true;
-  useEffect(()=>{
-    loadMoreBlogs();
-},[])
+  const [blogs, setBlogs] = useState<any>(initialBlogs);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [hydrated, setHydrated] = useState(true);
+  
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
-   (newBlogs.length === 0) ? hasMore = false
-    :(setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]),
-      page = nextPage,
-      hydrated = true)
-    
+    if (newBlogs.length === 0) {
+      setHasMore(false);
+    } else {
+      setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
+      setPage(nextPage);
+      setHydrated(true);
+    }
 };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
@@ -42,9 +42,11 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-
+        {memoizedBlogs.map((blog:any)=>
+          <Link rel="preload" as='image' href={blog.image} />
+        )}
       </Head>
-      {(!hydrated) ? 
+      {hydrated === true ? 
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -119,10 +121,14 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const blog = data.site.blog;
-    const title = blog.page;
-    const description = blog.description;
-    return {props: { title, description,}};
-  };
-
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
+  const pageNumber = 1;
+  const initialBlogs = await getBlogsData(pageSize, pageNumber);
+  const blog = data.site.blog;
+  const title = blog.page;
+  const description = blog.description;
+  return {
+    props: {title, description, initialBlogs}
+  }
+}
