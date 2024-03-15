@@ -111,8 +111,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const pageSize = isMobileDevice ? 3 : 8;
   res.setHeader('Cache-Control','public, s-maxage=10, stale-while-revalidate=59');
   const pageNumber = 1;
-  console.log(pageSize);
-  
   const initialBlogs = await getBlogsData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;

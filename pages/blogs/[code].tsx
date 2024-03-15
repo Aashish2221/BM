@@ -18,44 +18,15 @@ const Blog = ({
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
 
-  const [blogs, setblogs] = useState<any>();
-  const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false));
-    const initFetch = async () => {
-      setStatus('loading');
-      try {
-        const res = await axios.get(
-          `${
-            process.env.BASE_URL
-          }/api/BestBullionDeals/GetBlogDetails?Title=${code?.toString()}`
-        );
-        setblogs(res.data.data);
-        setStatus('success');
-      } catch (error) {
-        setError((error as Error)?.message || 'Api Error');
-        setStatus('error');
-      }
-    };
-    initFetch();
-  }, [code]);
-  
+ 
   function wordCount(text: string) {
     if (text === null) {
       return 0;
     }
     return text.trim().split(/\s+/).length;
   }
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-  if (!blogs) {
+  
+  if (blogData.description.length === 0) {
     return <Spinner />;
   } else {
     return (
