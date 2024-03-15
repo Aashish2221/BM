@@ -15,11 +15,11 @@ const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareMo
 // const BlogCard = dynamic(()=>import('@/components/BlogCard'))
 const pageSize = 3;
 export default function Blogs({
-  title ,
+  title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<any[]>(initialBlogs);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrate, setHydrated]= useState(true)
@@ -46,7 +46,7 @@ export default function Blogs({
         )}
       </Head>
       <Suspense fallback={<BlogSkeleton/>}>
-      {hydrate ?  <BlogSkeleton/> :
+      {!hydrate ?  <BlogSkeleton/> :
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -60,7 +60,16 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {blogs.map((blog:any ) => (
+               <div className='col-span-12 shadow rounded-[10px] mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
+               <Link
+                 href={`/blogs/${blog.code}`}
+                 as={`/blogs/${blog.code}`}
+                 passHref
+                 prefetch={false}
+               >
               <BlogCard key={blog.id} blog={blog} />
+              </Link>
+              </div>
             ))}
           </section>
           </InfiniteScroll>
@@ -81,11 +90,13 @@ export default function Blogs({
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader( 'Cache-Control', 'public, s-maxage=10, stale-while-revalidate=59' );
+  const pageNumber = 1;
+  const initialBlogs = await getBlogsData(pageSize, pageNumber);
   const blog = data.site.blog;
   const title = blog.page;
   const description = blog.description;
   return {
-    props: {title, description}
+    props: {title, description, initialBlogs}
   }
 }
 
@@ -93,13 +104,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
 export function BlogCard({ blog }: any) {
   return (
-     <div className='col-span-12 shadow rounded-[10px] mx-auto mt-6 mb-10 h-[22rem] w-full duration-300 hover:-translate-y-1 hover:scale-105 sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
-        <Link
-          href={`/blogs/${blog.code}`}
-          as={`/blogs/${blog.code}`}
-          passHref
-          prefetch={false}
-        >
+     <>
           <div className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'>
             <Image
               src={blog.image}
@@ -135,7 +140,6 @@ export function BlogCard({ blog }: any) {
               <BsArrowRight className='ml-1 text-primary' size={20} />
             </span>
           </div>
-        </Link>
-      </div>
+          </>
   );
 }
