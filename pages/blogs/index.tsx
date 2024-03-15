@@ -5,7 +5,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import dynamic from 'next/dynamic';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useState } from 'react';
 import SpinnerBlog from '@/components/Spinner';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,8 +16,6 @@ const BlogSkeleton = dynamic(
 const ShareModal = dynamic(
   () => import('@/components/ModalForm/ShareModal/shareModal')
 );
-// const BlogCard = dynamic(()=>import('@/components/BlogCard'))
-const pageSize = 3;
 export default function Blogs({
   title,
   initialBlogs
@@ -31,6 +29,7 @@ export default function Blogs({
 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
+    let pageSize = 8;
     const newBlogs = await getBlogsData(pageSize, nextPage);
     if (newBlogs.length === 0) {
       setHasMore(false);
@@ -67,7 +66,10 @@ export default function Blogs({
               {/* ----------------- blog section ------------- */}
               <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
                 {blogs.map((blog: any) => (
-                  <div key={blog.id} className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full rounded-[10px] shadow duration-300 hover:-translate-y-1 hover:scale-105 sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'>
+                  <div
+                    key={blog.id}
+                    className='col-span-12 mx-auto mt-6 mb-10 h-[22rem] w-full rounded-[10px] shadow duration-300 hover:-translate-y-1 hover:scale-105 sm:col-span-6 sm:mb-20 sm:mt-6 sm:h-[23rem] lg:col-span-4 lg:mb-20 lg:mt-2 lg:h-96 2xl:col-span-3 2xl:h-[22rem]'
+                  >
                     <Link
                       href={`/blogs/${blog.code}`}
                       as={`/blogs/${blog.code}`}
@@ -104,7 +106,9 @@ export default function Blogs({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const isMobileDevice = req.headers['user-agent'] && /Mobi|Android/i.test(req.headers['user-agent']);
+  const pageSize = isMobileDevice ? 3 : 8;
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
