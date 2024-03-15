@@ -11,6 +11,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
 import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
 const pageSize = 8;
 export default function Blogs({
   title ,
@@ -32,6 +33,7 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
+      setHydrated(true);
     }
 };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
@@ -41,7 +43,9 @@ export default function Blogs({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
+
       </Head>
+      {hydrated === true ? 
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -69,8 +73,8 @@ export default function Blogs({
                     height={450}
                     width={800}
                     className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                    loading='eager'
-                    priority
+                    loading='lazy'
+                    // priority
                   />
                 </div>
                 <div className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
@@ -111,6 +115,7 @@ export default function Blogs({
             />
           )}
         </div>
+        : <BlogSkeleton/>}
     </>
   );
 }
