@@ -68,13 +68,11 @@ export default function Blogs({
               >
                 <div className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'>
                   <Image
+                  fill
                     src={blog.image}
                     alt={blog.title}
-                    height={450}
-                    width={800}
                     className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
-                    loading='lazy'
-                    // priority
+                    priority
                   />
                 </div>
                 <div className='px-4 pt-2 sm:pt-3 md:mt-3 md:pt-2 lg:-mt-2 xl:mt-1'>
