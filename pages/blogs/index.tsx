@@ -1,30 +1,28 @@
+import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
+import Image from 'next/image';
 import Link from 'next/link';
 import {useEffect, useMemo, useState } from 'react';
+import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
 import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
+import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import dynamic from 'next/dynamic';
+import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
+import BlogCard from '@/components/BlogCard';
 const pageSize = 8;
-const BlogSkeleton = dynamic(()=>import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton'))
-const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'))
-const BlogCard = dynamic(()=>import('@/components/BlogCard'))
 export default function Blogs({
   title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>();
-  const [blogs, setBlogs] = useState<any>(initialBlogs);
-  const [page, setPage] = useState(1);
+  const [share, setShare] = useState<any>(window.location.href);
+  const [blogs, setBlogs] = useState<any[]>(initialBlogs);
+  const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
-  useEffect(()=>{
-     setShare(window.location.href);
-     setHydrated(true);
-  },[])
+ 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
@@ -33,7 +31,6 @@ export default function Blogs({
     } else {
       setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
-      setHydrated(true);
     }
 };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
@@ -45,10 +42,10 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {memoizedBlogs.map((blog:any)=>
-          <link key={blog.id} rel="preload" as='image' href={blog.image} />
+        <link rel="preload" as='image' href={blog.image} />
         )}
       </Head>
-      {hydrated === true ? 
+      {blogs.length !=0 ? 
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
@@ -62,7 +59,7 @@ export default function Blogs({
           {/* ----------------- blog section ------------- */}
           <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
             {memoizedBlogs.map((blog:any ) => (
-                <BlogCard key={blog.id} blog={blog} />
+              <BlogCard key={blog.id} blog={blog} />
             ))}
           </section>
           </InfiniteScroll>
@@ -91,3 +88,4 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     props: {title, description, initialBlogs}
   }
 }
+
