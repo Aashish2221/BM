@@ -1,18 +1,15 @@
-import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
 import useToggle from '@/hooks/useToggle';
-import Image from 'next/image';
-import Link from 'next/link';
-import {useEffect, useMemo, useState } from 'react';
-import { BsArrowRight } from 'react-icons/bs';
 import Head from 'next/head';
 import data from '@/data';
 import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
-import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
-import BlogCard from '@/components/BlogCard';
+import dynamic from 'next/dynamic';
+import { useMemo, useState } from 'react';
+const BlogSkeleton = dynamic(()=>import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton'))
+const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'))
+const BlogCard = dynamic(()=>import('@/components/BlogCard'))
 const pageSize = 8;
 export default function Blogs({
   title ,initialBlogs
@@ -42,7 +39,7 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {memoizedBlogs.map((blog:any)=>
-        <link rel="preload" as='image' href={blog.image} />
+        <link key={blog.id} rel="preload" as='image' href={blog.image} />
         )}
       </Head>
       {blogs.length !=0 ? 

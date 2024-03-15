@@ -31,6 +31,3 @@ const BlogSkeleton = () => {
   );
 };
 export default BlogSkeleton;
-// const BlogSkeleton = dynamic(()=>import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton'))
-// const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'))
-// const BlogCard = dynamic(()=>import('@/components/BlogCard'))

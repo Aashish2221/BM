@@ -18,7 +18,7 @@ export default function Spinner() {
 
 export function SpinnerBlog() {
     return (
-        <div className="h-[150px] -mt-[100px] overflow-hidden  relative flex flex-col justify-center items-center px-5 text-sm">
+        <div className="h-[150px] -mt-[50px] overflow-hidden  relative flex flex-col justify-center items-center px-5 text-sm">
             <FadeLoader
                 color="#303030"
                 cssOverride={{}}
