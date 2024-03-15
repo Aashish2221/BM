@@ -19,22 +19,20 @@ export default function Blogs({
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any[]>([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
+  let page = 0;
+  let hydrated = false;
+  let hasMore = true;
   useEffect(()=>{
     loadMoreBlogs();
 },[])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
-    if (newBlogs.length === 0) {
-      setHasMore(false);
-    } else {
-      setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
-      setPage(nextPage);
-      setHydrated(true);
-    }
+   (newBlogs.length === 0) ? hasMore = false
+    :(setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]),
+      page = nextPage,
+      hydrated = true)
+    
 };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   const memoizedBlogs = useMemo(() => blogs, [blogs]);
@@ -46,7 +44,7 @@ export default function Blogs({
         <link rel='canonical' href={canonicalUrl} />
 
       </Head>
-      {hydrated === true ? 
+      {(!hydrated) ? 
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog
