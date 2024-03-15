@@ -11,20 +11,20 @@ import Link from 'next/link';
 const BlogSkeleton = dynamic(()=>import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton'))
 const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'))
 const BlogCard = dynamic(()=>import('@/components/BlogCard'))
-const pageSize = 8;
+
 export default function Blogs({
   title ,
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrate, setHydrated]= useState(true)
   useEffect(()=>{
      const data = async()=>{
       const pageNumber = 1;
-      const initialBlogs = await getBlogsData(pageSize, pageNumber);
+      const initialBlogs = await getBlogsData(3, pageNumber);
       setBlogs(initialBlogs);
       setHydrated(false)
      }
@@ -32,7 +32,7 @@ export default function Blogs({
   },[])
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
-    const newBlogs = await getBlogsData(pageSize, nextPage);
+    const newBlogs = await getBlogsData(3, nextPage);
     if (newBlogs.length === 0) {
       setHasMore(false);
     } else {
