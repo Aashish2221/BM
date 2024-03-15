@@ -15,8 +15,8 @@ export function BlogCard({ blog }: any) {
             <Image
               src={blog.image}
               alt={blog.title}
-              height={450}
-              width={800}
+              height={300}
+              width={400}
               className='h-40 w-full rounded-[17px] px-1 sm:h-44 md:h-48 lg:h-48 xl:h-52'
               loading='eager'
               priority
