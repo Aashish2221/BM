@@ -1,15 +1,10 @@
-import ShareModal from '@/components/ModalForm/ShareModal/shareModal';
-import useToggle from '@/hooks/useToggle';
-import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect, useMemo, useState } from 'react';
-import { BsArrowRight } from 'react-icons/bs';
+import { useMemo, useState } from 'react';
 import Head from 'next/head';
 import data from '@/data';
 import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
-import { Blog } from '@/interfaces/typeinterfaces';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
 import { BlogCard } from '@/components/BlogCard';
@@ -17,8 +12,6 @@ const pageSize = 8;
 export default function Blogs({
   title ,initialBlogs
 }: InferGetServerSidePropsType<typeof getServerSideProps> | any) {
-  const [shareModal, toggleShareModal] = useToggle();
-  const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any>(initialBlogs);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -55,14 +48,7 @@ export default function Blogs({
             ))}
           </section>
           {/* </InfiniteScroll> */}
-          {shareModal && (
-            <ShareModal
-              closeModal={toggleShareModal}
-              shareUrl={share}
-              p1={''}
-              p2={''}
-            />
-          )}
+         
         </div>
         : <BlogSkeleton/>}
     </>
