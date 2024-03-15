@@ -43,7 +43,7 @@ export default function Blogs({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {memoizedBlogs.map((blog:any)=>
-          <Link rel="preload" as='image' href={blog.image} />
+          <Link key={blog.id} rel="preload" as='image' href={blog.image} />
         )}
       </Head>
       {hydrated === true ? 
