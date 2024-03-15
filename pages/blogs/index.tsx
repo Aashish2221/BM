@@ -1,12 +1,13 @@
 import useToggle from '@/hooks/useToggle';
 import Head from 'next/head';
 import data from '@/data';
-import { SpinnerBlog } from '@/components/Spinner';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogsData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import dynamic from 'next/dynamic';
 import { useMemo, useState } from 'react';
+// import BlogSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSkeleton';
+const SpinnerBlog = dynamic(()=>import('@/components/Spinner'))
 const BlogSkeleton = dynamic(()=>import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton'))
 const ShareModal = dynamic(()=>import('@/components/ModalForm/ShareModal/shareModal'))
 const BlogCard = dynamic(()=>import('@/components/BlogCard'))
@@ -42,7 +43,7 @@ export default function Blogs({
         <link key={blog.id} rel="preload" as='image' href={blog.image} />
         )}
       </Head>
-      {blogs.length !=0 ? 
+      {blogs.length > 0 ? 
         <div className='text-dark-black'>
           <h1 className='semibold container mx-auto mt-14 text-xl font-medium md:mt-16 md:text-2xl lg:mt-5'>
             Blog

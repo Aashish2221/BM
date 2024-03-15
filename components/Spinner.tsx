@@ -1,6 +1,6 @@
 import FadeLoader from "react-spinners/FadeLoader";
 
-export default function Spinner() {
+export function Spinner() {
     return (
         <div className="h-screen -mt-12 w-full relative flex flex-col justify-center items-center px-5 text-sm">
             <FadeLoader
@@ -16,9 +16,9 @@ export default function Spinner() {
     )
 }
 
-export function SpinnerBlog() {
+export default function SpinnerBlog() {
     return (
-        <div className="h-[150px] -mt-[50px] overflow-hidden  relative flex flex-col justify-center items-center px-5 text-sm">
+        <div className="h-[50px] mb-[100px] -mt-12 w-full relative flex flex-col justify-start items-center px-5 text-sm">
             <FadeLoader
                 color="#303030"
                 cssOverride={{}}

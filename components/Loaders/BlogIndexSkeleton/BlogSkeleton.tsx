@@ -1,4 +1,3 @@
-import { Card, CardBody, CardFooter } from '@material-tailwind/react';
 import { useState } from 'react';
 
 const BlogSkeleton = () => {
