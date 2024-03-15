@@ -40,7 +40,7 @@ const Blog = ({
         <div className='grid-col container mx-auto grid h-full w-full'>
           <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
-              <span className='lg:grid-col lg:grid gap-1'>
+              {/* <span className='lg:grid-col lg:grid gap-1'> */}
                 <span className='h-full w-full'>
                   <Image
                     src={blogData?.image ?? ''}
@@ -80,7 +80,7 @@ const Blog = ({
                 </div>
 
                 {/*-------------------------- Blog Content End --------------------- */}
-              </span>
+              {/* </span> */}
             </div>
             {/* --------------------- Blog Side Card------------------- */}
             <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
