@@ -20,20 +20,19 @@ export default function Blogs({
   const [shareModal, toggleShareModal] = useToggle();
   const [share, setShare] = useState<any>(window.location.href);
   const [blogs, setBlogs] = useState<any[]>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hydrate, setHydrated]= useState(true)
-  useEffect(()=>{
-     loadMoreBlogs();
-  },[])
+ 
   const loadMoreBlogs = async () => {
     const nextPage = page + 1;
     const newBlogs = await getBlogsData(pageSize, nextPage);
-
-      setBlogs((prevBlogs: any) => [...prevBlogs, ...newBlogs]);
+    if (newBlogs.length === 0) {
+      setHasMore(false);
+    } else {
+      setBlogs((prevBlogs:any) => [...prevBlogs, ...newBlogs]);
       setPage(nextPage);
-      setHydrated(false);
-    
+    }
 };
   const canonicalUrl = data.WEBSITEUrl + '/blogs';
   return (
