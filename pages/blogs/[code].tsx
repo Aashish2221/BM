@@ -1,11 +1,10 @@
 import Spinner from '@/components/Spinner';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
-import axios from 'axios';
+
 import data from '@/data';
 
 const Blog = ({
@@ -14,11 +13,8 @@ const Blog = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { code } = router.query;
-
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-
- 
   function wordCount(text: string) {
     if (text === null) {
       return 0;
@@ -41,7 +37,7 @@ const Blog = ({
           <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
               {/* <span className='lg:grid-col lg:grid gap-1'> */}
-                <span className='h-full w-full'>
+                {/* <span className='h-full w-full'> */}
                   <Image
                     src={blogData?.image ?? ''}
                     alt={blogData?.title}
@@ -50,7 +46,7 @@ const Blog = ({
                     className='rounded-md lg:w-full'
                     loading='lazy'
                   />
-                </span>
+                {/* </span> */}
                 {/*-------------------------- Blog Content Start --------------------- */}
                 {/* ------ heading ------- */}
                 <header
@@ -71,13 +67,7 @@ const Blog = ({
                 </section>
                 {/* ----- sub-heading and paragraph ----- */}
 
-                <div
-                  id='innerText'
-                  className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-                  dangerouslySetInnerHTML={{ __html: blogData?.description }}
-                >
-                  
-                </div>
+               {<Description blogData={blogData} />}
 
                 {/*-------------------------- Blog Content End --------------------- */}
               {/* </span> */}
@@ -143,3 +133,13 @@ export const getServerSideProps: GetServerSideProps<{
     }
   };
 };
+
+export function Description({ blogData }:any) {
+  return (
+    <div
+      id='innerText'
+      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+      dangerouslySetInnerHTML={{ __html: blogData?.description }}
+    ></div>
+  );
+}
