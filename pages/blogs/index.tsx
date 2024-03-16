@@ -107,7 +107,7 @@ export default function Blogs({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const isMobileDevice = req.headers['user-agent'] && /Mobi|Android|Ipad/i.test(req.headers['user-agent']);
+  const isMobileDevice = req.headers['user-agent'] && /Mobi|Android/i.test(req.headers['user-agent']);
   const pageSize = isMobileDevice ? 3 : 8;
   res.setHeader('Cache-Control','public, s-maxage=10, stale-while-revalidate=59');
   const pageNumber = 1;
