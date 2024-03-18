@@ -20,10 +20,6 @@ const Blog = ({
     }
     return text.trim().split(/\s+/).length;
   }
-  if (!blogData || !blogData.description) {
-    return <Spinner />;
-  }
-
   return (
     <>
       <Head>
@@ -32,6 +28,7 @@ const Blog = ({
         <link rel='canonical' href={canonicalUrl} />
         <link rel="preload" as='image' href={blogData.image} />
       </Head>
+      {blogData.description.length === 0 ? <Spinner /> :
         <div className='grid-col container mx-auto grid h-full w-full'>
           <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
@@ -90,6 +87,7 @@ const Blog = ({
             </div>
           </div>
         </div>
+       }
     </>
   );
 };
@@ -120,7 +118,7 @@ const Images = ({ blogData }: any) => {
     <img
       src={blogData.image}
       alt={blogData.title}
-      className='rounded-md lg:w-full'
+      className='rounded-md p-4 w-full'
       loading='lazy'
     />
   );
