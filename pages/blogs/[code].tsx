@@ -78,8 +78,8 @@ const Blog = ({
                     dangerouslySetInnerHTML={{
                       __html:
                         blogData && wordCount(blogData?.description) <= 29
-                          ? blogData?.description
-                          : blogData?.description.slice(0, 500) + '...'
+                          ? blogData?.shortDescription
+                          : blogData?.shortDescription.slice(0, 500) + '...'
                     }}
                   ></p>
                 </div>
