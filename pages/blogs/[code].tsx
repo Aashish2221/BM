@@ -11,18 +11,11 @@ const Blog = ({
   description,
   blogData
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-  const { code } = router.query;
-  const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
-  const canonicalUrl = data.WEBSITEUrl + formattedPath;
+ 
  
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
-        <link rel='canonical' href={canonicalUrl} />
-      </Head>
+     
       {blogData.description.length === 0 ? <Spinner /> :
         <div className='grid-col container mx-auto grid h-full w-full'>
           <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
