@@ -22,7 +22,6 @@ const Blog = ({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        <link rel="preload" as='image' href={blogData.image} />
       </Head>
       {blogData.description.length === 0 ? <Spinner /> :
         <div className='grid-col container mx-auto grid h-full w-full'>
