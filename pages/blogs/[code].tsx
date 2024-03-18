@@ -87,7 +87,7 @@ const Images = ({ blogData }: any) => {
     <img
       src={blogData.image}
       alt={blogData.title}
-      className='absolute inset-0 w-full h-full object-cover rounded-md'
+      className='rounded-md lg:w-full'
       loading='lazy'
     />
   );
@@ -96,10 +96,10 @@ const Images = ({ blogData }: any) => {
 const BlogSideCard = ({blogData}:any)=>{
   return(
     <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
-    <img
+   <img
       src={blogData.image}
       alt={blogData.title}
-      className='absolute inset-0 w-full h-full object-cover rounded-md'
+      className='rounded-md p-4 lg:w-full'
       loading='lazy'
     />
     <div className='px-2'>
