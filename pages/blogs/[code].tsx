@@ -14,12 +14,7 @@ const Blog = ({
   const { code } = router.query;
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-  function wordCount(text: string) {
-    if (text === null) {
-      return 0;
-    }
-    return text.trim().split(/\s+/).length;
-  }
+ 
   return (
     <>
       <Head>
@@ -57,33 +52,7 @@ const Blog = ({
             </div>
             {/* --------------------- Blog Side Card------------------- */}
             <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-              <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
-                <Images blogData={blogData}/>
-                <div className='px-2'>
-                  <header className='text-md pt-2 font-semibold text-primary'>
-                    <h5>{blogData?.title}</h5>
-                  </header>
-                  <section className='font-muted pt-4 text-xs font-bold italic text-[#5c5b5b]'>
-                    <h6>
-                      By BullionMentor on{' '}
-                      {new Intl.DateTimeFormat('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric'
-                      }).format(new Date(blogData.publishdate))}
-                    </h6>
-                  </section>
-                  <p
-                    className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        blogData && wordCount(blogData?.description) <= 29
-                          ? blogData?.shortDescription
-                          : blogData?.shortDescription.slice(0, 500) + '...'
-                    }}
-                  ></p>
-                </div>
-              </div>
+              <BlogSideCard blogData={blogData}/>
             </div>
           </div>
         </div>
@@ -123,4 +92,41 @@ const Images = ({ blogData }: any) => {
     />
   );
 };
+
+const BlogSideCard = ({blogData}:any)=>{
+  return(
+    <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
+    <img
+      src={blogData.image}
+      alt={blogData.title}
+      className='rounded-md p-4 lg:w-full'
+      loading='lazy'
+    />
+    <div className='px-2'>
+      <header className='text-md pt-2 font-semibold text-primary'>
+        <h5>{blogData?.title}</h5>
+      </header>
+      <section className='font-muted pt-4 text-xs font-bold italic text-[#5c5b5b]'>
+        <h6>
+          By BullionMentor on{' '}
+          {new Intl.DateTimeFormat('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          }).format(new Date(blogData.publishdate))}
+        </h6>
+      </section>
+      <p
+        className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'
+        dangerouslySetInnerHTML={{
+          __html:
+            blogData.shortDescription <= 29
+              ? blogData.shortDescription
+              : blogData.shortDescription.slice(0, 500) + '...'
+        }}
+      ></p>
+    </div>
+  </div>
+  )
+}
 
