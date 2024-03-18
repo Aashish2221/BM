@@ -3,8 +3,9 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-import dynamic from 'next/dynamic';
-const Spinner = dynamic(()=>import('@/components/Spinner'))
+import React from 'react';
+const Spinner = React.lazy(()=>import('@/components/Spinner'))
+const Description = React.lazy(()=>import('@/components/BlogDescription'))
 const Blog = ({
   title,
   description,
@@ -71,16 +72,6 @@ export const getServerSideProps: GetServerSideProps = async (res) => {
     props: {title, description, blogData: blogData }
   };
 };
-
-export function Description({ blogData }: any) {
-  return (
-    <div
-      id='innerText'
-      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-      dangerouslySetInnerHTML={{ __html: blogData?.description }}
-    ></div>
-  );
-}
 
 const Images = ({ blogData }: any) => {
   return (
