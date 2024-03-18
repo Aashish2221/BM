@@ -4,27 +4,26 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
 import React from 'react';
-const Spinner = React.lazy(()=>import('@/components/Spinner'))
-const Description = React.lazy(()=>import('@/components/BlogDescription'))
+import { BlogSideCard } from '@/components/BlogDescription';
+const Spinner = React.lazy(() => import('@/components/Spinner'));
+const Description = React.lazy(() => import('@/components/BlogDescription'));
 const Blog = ({
   title,
   description,
   blogData
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
- 
- 
   return (
     <>
-     
-      {blogData.description.length === 0 ? <Spinner /> :
-        <div className='grid-col container mx-auto grid h-full w-full'>
-          <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
+      {blogData.description.length === 0 ? (
+        <Spinner />
+      ) : (
+        <div className='grid-col container mx-auto'>
+          <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
-              <span className='lg:grid-col lg:grid gap-1'>
-                <Images blogData={blogData}/>
+              <span className='lg:grid-col gap-1 lg:grid'>
+                <Images blogData={blogData} />
                 {/* ------ heading ------- */}
-                <header
-                  className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
+                <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData?.title}</h1>
                 </header>
                 <section className='pt-4 text-xs font-bold italic text-[#5c5b5b]'>
@@ -38,18 +37,26 @@ const Blog = ({
                   </h6>
                 </section>
                 {/* ----- sub-heading and paragraph ----- */}
-                {<Description blogData={blogData}/>}
+                {<Description blogData={blogData} />}
 
                 {/*-------------------------- Blog Content End --------------------- */}
               </span>
             </div>
             {/* --------------------- Blog Side Card------------------- */}
             <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-              <BlogSideCard blogData={blogData}/>
+              <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
+                <img
+                  src={blogData.image}
+                  alt={blogData.title}
+                  className='rounded-md p-4 lg:w-full'
+                  loading='lazy'
+                />
+                <BlogSideCard blogData={blogData} />
+              </div>
             </div>
           </div>
         </div>
-       }
+      )}
     </>
   );
 };
@@ -61,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (res) => {
   const title = blogData.metatitle;
   const description = blogData.metaDescription;
   return {
-    props: {title, description, blogData: blogData }
+    props: { title, description, blogData: blogData }
   };
 };
 
@@ -75,41 +82,3 @@ const Images = ({ blogData }: any) => {
     />
   );
 };
-
-const BlogSideCard = ({blogData}:any)=>{
-  return(
-    <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
-   <img
-      src={blogData.image}
-      alt={blogData.title}
-      className='rounded-md p-4 lg:w-full'
-      loading='lazy'
-    />
-    <div className='px-2'>
-      <header className='text-md pt-2 font-semibold text-primary'>
-        <h5>{blogData?.title}</h5>
-      </header>
-      <section className='font-muted pt-4 text-xs font-bold italic text-[#5c5b5b]'>
-        <h6>
-          By BullionMentor on{' '}
-          {new Intl.DateTimeFormat('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-          }).format(new Date(blogData.publishdate))}
-        </h6>
-      </section>
-      <p
-        className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'
-        dangerouslySetInnerHTML={{
-          __html:
-            blogData.shortDescription <= 29
-              ? blogData.shortDescription
-              : blogData.shortDescription.slice(0, 500) + '...'
-        }}
-      ></p>
-    </div>
-  </div>
-  )
-}
-
