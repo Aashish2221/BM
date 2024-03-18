@@ -118,7 +118,7 @@ const Images = ({ blogData }: any) => {
     <img
       src={blogData.image}
       alt={blogData.title}
-      className='rounded-md p-4 w-full'
+      className='rounded-md lg:w-full'
       loading='lazy'
     />
   );
