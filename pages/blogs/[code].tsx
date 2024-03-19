@@ -70,7 +70,7 @@ const Blog = ({
               />
               <p className='p-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>
                 {blogData.shortDescription.slice(0, 500)}
-              </p>{' '}
+              </p>
             </div>
           </div>
         </div>
@@ -90,13 +90,3 @@ export const getServerSideProps: GetServerSideProps = async (res) => {
   };
 };
 
-const Images = ({ blogData }: any) => {
-  return (
-    <img
-      src={blogData.image}
-      alt={blogData.title}
-      className='rounded-md lg:w-full'
-      loading='lazy'
-    />
-  );
-};
