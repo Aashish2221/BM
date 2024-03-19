@@ -5,7 +5,6 @@ import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
 import React from 'react';
 import { BlogSideCard } from '@/components/BlogDescription';
-import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
 const Description = React.lazy(() => import('@/components/BlogDescription'));
 const Blog = ({
   title,
@@ -24,9 +23,7 @@ const Blog = ({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
       </Head>
-      {blogData.description.length === 0 ? (
-        <BlogSlugSkeleton />
-      ) : (
+      
         <div className='grid-col container mx-auto'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
@@ -66,7 +63,6 @@ const Blog = ({
             </div>
           </div>
         </div>
-      )}
     </>
   );
 };
