@@ -3,8 +3,9 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BlogSideCard } from '@/components/BlogDescription';
+import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
 const Description = React.lazy(() => import('@/components/BlogDescription'));
 const Blog = ({
   title,
@@ -16,6 +17,12 @@ const Blog = ({
 
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
+  const [loading, setLoading] = useState(true);
+  useEffect(()=>{
+     setTimeout(()=>{
+       setLoading(false)
+     },500)
+  },[])
   return (
     <>
       <Head>
@@ -23,7 +30,7 @@ const Blog = ({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
       </Head>
-      
+      {loading ? <BlogSlugSkeleton /> :
         <div className='grid-col container mx-auto'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
@@ -63,6 +70,7 @@ const Blog = ({
             </div>
           </div>
         </div>
+        }
     </>
   );
 };
