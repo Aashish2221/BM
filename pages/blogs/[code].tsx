@@ -5,6 +5,7 @@ import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 const Description = dynamic(() => import('@/components/BlogDescription'));
 const Blog = ({
   title,
@@ -16,6 +17,13 @@ const Blog = ({
 
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
+  const formattedPublishDate = useMemo(() => {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(new Date(blogData.publishdate));
+  }, [blogData.publishdate]);
 
   return (
     <>
@@ -37,27 +45,22 @@ const Blog = ({
                 className='rounded-md lg:w-full'
                 loading='lazy'
               />
-              {/* ------ heading ------- */}
+              {/* heading */}
               <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                 <h1>{blogData?.title}</h1>
               </header>
+              {/* author and date */}
               <section className='pt-4 text-xs font-bold italic text-[#5c5b5b]'>
                 <h6>
-                  By BullionMentor on{' '}
-                  {new Intl.DateTimeFormat('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  }).format(new Date(blogData.publishdate))}
+                  By BullionMentor on {formattedPublishDate}
                 </h6>
               </section>
-              {/* ----- sub-heading and paragraph ----- */}
+              {/* sub-heading and paragraph */}
               <Description blogData={blogData} />
-
-              {/*-------------------------- Blog Content End --------------------- */}
+              {/* Blog Content End */}
             </span>
           </div>
-          {/* --------------------- Blog Side Card------------------- */}
+          {/* Blog Side Card */}
           <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
             <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
               <Image
