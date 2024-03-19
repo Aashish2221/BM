@@ -3,29 +3,48 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BlogSideCard } from '@/components/BlogDescription';
-const Spinner = React.lazy(() => import('@/components/Spinner'));
+import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
+import axios from 'axios';
 const Description = React.lazy(() => import('@/components/BlogDescription'));
 const Blog = ({
   title,
   description,
-  blogData
+  // blogData
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { code } = router.query;
 
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
+  const [loading, setLoading] = useState(true);
+  const [blogData, setBlogData] = useState<any>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogDetails?Title=${code?.toString()}`
+        );
+        setBlogData(res.data.data);
+      } catch (error) {
+        console.error('Error fetching blog data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [code]);
   return (
     <>
-    <Head>
-          <title>{title}</title>
-          <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
-          <link rel='canonical' href={canonicalUrl} />
-        </Head>
-      {blogData.description.length === 0 ? (
-        <Spinner />
+      <Head>
+        <title>{title}</title>
+        <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
+        <link rel='canonical' href={canonicalUrl} />
+      </Head>
+      {loading? (
+        <BlogSlugSkeleton />
       ) : (
         <div className='grid-col container mx-auto'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
