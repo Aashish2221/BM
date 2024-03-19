@@ -17,20 +17,15 @@ const Blog = ({
 
   const formattedPath = router.asPath.replace(`/blogs?.Title = ${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-  const [loading, setLoading] = useState(true);
-  useEffect(()=>{
-     setTimeout(()=>{
-       setLoading(false)
-     },1000)
-  },[])
+  
   return (
     <>
       <Head>
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
+        <link rel="preload" as='image' href={blogData.image} />
       </Head>
-      {/* {loading ? <BlogSlugSkeleton /> : */}
         <div className='grid-col container mx-auto'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
@@ -51,8 +46,7 @@ const Blog = ({
                   </h6>
                 </section>
                 {/* ----- sub-heading and paragraph ----- */}
-                {loading ? <BlogSlugSkeleton /> :
-                <Description blogData={blogData} />}
+                <Description blogData={blogData} />
 
                 {/*-------------------------- Blog Content End --------------------- */}
               </span>
@@ -71,7 +65,6 @@ const Blog = ({
             </div>
           </div>
         </div>
-        {/* } */}
     </>
   );
 };
