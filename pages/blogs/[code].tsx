@@ -36,9 +36,7 @@ const Blog = ({
                     priority
                   />
                 {/* </span> */}
-                {/*-------------------------- Blog Content Start --------------------- */}
-                {/* ------ heading ------- */}
-                <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
+=                <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData?.title}</h1>
                 </header>
                 <section className='pt-4 text-xs font-bold italic text-[#5c5b5b]'>
@@ -51,35 +49,16 @@ const Blog = ({
                     }).format(new Date(blogData.publishdate))}
                   </h6>
                 </section>
-                {/* ----- sub-heading and paragraph ----- */}
                 <div
                   id='innerText'
                   className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
                   dangerouslySetInnerHTML={{ __html: blogData?.description }}
                 >    
                 </div>
-                {/*-------------------------- Blog Content End --------------------- */}
               </span>
             </div>
-            {/* --------------------- Blog Side Card------------------- */}
             <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-              <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
-                <Image
-                  src={blogData?.image ?? ''}
-                  alt={blogData?.title}
-                  height={800}
-                  width={800}
-                  className='rounded-md lg:w-full'
-                  loading='eager'
-                  priority
-                />
-                <div className='px-2'>
-                  <header className='text-md pt-2 font-semibold text-primary'>
-                    <h5>{blogData?.title}</h5>
-                  </header>
-                  <p className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
-                </div>
-              </div>
+              <BlogSideCard blogData={blogData}/>
             </div>
           </div>
         </div>
@@ -93,7 +72,27 @@ export const getServerSideProps: GetServerSideProps = async (res) => {
   const blogData = await getBlogDetails(code as string);
   const title = blogData.metatitle;
   const description = blogData.metaDescription
-  return { props: {title , description ,blogData: blogData}};
+  return {props: {title , description ,blogData: blogData}};
 };
 
-
+export const BlogSideCard = ({blogData}:any)=>{
+  return(
+    <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
+    <Image
+      src={blogData?.image ?? ''}
+      alt={blogData?.title}
+      height={800}
+      width={800}
+      className='rounded-md lg:w-full'
+      loading='eager'
+      priority
+    />
+    <div className='px-2'>
+      <header className='text-md pt-2 font-semibold text-primary'>
+        <h5>{blogData?.title}</h5>
+      </header>
+      <p className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
+    </div>
+  </div>
+  )
+}
