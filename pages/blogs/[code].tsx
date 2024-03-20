@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
+import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
 
 const Blog = ({
   title,
@@ -22,13 +23,14 @@ const Blog = ({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {blogData.image && (
-          <link rel="preload" as='image' href={blogData.image} />
+          <link rel='preload' as='image' href={blogData.image} />
         )}
       </Head>
-      <div className='grid-col container mx-auto grid h-full w-full'>
-        <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
+      {blogData.length === 0 ? <BlogSlugSkeleton /> :
+      <div className='grid-col container mx-auto grid'>
+        <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
           <div className='col-span-12 md:col-span-8'>
-            <span className='lg:grid-col lg:grid gap-1'>
+            <span className='lg:grid-col gap-1 lg:grid'>
               {blogData.image && (
                 <Image
                   src={blogData.image}
@@ -54,45 +56,46 @@ const Blog = ({
                 </h6>
               </section>
               <div
-    id='innerText'
-    className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-    dangerouslySetInnerHTML={{ __html: blogData?.description }}
-  ></div>
+                id='innerText'
+                className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+                dangerouslySetInnerHTML={{ __html: blogData?.description }}
+              ></div>
             </span>
           </div>
           <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-            <BlogSideCard blogData={blogData}/>
+            <BlogSideCard blogData={blogData} />
           </div>
         </div>
       </div>
+      }
     </>
   );
-}
-
+};
 export default Blog;
-
 
 export const getServerSideProps: GetServerSideProps = async (res) => {
   const code = res.params?.code as string;
   const blogData = await getBlogDetails(code as string);
   const title = blogData.metatitle;
-  const description = blogData.metaDescription
-  return {props: {title , description ,blogData: blogData}};
+  const description = blogData.metaDescription;
+  return { props: { title, description, blogData } };
 };
 
-export const BlogSideCard = ({blogData}:any)=>{
-  return(
+export const BlogSideCard = ({ blogData }: any) => {
+  return (
     <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
-    <Image
-      src={blogData?.image ?? ''}
-      alt={blogData?.title}
-      height={800}
-      width={800}
-      className='rounded-md p-4 lg:w-full'
-      loading='eager'
-      priority
-    />
-      <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
-  </div>
-  )
-  }
+      <Image
+        src={blogData?.image ?? ''}
+        alt={blogData?.title}
+        height={800}
+        width={800}
+        className='rounded-md p-4 lg:w-full'
+        loading='eager'
+        priority
+      />
+      <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>
+        {blogData.shortDescription}
+      </p>
+    </div>
+  );
+};
