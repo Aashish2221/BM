@@ -5,16 +5,31 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
 import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
+import { useState, useEffect } from 'react';
 
 const Blog = ({
   title,
   description,
   blogData
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [showDescription, setShowDescription] = useState(false);
   const router = useRouter();
   const { code } = router.query;
   const formattedPath = router.asPath.replace(`/blogs?.Title=${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const blogDetails = await getBlogDetails(`${code}`);
+        setShowDescription(true);
+      } catch (error) {
+        console.error('Error fetching blog details:', error);
+      }
+    };
+
+    fetchData();
+  }, [code]); // Fetch data whenever the router query parameter 'code' changes
 
   return (
     <>
@@ -55,11 +70,7 @@ const Blog = ({
                   }).format(new Date(blogData.publishdate))}
                 </h6>
               </section>
-              <div
-                id='innerText'
-                className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-                dangerouslySetInnerHTML={{ __html: blogData?.description }}
-              ></div>
+              {showDescription && <BlogDescription blogData={blogData} />}
             </span>
           </div>
           <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
@@ -74,11 +85,16 @@ const Blog = ({
 export default Blog;
 
 export const getServerSideProps: GetServerSideProps = async (res) => {
-  const code = res.params?.code as string;
-  const blogData = await getBlogDetails(code as string);
-  const title = blogData.metatitle;
-  const description = blogData.metaDescription;
-  return { props: { title, description, blogData } };
+  try {
+    const code = res.params?.code as string;
+    const blogData = await getBlogDetails(code);
+    const title = blogData.metatitle;
+    const description = blogData.metaDescription;
+    return { props: { title, description, blogData } };
+  } catch (error) {
+    console.error('Error fetching server-side props:', error);
+    return { props: { title: '', description: '', blogData: [] } };
+  }
 };
 
 export const BlogSideCard = ({ blogData }: any) => {
@@ -99,3 +115,14 @@ export const BlogSideCard = ({ blogData }: any) => {
     </div>
   );
 };
+
+export const BlogDescription = ({ blogData }: any)=>
+{
+  return (
+    <div
+      id='innerText'
+      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+      dangerouslySetInnerHTML={{ __html: blogData?.description }}
+    ></div>
+  )
+}
