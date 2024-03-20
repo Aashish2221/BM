@@ -36,7 +36,7 @@ const Blog = ({
                     priority
                   />
                 {/* </span> */}
-=                <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
+                <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData?.title}</h1>
                 </header>
                 <section className='pt-4 text-xs font-bold italic text-[#5c5b5b]'>
