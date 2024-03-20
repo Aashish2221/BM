@@ -1,11 +1,8 @@
-import Spinner from '@/components/Spinner';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
-import axios from 'axios';
 import data from '@/data';
 
 const Blog = ({
@@ -67,13 +64,11 @@ const Blog = ({
                   </h6>
                 </section>
                 {/* ----- sub-heading and paragraph ----- */}
-
                 <div
                   id='innerText'
                   className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
                   dangerouslySetInnerHTML={{ __html: blogData?.description }}
-                >
-                  
+                >    
                 </div>
 
                 {/*-------------------------- Blog Content End --------------------- */}
@@ -106,13 +101,13 @@ const Blog = ({
                   </section>
                   <p
                     className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        blogData && wordCount(blogData?.description) <= 29
-                          ? blogData?.description
-                          : blogData?.description.slice(0, 500) + '...'
-                    }}
-                  ></p>
+                    // dangerouslySetInnerHTML={{
+                    //   __html:
+                    //     blogData && wordCount(blogData?.description) <= 29
+                    //       ? blogData?.description
+                    //       : blogData?.description.slice(0, 500) + '...'
+                    // }}
+                  >{blogData.shortDescription}</p>
                 </div>
               </div>
             </div>
@@ -123,11 +118,7 @@ const Blog = ({
   }
 export default Blog;
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  blogData: Awaited<ReturnType<typeof getBlogDetails>>;
-}> = async (res) => {
+export const getServerSideProps: GetServerSideProps = async (res) => {
   const code = res.params?.code as string;
   const blogData = await getBlogDetails(code as string);
   const title = blogData.metatitle;
