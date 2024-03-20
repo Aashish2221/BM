@@ -77,16 +77,13 @@ export const BlogSideCard = ({blogData}:any)=>{
       alt={blogData?.title}
       height={800}
       width={800}
-      className='rounded-md lg:w-full'
+      className='rounded-md p-4 lg:w-full'
       loading='eager'
       priority
     />
-    <div className='px-2'>
-      <header className='text-md pt-2 font-semibold text-primary'>
-        <h5>{blogData?.title}</h5>
-      </header>
-      <p className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
-    </div>
+    {/* <div className='px-2'> */}
+      <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
+    {/* </div> */}
   </div>
   )
 }
