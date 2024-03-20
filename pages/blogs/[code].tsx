@@ -24,7 +24,6 @@ const Blog = ({
           <div className='sm:container mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
               <span className='lg:grid-col lg:grid gap-1'>
-                {/* <span className='h-full w-full'> */}
                   <Image
                     src={blogData?.image ?? ''}
                     alt={blogData?.title}
@@ -34,7 +33,6 @@ const Blog = ({
                     loading='eager'
                     priority
                   />
-                {/* </span> */}
                 <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData?.title}</h1>
                 </header>
@@ -62,6 +60,8 @@ const Blog = ({
 export default Blog;
 
 export const getServerSideProps: GetServerSideProps = async (res) => {
+  console.log(10);
+  
   const code = res.params?.code as string;
   const blogData = await getBlogDetails(code as string);
   const title = blogData.metatitle;
@@ -81,13 +81,10 @@ export const BlogSideCard = ({blogData}:any)=>{
       loading='eager'
       priority
     />
-    {/* <div className='px-2'> */}
       <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
-    {/* </div> */}
   </div>
   )
-}
-
+  }
 export const BlogDescription = ({blogData}:any)=>{
   return(
     <div
