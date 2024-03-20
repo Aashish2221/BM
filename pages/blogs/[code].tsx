@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-
+import React from 'react';
+const BlogDescription = React.lazy(()=>import('@/components/BlogDescription'))
 const Blog = ({
   title , description ,
   blogData
@@ -49,12 +50,7 @@ const Blog = ({
                     }).format(new Date(blogData.publishdate))}
                   </h6>
                 </section>
-                <div
-                  id='innerText'
-                  className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-                  dangerouslySetInnerHTML={{ __html: blogData?.description }}
-                >    
-                </div>
+               <BlogDescription blogData={blogData} />
               </span>
             </div>
             <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
