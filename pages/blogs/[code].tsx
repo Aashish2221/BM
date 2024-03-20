@@ -4,8 +4,6 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-import React from 'react';
-const BlogDescription = React.lazy(()=>import('@/components/BlogDescription'))
 const Blog = ({
   title , description ,
   blogData
@@ -90,5 +88,15 @@ export const BlogSideCard = ({blogData}:any)=>{
       <p className='pt-2 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>{blogData.shortDescription}</p>
     </div>
   </div>
+  )
+}
+
+export const BlogDescription = ({blogData}:any)=>{
+  return(
+    <div
+    id='innerText'
+    className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+    dangerouslySetInnerHTML={{ __html: blogData?.description }}
+  ></div>
   )
 }
