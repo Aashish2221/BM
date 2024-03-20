@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
 import data from '@/data';
-import { useState, useEffect } from 'react';
 
 const Blog = ({
   title,
@@ -15,16 +14,6 @@ const Blog = ({
   const { code } = router.query;
   const formattedPath = router.asPath.replace(`/blogs?.Title=${code}`, '');
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-  const [showDescription, setShowDescription] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setTimeout(() => {
-        setShowDescription(true);
-      }, 1000);
-    };
-    fetchData();
-  }, []); 
 
   return (
     <>
@@ -64,11 +53,15 @@ const Blog = ({
                   }).format(new Date(blogData.publishdate))}
                 </h6>
               </section>
-              {showDescription && <BlogDescription blogData={blogData} />}
+            <BlogDescription blogData={blogData} />
             </span>
           </div>
           <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-            <BlogSideCard blogData={blogData}/>
+          <div
+    id='innerText'
+    className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+    dangerouslySetInnerHTML={{ __html: blogData?.description }}
+  ></div>
           </div>
         </div>
       </div>
@@ -103,12 +96,3 @@ export const BlogSideCard = ({blogData}:any)=>{
   </div>
   )
   }
-export const BlogDescription = ({blogData}:any)=>{
-  return(
-    <div
-    id='innerText'
-    className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-    dangerouslySetInnerHTML={{ __html: blogData?.description }}
-  ></div>
-  )
-}
