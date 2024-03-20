@@ -53,15 +53,15 @@ const Blog = ({
                   }).format(new Date(blogData.publishdate))}
                 </h6>
               </section>
-            <BlogDescription blogData={blogData} />
-            </span>
-          </div>
-          <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
-          <div
+              <div
     id='innerText'
     className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
     dangerouslySetInnerHTML={{ __html: blogData?.description }}
   ></div>
+            </span>
+          </div>
+          <div className='col-span-12 mt-4 md:col-span-4 md:mt-0'>
+            <BlogSideCard blogData={blogData}/>
           </div>
         </div>
       </div>
