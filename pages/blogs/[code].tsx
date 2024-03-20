@@ -60,8 +60,6 @@ const Blog = ({
 export default Blog;
 
 export const getServerSideProps: GetServerSideProps = async (res) => {
-  console.log(10);
-  
   const code = res.params?.code as string;
   const blogData = await getBlogDetails(code as string);
   const title = blogData.metatitle;
