@@ -420,7 +420,12 @@ width: 100%;
   padding: 10px;
   border-radius:20px;
 }
-
+@media (max-width: 500px) {
+  .blog_circle_img,
+  .blog_square_img {
+    float: none;
+  }
+}
 .blog_circle_img_description {
   border: 2px solid #e49e2f;
   border-radius: 8px;

@@ -15,7 +15,8 @@ const Blog = ({
   const { code } = router.query;
   const formattedPath = `/blogs/${code}`;
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-
+  console.log(canonicalUrl);
+  
   return (
     <>
       <Head>
