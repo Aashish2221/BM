@@ -15,7 +15,6 @@ const Blog = ({
   const { code } = router.query;
   const formattedPath = `/blogs/${code}`;
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-  console.log(canonicalUrl);
   
   return (
     <>
@@ -82,13 +81,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 export const BlogSideCard = ({ blogData }: any) => {
   return (
-    <div className='container rounded-md pb-4 shadow-md shadow-slate-300'>
+    <div className='container rounded-md shadow-md shadow-slate-300'>
       <Image
         src={blogData?.image ?? ''}
         alt={blogData?.title}
         height={800}
         width={800}
-        className='rounded-md p-4 lg:w-full'
+        className='p-4 lg:w-full'
         loading='lazy'
       />
       <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>

@@ -424,6 +424,10 @@ width: 100%;
   .blog_circle_img,
   .blog_square_img {
     float: none;
+    margin: 0 auto; /* Center the images horizontally */
+    display: block;
+    margin-bottom: 10px;
+    
   }
 }
 .blog_circle_img_description {
