@@ -58,7 +58,7 @@ const Blog = ({
                   <BlogDescription blogData={blogData}/>
               </span>
             </div>
-            <div className='hidden md:block mt-2 md:col-span-4 md:mt-0'>
+            <div className='hidden md:block md:col-span-4'>
               <BlogSideCard blogData={blogData} />
             </div>
           </div>
