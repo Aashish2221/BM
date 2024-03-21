@@ -23,7 +23,7 @@ const Blog = ({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         {blogData.image && (
-          <link rel='preload' as='image' href={blogData.image} />
+          <link rel='preload' as={blogData.title} href={blogData.image} />
         )}
       </Head>
       {blogData.length === 0 ? <BlogSlugSkeleton /> :
@@ -45,7 +45,7 @@ const Blog = ({
                 <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData.title}</h1>
                 </header>
-                <section className='pt-4 text-xs font-bold italic text-[#5c5b5b]'>
+                <section className='pt-4 -mb-5 text-xs font-bold italic text-[#5c5b5b]'>
                   <h6>
                     By BullionMentor on{' '}
                     {new Intl.DateTimeFormat('en-US', {
