@@ -6,10 +6,10 @@ import { getBlogsData } from '@/services/spot-prices';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import dynamic from 'next/dynamic';
 import { Suspense, useState } from 'react';
-import SpinnerBlog from '@/components/Spinner';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BsArrowRight } from 'react-icons/bs';
+import SearchSpinner from '@/components/Loaders/SearchSpinner';
 const BlogSkeleton = dynamic(
   () => import('@/components/Loaders/BlogIndexSkeleton/BlogSkeleton')
 );
@@ -61,7 +61,7 @@ export default function Blogs({
               dataLength={blogs.length}
               next={loadMoreBlogs}
               hasMore={hasMore}
-              loader={<SpinnerBlog />}
+              loader={<SearchSpinner />}
             >
               {/* ----------------- blog section ------------- */}
               <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>

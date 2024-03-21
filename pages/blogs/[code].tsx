@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getBlogDetails } from '@/services/spot-prices';
-import data from '@/data';
 import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import data from '@/data';
 
 const Blog = ({
   title,
@@ -13,7 +13,7 @@ const Blog = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { code } = router.query;
-  const formattedPath = router.asPath.replace(`/blogs?.Title=${code}`, '');
+  const formattedPath = `/blogs/${code}`;
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
 
   return (
@@ -22,11 +22,10 @@ const Blog = ({
         <title>{title}</title>
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
-        {blogData.image && (
-          <link rel='preload' as={blogData.title} href={blogData.image} />
-        )}
       </Head>
-      {blogData.length === 0 ? <BlogSlugSkeleton /> :
+      {blogData.length === 0 ? (
+        <BlogSlugSkeleton />
+      ) : (
         <div className='grid-col container mx-auto grid'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
             <div className='col-span-12 md:col-span-8'>
@@ -38,8 +37,7 @@ const Blog = ({
                     height={800}
                     width={800}
                     className='rounded-md lg:w-full'
-                    loading='eager'
-                    priority
+                    loading='lazy'
                   />
                 )}
                 <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
@@ -55,7 +53,7 @@ const Blog = ({
                     }).format(new Date(blogData.publishdate))}
                   </h6>
                 </section>
-                  <BlogDescription blogData={blogData}/>
+                <BlogDescription blogData={blogData} />
               </span>
             </div>
             <div className='hidden md:block md:col-span-4'>
@@ -63,18 +61,22 @@ const Blog = ({
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };
 export default Blog;
 
-export const getServerSideProps: GetServerSideProps = async (res) => {
-  const code = res.params?.code as string;
-  const blogData = await getBlogDetails(code as string);
-  const title = blogData.metatitle;
-  const description = blogData.metaDescription;
-  return { props: { title, description, blogData } };
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  try {
+    const code = params?.code as string;
+    const blogData = await getBlogDetails(code);
+    const title = blogData.metatitle;
+    const description = blogData.metaDescription;
+    return { props: { title, description, blogData } };
+  } catch (error) {
+    return { notFound: true };
+  }
 };
 
 export const BlogSideCard = ({ blogData }: any) => {
@@ -86,8 +88,7 @@ export const BlogSideCard = ({ blogData }: any) => {
         height={800}
         width={800}
         className='rounded-md p-4 lg:w-full'
-        loading='eager'
-        priority
+        loading='lazy'
       />
       <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>
         {blogData.shortDescription}
@@ -96,13 +97,12 @@ export const BlogSideCard = ({ blogData }: any) => {
   );
 };
 
-export const BlogDescription = ({ blogData }: any)=>
-{
+export const BlogDescription = ({ blogData }: any) => {
   return (
     <div
       id='innerText'
       className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
       dangerouslySetInnerHTML={{ __html: blogData?.description }}
     ></div>
-  )
-}
+  );
+};
