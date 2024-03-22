@@ -420,11 +420,11 @@ width: 100%;
   padding: 10px;
   border-radius:20px;
 }
-@media (max-width: 500px) {
+@media (max-width: 500px) and (min-width: 100px) {
   .blog_circle_img,
   .blog_square_img {
     float: none;
-    margin: 0 auto; /* Center the images horizontally */
+    margin: 0 auto;
     display: block;
     margin-bottom: 10px;
     

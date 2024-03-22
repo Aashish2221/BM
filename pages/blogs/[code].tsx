@@ -2,9 +2,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { getBlogDetails } from '@/services/spot-prices';
-import BlogSlugSkeleton from '@/components/Loaders/BlogIndexSkeleton/BlogSlugSkeleton';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import data from '@/data';
+import { BlogSideCard } from '@/components/Blogs/blogsidecard';
+import Blogslugskeleton from '@/components/Blogs/blogslugskeleton';
 
 const Blog = ({
   title,
@@ -24,7 +25,7 @@ const Blog = ({
         <link rel='canonical' href={canonicalUrl} />
       </Head>
       {blogData.length === 0 ? (
-        <BlogSlugSkeleton />
+        <Blogslugskeleton />
       ) : (
         <div className='grid-col container mx-auto grid'>
           <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
@@ -53,7 +54,11 @@ const Blog = ({
                     }).format(new Date(blogData.publishdate))}
                   </h6>
                 </section>
-                <BlogDescription blogData={blogData} />
+                <div
+      id='innerText'
+      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+      dangerouslySetInnerHTML={{ __html: blogData?.description }}
+    ></div>
               </span>
             </div>
             <div className='hidden md:block md:col-span-4'>
@@ -79,30 +84,3 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 };
 
-export const BlogSideCard = ({ blogData }: any) => {
-  return (
-    <div className='container rounded-md shadow-md shadow-slate-300'>
-      <Image
-        src={blogData?.image ?? ''}
-        alt={blogData?.title}
-        height={800}
-        width={800}
-        className='p-4 lg:w-full'
-        loading='lazy'
-      />
-      <p className='p-4 text-justify text-sm leading-[1.4rem] text-[#5c5b5b]'>
-        {blogData.shortDescription}
-      </p>
-    </div>
-  );
-};
-
-export const BlogDescription = ({ blogData }: any) => {
-  return (
-    <div
-      id='innerText'
-      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-      dangerouslySetInnerHTML={{ __html: blogData?.description }}
-    ></div>
-  );
-};
