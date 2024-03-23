@@ -178,17 +178,13 @@ export const getServerSideProps: GetServerSideProps<{
   description: any;
   dealers: Awaited<ReturnType<typeof getDealers>>;
 }> = async ({ res }) => {
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
   );
   const dealers = await getDealers();
   const title = data.site.dealerslist.page
   const description = data.site.dealerslist.description
   return {
-    props: {
-      title , description ,
-      dealers
+    props: {title , description , dealers
     }
   };
 };
