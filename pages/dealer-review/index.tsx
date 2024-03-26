@@ -26,11 +26,14 @@ export default function DealerReview({title , description ,
           rel='canonical'
           href={`${process.env.WEBSITE_URL}/dealer-review`}
         />
-        {/* <link
+        <link
           rel='preload'
           as='image'
           href='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
-        /> */}
+        />
+        {
+          dealers.map((dealers:any) =><link rel="preload" as='image' href={dealers.image} /> )
+        }
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
@@ -56,7 +59,7 @@ export default function DealerReview({title , description ,
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
-              {dealers.map((dealers) => (
+              {dealers.map((dealers:any) => (
                 <div key={dealers.id}>
                   <DealerCard dealers={dealers} />
                 </div>
@@ -85,18 +88,11 @@ export default function DealerReview({title , description ,
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  dealers: Awaited<ReturnType<typeof getDealers>>;
-}> = async ({ res }) => {
-  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
-  );
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
   const dealers = await getDealers();
   const title = data.site.dealerslist.page
   const description = data.site.dealerslist.description
-  return {
-    props: {title , description , dealers
-    }
+  return { props: {title , description , dealers}
   };
 };

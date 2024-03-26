@@ -12,7 +12,6 @@ import { TiStarFullOutline } from 'react-icons/ti';
 const DealerCard = ({ dealers }: any) => {
   return (
     <>
-      
         <Card
           className='md:h-66 mx-auto mt-6 h-52 sm:h-72 md:mt-4 lg:mb-4 lg:mt-2 
                    lg:h-64'
