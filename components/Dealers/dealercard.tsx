@@ -49,7 +49,7 @@ const DealerCard = ({ dealers }: any) => {
                 </Link>
               </p>
 
-              {/* <div className='mt-1 flex items-center justify-center md:mt-0 lg:mt-0'>
+              <div className='mt-1 flex items-center justify-center md:mt-0 lg:mt-0'>
                 {Array.from({ length: 5 }, (value, index) => {
                   let numbers = index + 0.5;
                   return (
@@ -69,7 +69,7 @@ const DealerCard = ({ dealers }: any) => {
                     </span>
                   );
                 })}
-              </div> */}
+              </div>
 
               <p className='mt-2 h-4 text-xs font-extralight md:h-3 lg:mt-1 lg:h-6 xl:mt-2 xl:h-5 2xl:h-4'>
                 {dealers.shippingDescription}
