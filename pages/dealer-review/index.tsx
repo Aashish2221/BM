@@ -61,7 +61,7 @@ export default function DealerReview({title , description ,
             <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
               {dealers.map((dealers:any) => (
                 <div key={dealers.id}>
-                  <DealerCard dealers={dealers} />
+                  {/* <DealerCard dealers={dealers} /> */}
                 </div>
               ))}
             </div>
