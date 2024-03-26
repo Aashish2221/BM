@@ -62,7 +62,6 @@ export default function DealerReview({title , description ,
               ))}
             </div>
           </div>
-          {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
         </div>
       </div>
       {isOpenModalRegister && (
