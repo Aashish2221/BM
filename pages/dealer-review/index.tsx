@@ -6,8 +6,8 @@ import ReviewModal from '@/components/ModalForm/ReviewModal/ReviewModal';
 import data from '@/data';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import DealersComponent from '@/components/Dealers/heading';
 const DealerCard = dynamic(()=>import('@/components/Dealers/dealercard'));
-const DealersComponent = dynamic(()=>import('@/components/Dealers/heading'))
 export default function DealerReview({title , description ,
   dealers
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
