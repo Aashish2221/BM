@@ -29,9 +29,6 @@ export default function DealerReview({title , description ,
           href={`${process.env.WEBSITE_URL}/dealer-review`}
         />
        
-        {
-          dealers.map((dealers:any) =><link key={dealers.id} rel="preload" as='image' href={dealers.image} /> )
-        }
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
