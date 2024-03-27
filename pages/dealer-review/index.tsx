@@ -27,8 +27,6 @@ export default function DealerReview({title , description ,
           rel='canonical'
           href={`${process.env.WEBSITE_URL}/dealer-review`}
         />
-       
-       
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
