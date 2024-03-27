@@ -1,16 +1,7 @@
-import { getDealers } from '@/services/spot-prices';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography
-} from '@material-tailwind/react';
+import {getDealers } from '@/services/spot-prices';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import useToggle from '@/hooks/useToggle';
-import { TiStarFullOutline } from 'react-icons/ti';
 import ReviewModal from '@/components/ModalForm/ReviewModal/ReviewModal';
 import data from '@/data';
 import Head from 'next/head';
@@ -22,6 +13,7 @@ export default function DealerReview({
   dealers
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isOpenModalRegister, toggleModalDealersRating] = useToggle();
+  
   return (
     <>
       {/* ******************** SEO CONTENT ******************** */}
@@ -67,13 +59,14 @@ export default function DealerReview({
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
-              {dealers.map((dealers) => (
+              {dealers.map((dealers: any) => (
                 <div key={dealers.id}>
-                 <DealerCard dealers={dealers} />
+                  <DealerCard dealers={dealers} />
                 </div>
               ))}
             </div>
           </div>
+
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
           <div className='col-span-4 hidden sm:block md:col-span-3 md:ml-4 md:flex lg:col-span-2 lg:ml-4'>
             <div className='mt-0 w-full  rounded-2xl md:mt-4 md:h-full lg:mt-1 '>
@@ -96,23 +89,15 @@ export default function DealerReview({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  dealers: Awaited<ReturnType<typeof getDealers>>;
-}> = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ res}) => {
   res.setHeader(
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
-  );
-  const dealers = await getDealers();
+  ); 
+  const dealer = await getDealers();
   const title = data.site.dealerslist.page;
   const description = data.site.dealerslist.description;
   return {
-    props: {
-      title,
-      description,
-      dealers
-    }
+    props: {title, description, dealer}
   };
 };
