@@ -6,11 +6,14 @@ import ReviewModal from '@/components/ModalForm/ReviewModal/ReviewModal';
 import data from '@/data';
 import Head from 'next/head';
 import DealerCard from '@/components/Dealers/dealercard';
+import DealersComponent from '@/components/Dealers/heading';
 
 export default function DealerReview({title , description ,
   dealers
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isOpenModalRegister, toggleModalDealersRating] = useToggle();
+  console.log(isOpenModalRegister);
+  
   return (
     <>
       {/* ******************** SEO CONTENT ******************** */}
@@ -35,22 +38,7 @@ export default function DealerReview({title , description ,
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
       <div className='-mt-28 flex flex-col gap-4 text-dark-black'>
         {/* ******************** HEADING ******************** */}
-        <div className='container mx-auto grid grid-cols-4 md:grid-cols-10 md:gap-4 lg:grid-cols-12 '>
-          {/* ******************** HEADING ******************** */}
-          <div className='col-span-2 md:col-span-8 md:mt-3 lg:col-span-10 lg:mt-0'>
-            <h1 className='text-xl font-medium md:text-2xl'>Dealers</h1>
-          </div>
-          {/* ******************** ADD REVIEW BUTTON ******************** */}
-          <div className='col-span-2 flex justify-end md:col-span-2 md:mt-3 lg:col-span-2 lg:mt-0'>
-            <button
-              onClick={toggleModalDealersRating}
-              className='group relative inline-block overflow-hidden rounded-full bg-primary px-2 py-2 font-normal text-white md:px-6 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-sm'
-            >
-              <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
-              <span className='relative '>Add Review</span>
-            </button>
-          </div>
-        </div>
+        {<DealersComponent toggleModalDealersRating={toggleModalDealersRating}/>}
         <div className='grid-col-4 container mx-auto mt-4 flex flex-col gap-4 md:grid md:grid-cols-8 lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
