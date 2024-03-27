@@ -45,12 +45,12 @@ export default function DealerReview({
             <h1 className='text-xl font-medium md:text-2xl'>Dealers</h1>
           </div>
           {/* ******************** ADD REVIEW BUTTON ******************** */}
-          <div className='col-span-2 flex justify-end md:col-span-2 md:mt-3 lg:col-span-2 lg:mt-0'>
+          <div className='col-span-2 flex justify-end md:mt-3 lg:mt-0'>
             <button
               onClick={toggleModalDealersRating}
               className='group relative inline-block overflow-hidden rounded-full bg-primary px-2 py-2 font-normal text-white md:px-6 md:py-2 md:text-sm lg:px-6 lg:py-3 lg:text-sm'
             >
-              <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
+              <span className='absolute top-0 left-0 mb-0 flex h-0 w-full bg-secondary duration-300 group-hover:h-full '></span>
               <span className='relative '>Add Review</span>
             </button>
           </div>
@@ -68,7 +68,7 @@ export default function DealerReview({
           </div>
 
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
-          <div className='col-span-4 hidden sm:block md:col-span-3 md:ml-4 md:flex lg:col-span-2 lg:ml-4'>
+          <div className='col-span-4 hidden md:block md:col-span-3 md:ml-4 lg:col-span-2 lg:ml-4'>
             <div className='mt-0 w-full  rounded-2xl md:mt-4 md:h-full lg:mt-1 '>
               <Image
                 src='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
