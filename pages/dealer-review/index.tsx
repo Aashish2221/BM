@@ -94,10 +94,10 @@ export const getServerSideProps: GetServerSideProps = async ({ res}) => {
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
   ); 
-  const dealer = await getDealers();
+  const dealers = await getDealers();
   const title = data.site.dealerslist.page;
   const description = data.site.dealerslist.description;
   return {
-    props: {title, description, dealer}
+    props: {title, description, dealers}
   };
 };
