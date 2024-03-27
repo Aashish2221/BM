@@ -77,6 +77,7 @@ export default function DealerReview({
                 width={500}
                 className='rounded-lg'
                 loading='eager'
+                priority
               />
             </div>
           </div>
@@ -90,9 +91,7 @@ export default function DealerReview({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res}) => {
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
+  res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59'
   ); 
   const dealers = await getDealers();
   const title = data.site.dealerslist.page;
