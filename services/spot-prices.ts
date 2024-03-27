@@ -45,7 +45,10 @@ export const getTopProductsBySpesifictFilter = async (
 export const getTopProducts = async (
   getBy?: GetTopProductsBy,
   searchKeyword?: string,
-  metalType?: string
+  metalType?: string,
+  size?:string,
+  PageNumber?:string
+
 ) => {
   if (searchKeyword) {
     return searchProducts(searchKeyword);
@@ -54,13 +57,38 @@ export const getTopProducts = async (
     `${process.env.BASE_URL}/api/BestBullionDeals/GetHomePageProductsByLocation`
   );
   url.searchParams.set('GetBy', getBy ?? 'Trending');
-  if (metalType) {
+
+ if (metalType) {
     url.searchParams.set('MetalType', metalType);
+    if (size) {
+      url.searchParams.set('size', size.toString()); 
+    }
+    if (PageNumber) {
+      url.searchParams.set('Pagenumber', PageNumber.toString());
+    }
   }
+
+
+
   const res = await fetcher.get<ApiResponse<Product[]>>(url.toString());
   return res.data.data;
 };
 
+export const getNearToSpot = async (getBy: string, searchKeyword: string, size: number, pageNumber: number) => {
+  try {
+    const response = await fetch(
+      `${process.env.BASE_URL}/api/BestBullionDeals/GetHomePageProductsByLocation_NearToSpot?GetBy=${getBy}&MetalType=${searchKeyword}&Size=${size}&Pagenumber=${pageNumber}`
+    );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.error('Error fetching near to spot data:', error);
+    throw error; 
+  }
+};
 
 export const getDealerSponsors = async () => {
   const res = await fetcher.get<ApiResponse<DealerSponsor[]>>(
@@ -90,7 +118,6 @@ export const getBlogsData = async (PageSize:any, pagenumber:any) => {
   );
   return res.data.data;
 };
-
 export const getBlogDetails = async (code: string) => {
   const url = new URL(
     `${process.env.BASE_URL}/api/BestBullionDeals/GetBlogDetails`

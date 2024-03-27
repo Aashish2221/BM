@@ -1,12 +1,13 @@
 'use client';
 import useToggle from '@/hooks/useToggle';
 import { RegisterLoginModal } from '../ModalForm';
-import Search from '../Search';
 import SpotPrices from '../SpotPrices';
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+const Search = dynamic(() => import('../Search'));
 export default function MainNavbar() {
   const [isOpenModalRegister, toggleModalRegister] = useToggle();
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <header className='w-full bg-secondary text-white lg:block'>
@@ -26,3 +27,5 @@ export default function MainNavbar() {
     </>
   );
 }
+
+

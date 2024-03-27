@@ -9,7 +9,7 @@ import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { BsArrowRight } from 'react-icons/bs';
 import SearchSpinner from '@/components/Loaders/SearchSpinner';
-const BlogCard = dynamic(()=>import('@/components/BlogCard'))
+const BlogCard = dynamic(() =>import ('@/components/Blogs/blogcard'))
 const BlogSkeleton = dynamic(
   () => import('@/components/Blogs/indexskeleton')
 );
@@ -64,7 +64,7 @@ export default function Blogs({
               hasMore={hasMore}
               loader={<SearchSpinner />}
             >
-              {/* ----------------- blog section ------------- */}
+              {/*  ----------------- blog section ------------- */}
               <section className='container mx-auto mt-14 grid grid-cols-12 gap-4 sm:mt-20 lg:mt-24 xl:mt-24 2xl:mt-28'>
                 {blogs.map((blog: any) => (
                   <div

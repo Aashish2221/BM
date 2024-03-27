@@ -5,23 +5,23 @@ const DashboardImages = () => {
       imageName: 'Banner1',
       imageForVenderId: 1,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/2024-Britannias-On-Sale.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/secondary-market-silver-on-sale.webp',
       mobileImageurl:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/2024-Britannias-On-Sale-Mob-Db.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/secondary-market-silver-on-sale-mob.webp',
       isStatic: false,
       eventRedirectiveUrl:
-        'https://www.apmex.com/category/96310/2024-britannias?f_onsale=true&page=1&_campaign=03042024-category96310-priceplay-corebullion-homepagehero'
+        'https://www.apmex.com/category/90437/secondary-market-silver-products?_campaign=03252024-category90437-priceplay-corebullion-homepagehero'
     },
     {
       id: 3,
       imageName: 'Banner3',
       imageForVenderId: 3,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/Silver-Bullion-Coins.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/investment-corner-static.webp',
       mobileImageurl: '',
       isStatic: true,
       eventRedirectiveUrl:
-        'https://www.boldpreciousmetals.com/sale/silver-coin-tubes'
+        'https://www.boldpreciousmetals.com/sale/silver-monster-box'
     },
     {
       id: 4,
@@ -52,23 +52,23 @@ const DashboardImages = () => {
       imageName: 'Banner7',
       imageForVenderId: 34,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/1-oz-silver-rounds-lowest-premium.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/pamp-suisse-lady-fortuna.webp',
       mobileImageurl:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/1-oz-silver-rounds-lowest-premium-mob.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/pamp-suisse-lady-fortuna-mob.webp',
       isStatic: false,
       eventRedirectiveUrl:
-        'https://bullionexchanges.com/buy-silver/rounds?category_id=584&perPage=72&currentPage=1'
+        'https://bullionexchanges.com/search?search=45th%20ann%20pamp%201%20oz'
     },
     {
       id: 8,
       imageName: 'Banner8',
       imageForVenderId: 4,
       imagePath:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/Cow-Boy-Rounds.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/5-gold-hoard.webp',
       mobileImageurl:
-        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/Cow-Boy-Rounds-Mob-Db.webp',
+        'https://res.cloudinary.com/bullionmentor/image/upload/Banners/5-gold-hoard-mob.webp',
       isStatic: false,
-      eventRedirectiveUrl:'https://sdbullion.com/1-oz-scottsdale-mint-cowboy-silver-round-tube-of-20'
+      eventRedirectiveUrl:'https://sdbullion.com/1899-5-liberty-half-eagle-gold-coin-bu-original-bag-hoard'
     },
     {
       id: 9,

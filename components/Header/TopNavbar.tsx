@@ -22,7 +22,7 @@ import dynamic from 'next/dynamic';
 const ShareModal = dynamic(() => import('../ModalForm/ShareModal/shareModal'));
 const GoldMenu = dynamic(() => import('../goldMenu'));
 const SilverMenu = dynamic(() => import('../silverMenu'));
-const NearToSpotMenu = dynamic(()=> import('../NearToSpotMenu'));
+const NearToSpotMenu = dynamic(() => import('../NearToSpotMenu'));
 const MobileMenu = dynamic(() => import('../MobileMenu'));
 
 export default function TopNavbar() {
@@ -44,15 +44,15 @@ export default function TopNavbar() {
     const getUserName = async () => {
       if (user.isLoggedIn && userInfo === '') {
         const response = await GetCustomerDetails(user.user.email);
-        const userName = response.data.name || `${response.data.emailId.slice(0, 8)}...`;
+        const userName =
+          response.data.name || `${response.data.emailId.slice(0, 8)}...`;
         setUserInfo(userName);
       }
     };
-  
+
     getUserName();
-  
   }, [user, userInfo]);
-  
+
   const handleGoogleLogin = async () => {
     if (session?.user?.email !== undefined) {
       const response = await login(
@@ -101,7 +101,13 @@ export default function TopNavbar() {
   };
   const outSideRef = useRef<HTMLDivElement>(null);
   useOnClickOutside(outSideRef, () => setDropdown(false));
-
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [showMobileMenu]);
   return (
     <>
       <Head>
@@ -120,15 +126,15 @@ export default function TopNavbar() {
       </Head>
       <div className='z-30 w-full bg-secondary-dark text-white'>
         <div className='container relative mx-auto flex flex-row items-center py-2 text-sm lg:py-2.5'>
-          {/* ************************ HAMBURGER MENU ICON ************************ */}
+          {/*********************** HAMBURGER MENU ICON ***********************/}
           <button
             aria-label='Mobile_Menu'
             onClick={() => setShowMobileMenu(true)}
-            className='mr-2 lg:hidden'
+            className='mr-2 w-[40px] lg:hidden'
           >
             <IconMenu className='h-10 w-10 fill-white stroke-2' />
           </button>
-          {/* ************************ MOBILE LOGO ************************ */}
+          {/********************** MOBILE LOGO ***********************/}
           <Link className='lg:hidden' href={'/'} passHref prefetch={false}>
             <Image
               src='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo-mob.webp'
@@ -138,7 +144,7 @@ export default function TopNavbar() {
               loading='lazy'
             />
           </Link>
-          {/* ************************ WEB LOGO ************************ */}
+          {/*********************** WEB LOGO ***********************/}
           <Link
             className='absolute top-0 z-10 hidden lg:block'
             href={'/'}
@@ -164,10 +170,11 @@ export default function TopNavbar() {
             >
               <Link
                 href='/silver'
-                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${router.pathname === '/silver'
-                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                  : ''
-                  }`}
+                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${
+                  router.pathname === '/silver'
+                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                    : ''
+                }`}
                 passHref
                 prefetch={false}
               >
@@ -191,10 +198,11 @@ export default function TopNavbar() {
             >
               <Link
                 href='/gold'
-                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${router.pathname === '/gold'
-                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                  : ''
-                  }`}
+                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${
+                  router.pathname === '/gold'
+                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                    : ''
+                }`}
                 passHref
                 prefetch={false}
               >
@@ -211,50 +219,52 @@ export default function TopNavbar() {
               </AnimatePresence>
             </div>
 
-            <div 
+            <div
               onMouseOver={() => setshowNearSpotMenu(true)}
               onMouseLeave={() => setshowNearSpotMenu(false)}
               onClick={() => setshowNearSpotMenu(!setshowNearSpotMenu)}
               className='relative'
-              >
-            <Link 
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/near-to-spot/silver'
-                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                : ''
-                }`}
-              href={'/near-to-spot/silver'}
-              passHref
-              prefetch={false}
             >
-              <button className='py-1 text-sm font-normal hover:text-primary'>
-                Near to Spot
-                </button> 
-            </Link>
-            <AnimatePresence>
+              <Link
+                className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
+                  router.pathname === '/near-to-spot/silver'
+                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                    : ''
+                }`}
+                href={'/near-to-spot/silver'}
+                passHref
+                prefetch={false}
+              >
+                <button className='py-1 text-sm font-normal hover:text-primary'>
+                  Near to Spot
+                </button>
+              </Link>
+              <AnimatePresence>
                 {showNearSpotMenu && (
                   <MegaMenu>
                     <NearToSpotMenu hideNearToSpotMenu={hideNearToSpotMenu} />
                   </MegaMenu>
                 )}
               </AnimatePresence>
-              </div>
-
+            </div>
 
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/new-launched'
-                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                : ''
-                }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
+                router.pathname === '/new-launched'
+                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                  : ''
+              }`}
               href={'/new-launched'}
               prefetch={false}
             >
               New Launched
             </Link>
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/blogs'
-                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                : ''
-                }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
+                router.pathname === '/blogs'
+                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                  : ''
+              }`}
               href={'/blogs'}
               passHref
               prefetch={false}
@@ -262,10 +272,11 @@ export default function TopNavbar() {
               Blog
             </Link>
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/dealer-review'
-                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                : ''
-                }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
+                router.pathname === '/dealer-review'
+                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                  : ''
+              }`}
               href='/dealer-review'
               prefetch={false}
             >
@@ -273,10 +284,11 @@ export default function TopNavbar() {
             </Link>
             <Link
               className={`hidden py-1 text-sm font-normal hover:text-primary lg:block 
-              ${router.pathname === '/observations'
+              ${
+                router.pathname === '/observations'
                   ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
                   : ''
-                }
+              }
               `}
               href='/observations'
               passHref
@@ -292,7 +304,7 @@ export default function TopNavbar() {
               >
                 <CgShare size={22} />
               </button>
-              {/* ******************** USER PROFILE ******************** */}
+              {/******************* USER PROFILE *******************/}
               {user.isLoggedin === true ? (
                 <span
                   className='flex cursor-pointer flex-row items-center justify-end gap-1'
@@ -320,7 +332,7 @@ export default function TopNavbar() {
                   </span>
                 </button>
               )}
-              {/* ******************** USER DROPDOWN ******************** */}
+              {/******************* USER DROPDOWN *******************/}
               {dropdown && (
                 <AnimatePresence>
                   <div className='absolute top-12 right-4 z-10 -mr-2 bg-secondary-dark pl-10 pr-3 text-right'>
@@ -352,7 +364,7 @@ export default function TopNavbar() {
                         className='py-2 hover:cursor-pointer hover:text-primary'
                       >
                         Logout
-                                             </li>
+                      </li>
                     </ul>
                   </div>
                 </AnimatePresence>
@@ -372,7 +384,14 @@ export default function TopNavbar() {
       </div>
       <AnimatePresence>
         {showMobileMenu && (
-          <MobileMenu onHide={() => setShowMobileMenu(false)} />
+          <div
+            className='mobile-menu-overlay'
+            onClick={() => setShowMobileMenu(false)}
+          >
+            <div onClick={(e) => e.stopPropagation()}>
+              <MobileMenu onHide={() => setShowMobileMenu(false)} />
+            </div>
+          </div>
         )}
       </AnimatePresence>
       {showLogin && <Modal closeModal={() => setShowLogin(false)} />}

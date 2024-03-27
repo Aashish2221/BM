@@ -50,7 +50,7 @@ body {
 
 .slick-dots li button::before {
   background-color: rgba(29, 29, 29, 1);
-  border-radius: 9999px;
+  border-radius: 9999px;  
   margin-top: -3rem;
   font-display: swap !important;
 }
@@ -148,10 +148,11 @@ body::-webkit-scrollbar-track:hover {
   background-color: red;
 }
 
-/****************************/
 #scrollable-content {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #999999 #f5f5f5;
 }
 .scrollable-content::-webkit-scrollbar {
   width: 4px;
@@ -194,8 +195,8 @@ body::-webkit-scrollbar-track:hover {
   z-index: 4; 
 }
 
-@media screen and (max-width: 300px) {
-  .slick-prev:before,
+@media screen and (max-width: 450px) {
+  .slick-prev:before,     
   .slick-next:before {
     font-size: 40px !important;
     font-display: swap !important;
@@ -260,6 +261,7 @@ body::-webkit-scrollbar-track:hover {
 }
 .overflow{
   overflow-x: scroll;
+  padding: 5px;
 }
 .blog_h2 {
   width: fit-content;
@@ -420,11 +422,11 @@ width: 100%;
   padding: 10px;
   border-radius:20px;
 }
-@media (max-width: 500px) and (min-width: 100px) {
+@media (max-width: 475px) {
   .blog_circle_img,
   .blog_square_img {
     float: none;
-    margin: 0 auto;
+    margin: 0 auto; 
     display: block;
     margin-bottom: 10px;
     

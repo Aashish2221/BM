@@ -1,5 +1,5 @@
 import Image from "next/image";
-export function BlogCard({ blog }: any) {
+export default function BlogCard({ blog }: any) {
     return (
       <>
         <div className='mx-1 -mt-16 h-40 shadow-none sm:mt-[-4rem] sm:h-44 md:-mt-20 md:h-48 lg:-mt-[65px] lg:h-52 xl:mx-2 xl:-mt-20'>

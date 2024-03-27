@@ -16,7 +16,7 @@ const Blog = ({
   const { code } = router.query;
   const formattedPath = `/blogs/${code}`;
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
-  
+
   return (
     <>
       <Head>
@@ -27,8 +27,8 @@ const Blog = ({
       {blogData.length === 0 ? (
         <Blogslugskeleton />
       ) : (
-        <div className='grid-col container mx-auto grid'>
-          <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 md:mt-10'>
+        <div className='grid-col container mx-auto grid '>
+          <div className='mx-auto mt-16 grid max-w-[1400px] grid-cols-12 gap-0 text-dark-black sm:container sm:gap-4 sm:mt-16 lg:mt-10'>
             <div className='col-span-12 md:col-span-8'>
               <span className='lg:grid-col gap-1 lg:grid'>
                 {blogData.image && (
@@ -44,7 +44,7 @@ const Blog = ({
                 <header className='pt-5 text-lg font-semibold text-primary md:text-2xl md:font-medium'>
                   <h1>{blogData.title}</h1>
                 </header>
-                <section className='pt-4 -mb-5 text-xs font-bold italic text-[#5c5b5b]'>
+                <section className='-mb-5 pt-4 text-xs font-bold italic text-[#5c5b5b]'>
                   <h6>
                     By BullionMentor on{' '}
                     {new Intl.DateTimeFormat('en-US', {
@@ -55,13 +55,13 @@ const Blog = ({
                   </h6>
                 </section>
                 <div
-      id='innerText'
-      className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
-      dangerouslySetInnerHTML={{ __html: blogData?.description }}
-    ></div>
+                  id='innerText'
+                  className='pt-2 text-justify text-[0.95rem] leading-[1.4rem] text-[#5c5b5b]'
+                  dangerouslySetInnerHTML={{ __html: blogData?.description }}
+                ></div>
               </span>
             </div>
-            <div className='hidden md:block md:col-span-4'>
+            <div className='hidden md:col-span-4 md:block'>
               <BlogSideCard blogData={blogData} />
             </div>
           </div>
@@ -83,4 +83,3 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { notFound: true };
   }
 };
-

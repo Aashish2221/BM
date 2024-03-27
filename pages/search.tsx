@@ -26,6 +26,7 @@ export default function Search({
   const [fetchedProducts, setFetchedProducts] = useState(
     initialProducts.data.searchProducts
   );
+  const [searchObject, setSearchObject] = useState({ query: query });
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const Length = initialProducts.data.countOfProducts.numberOfPages;
@@ -48,11 +49,14 @@ export default function Search({
       console.error('Error fetching more products:', error);
     }
   };
+  useEffect(() => {
+    setSearchObject({ query: query });
+  }, [query]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoading(true); // Set loading state to true when fetching new products
+        setLoading(true);
         const newProducts = await search(query, PAGE_SIZE, 1);
         setProducts(newProducts);
         setFetchedProducts(newProducts.data.searchProducts);
@@ -61,7 +65,7 @@ export default function Search({
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
-        setLoading(false); // Reset loading state when fetching is done
+        setLoading(false);
       }
     };
 
@@ -147,13 +151,13 @@ export default function Search({
           }}
         />
       </Head>
-      <div className='hidden bg-gradient-to-b from-secondary via-white to-white text-dark-black md:block lg:block'>
-        {/***************** SEO CONTENT TOP *****************/}
+      {/***************** SEO CONTENT TOP *****************/}
+      <div className='hidden bg-gradient-to-b from-secondary via-white to-white text-dark-black lg:block'>
         <div className='container mx-auto py-8 md:mt-2 lg:mt-1'>
           <h1 className='mb-2 mt-3 text-lg font-bold md:text-xl lg:mt-0'>
             {initialProducts.data.content.title
               ? initialProducts.data.content.title
-              : ''}
+              : `Browse Results for ${searchObject.query.searchKW}`}
           </h1>
           <h2
             id='innerText'
@@ -166,13 +170,14 @@ export default function Search({
           ></h2>
         </div>
       </div>
-      <div className='bg-gradient-to-b from-secondary via-white to-white text-dark-black sm:hidden'>
-        {/***************** SEO CONTENT TOP FOR MOBILE VIEW *****************/}
+
+      {/***************** SEO CONTENT TOP FOR MOBILE and ipad VIEW *****************/}
+      <div className='bg-gradient-to-b from-secondary via-white to-white text-dark-black lg:hidden'>
         <div className='container mx-auto pt-8 md:mt-2 lg:mt-1'>
           <h1 className='mb-2 mt-3 text-lg font-bold md:text-xl lg:mt-0'>
             {initialProducts.data.content.title
               ? initialProducts.data.content.title
-              : ''}
+              : `Browse Results for ${searchObject.query.searchKW}`}
           </h1>
         </div>
       </div>
@@ -182,32 +187,32 @@ export default function Search({
         <SearchSpinner />
       ) : (
         <div className='container mx-auto text-dark-black'>
-          <div className='md:flex md:flex-row'>
-            <div className='md:w-[80%] md:flex-1'>
-              <div className='flex flex-col gap-2 md:grid md:grid-cols-4'>
-                {/***************** LEFT ADVERTISEMENT *****************/}
-                <div className='hidden sm:block flex-col gap-4 md:static md:top-[32px] md:h-fit lg:flex'>
-                  <div className='flex w-full items-center justify-center rounded-md'>
-                    <Image
-                      src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Where-Beauty-Meets-Value_ig2c4a.webp'
-                      alt=''
-                      height={350}
-                      width={350}
-                      className='rounded-lg'
-                      loading='lazy'
-                    />
-                  </div>
-                  <div className='flex  w-full items-center justify-center rounded-md'>
-                    <Image
-                      src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/United-States-Mint_cemody.jpg'
-                      alt=''
-                      height={350}
-                      width={350}
-                      className='rounded-lg pt-4 lg:pt-0'
-                      loading='lazy'
-                    />
-                  </div>
-                </div>
+          <div className='sm:flex sm:flex-row'>
+            {/***************** LEFT ADVERTISEMENT *****************/}
+            <div className='hidden flex-col gap-4 sm:sticky sm:top-32 sm:block sm:w-[32%] md:h-fit md:flex-1   lg:flex lg:w-[20%]'>
+              <div className='flex w-full items-center justify-center rounded-md'>
+                <Image
+                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Where-Beauty-Meets-Value_ig2c4a.webp'
+                  alt=''
+                  height={500}
+                  width={500}
+                  className='rounded-lg'
+                  loading='eager'
+                />
+              </div>
+              <div className='flex  w-full items-center justify-center rounded-md'>
+                <Image
+                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/United-States-Mint_cemody.jpg'
+                  alt=''
+                  height={500}
+                  width={500}
+                  className='rounded-lg pt-4 lg:pt-0'
+                  loading='eager'
+                />
+              </div>
+            </div>
+            <div className='md:flex-2 sm:w-[68%] lg:w-[60%]'>
+              <div className='flex flex-col gap-2 '>
                 {/***************** PAGE CONTENT *****************/}
                 <div className='col-span-3 mx-0 grow gap-0 lg:mx-4 lg:gap-4'>
                   {/***************** VIEW TOGGLE BUTTONS *****************/}
@@ -224,7 +229,7 @@ export default function Search({
                       <GiHamburgerMenu size={25} />
                       <span>Detailed View</span>
                     </button>
-                    {/***************** GRID VIEW BUTTON *****************/}
+                    {/* **************** GRID VIEW BUTTON **************** */}
                     <button
                       onClick={() => setView('grid')}
                       className={`flex items-center gap-2 px-4 py-2 ${
@@ -260,7 +265,7 @@ export default function Search({
                               scrollThreshold={0.3}
                             >
                               <div
-                                className={`mb-5  grid gap-4 mx-1 ${
+                                className={`mx-1  mb-5 grid gap-4 ${
                                   view === 'detailed'
                                     ? 'grid-cols-1 xl:grid-cols-2'
                                     : 'grid-cols-2 xl:grid-cols-3'
@@ -281,48 +286,47 @@ export default function Search({
                     )}
                   </>
                 </div>
-
                 {/***************** LEFT ADVERTISEMENT FOR MOBILE VIEW *****************/}
-                <div className='sm:hidden mx-2 flex-col gap-4 md:static md:top-[32px] md:h-fit lg:flex'>
-                  <div className='sm:hidden flex w-full items-center justify-center rounded-md'>
+                <div className='mx-2 flex-col gap-4 sm:hidden md:static md:top-[32px] md:h-fit'>
+                  <div className='flex w-full items-center justify-center rounded-md sm:hidden'>
                     <Image
                       src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Where-Beauty-Meets-Value_ig2c4a.webp'
                       alt=''
-                      height={350}
-                      width={550}
+                      height={500}
+                      width={500}
                       className='rounded-lg'
-                      loading='lazy'
+                      loading='eager'
                     />
                   </div>
-                  <div className='flex sm:hidden  w-full items-center justify-center rounded-md'>
+                  <div className='flex w-full  items-center justify-center rounded-md sm:hidden'>
                     <Image
                       src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/United-States-Mint_cemody.jpg'
                       alt=''
-                      height={350}
-                      width={550}
+                      height={500}
+                      width={500}
                       className='rounded-lg pt-4 lg:pt-0'
-                      loading='lazy'
+                      loading='eager'
                     />
                   </div>
                 </div>
-                <div className='text-dark-black  sm:hidden'>
-                  {/***************** SEO CONTENT TOP  FOR MOBILE VIEW *****************/}
-                  <div className='sm:container mx-2 md:mt-2 lg:mt-1'>
-                    <h2
-                      id='innerText'
-                      className='text-sm text-slate-600  md:text-base'
-                      dangerouslySetInnerHTML={{
-                        __html: initialProducts.data.content
-                          ? initialProducts.data.content.seoContent
-                          : ''
-                      }}
-                    ></h2>
-                  </div>
-                </div>
-                {/***************** SEO CONTENT BOTTOM *****************/}
                 <div
-                  className={`text-justify' sm:container sm:mx-auto mx-2 sm:mt-10 text-sm text-slate-600 md:relative md:col-span-4 md:mt-5  md:text-base`}
+                  className={`text-justify' mx-2 text-sm text-slate-600 sm:container sm:mx-auto sm:mt-10 md:relative md:col-span-4 md:mt-5  md:text-base`}
                 >
+                  <div className='text-dark-black  lg:hidden'>
+                    {/***************** SEO CONTENT TOP  FOR MOBILE VIEW *****************/}
+                    <div className=' md:mt-2 lg:mt-1'>
+                      <h2
+                        id='innerText'
+                        className='text-sm text-slate-600  md:text-base'
+                        dangerouslySetInnerHTML={{
+                          __html: initialProducts.data.content
+                            ? initialProducts.data.content.seoContent
+                            : ''
+                        }}
+                      ></h2>
+                    </div>
+                  </div>
+                  {/***************** SEO CONTENT BOTTOM *****************/}
                   <span
                     id='innerText'
                     dangerouslySetInnerHTML={{
@@ -334,9 +338,9 @@ export default function Search({
                 </div>
               </div>
             </div>
-            <div className='md:flex-2 md:ml-4 md:w-[20%]'>
-              {/***************** RIGHT ADVERTISEMENT *****************/}
-              <div className='hidden flex-col gap-4 pt-6 sm:sticky sm:top-32 sm:flex sm:h-fit sm:pt-0'>
+            {/***************** RIGHT ADVERTISEMENT *****************/}
+            <div className='md:flex-3 hidden sm:w-[0%] md:ml-4 lg:flex lg:w-[20%]'>
+              <div className='hidden flex-col gap-4 pt-6 sm:sticky sm:top-32 sm:h-fit sm:pt-0 lg:flex'>
                 <div className='flex w-full items-center justify-center rounded-md'>
                   <Image
                     src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
@@ -344,7 +348,7 @@ export default function Search({
                     height={500}
                     width={500}
                     className='rounded-lg'
-                    loading='lazy'
+                    loading='eager'
                   />
                 </div>
               </div>

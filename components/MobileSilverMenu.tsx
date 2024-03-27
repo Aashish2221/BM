@@ -11,7 +11,7 @@ export default function MobileSilverMenu({ onHide }: MobileSilverMenuProps) {
 
   return (
     <motion.div
-      initial={{ translateX: '100%', opacity: 0, visibility: 'hidden' }}
+      initial={{ translateX: '100%', opacity: 0, visibility: 'hidden',overflow:'scroll' }}
       animate={{
         translateX: '0',
         opacity: 1,
@@ -25,11 +25,12 @@ export default function MobileSilverMenu({ onHide }: MobileSilverMenuProps) {
         translateX: '100%',
         opacity: 0,
         visibility: 'hidden',
+        overflow:'scroll',
         transition: {
           duration: 0.1
         }
       }}
-    >
+    ><div className='overflow-y-scroll'>
       <div className='flex items-center gap-2 py-2 text-sm'>
         <button onClick={onHide}>
           <HiOutlineArrowNarrowLeft className='h-6 w-6 stroke-white' />
@@ -169,7 +170,7 @@ export default function MobileSilverMenu({ onHide }: MobileSilverMenuProps) {
                       loading='lazy'
                     />
                   </div>
-                  <p className='mt-2 text-center text-xs text-white'>
+                  <p className='mt-2 text-xs text-white'>
                     {item.label}
                   </p>
                 </Link>
@@ -234,6 +235,7 @@ export default function MobileSilverMenu({ onHide }: MobileSilverMenuProps) {
             ))}
           </div>
         </Accordion>
+      </div>
       </div>
     </motion.div>
   );

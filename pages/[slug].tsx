@@ -252,7 +252,7 @@ console.log(productData.data.competitorProductPrices)
             </div>
           </div>
           <div className='lg:block'>
-            <h2 className='hidden text-lg font-semibold  md:block md:text-xl'>
+            <h2 className=' text-lg font-semibold  md:block md:text-xl'>
               Sponsored
             </h2>
             <div className='mt-4'>

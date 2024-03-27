@@ -15,7 +15,7 @@ export default function ProductSpecifications({
   }
   return (
     <div>
-      <h2 className='mt-2  text-sm font-semibold md:text-lg lg:text-xl'>Product Specifications</h2>
+      <h2 className='mt-2  text-lg font-semibold md:text-lg lg:text-xl'>Product Specifications</h2>
       <div className='overflow-auto rounded-lg capitalize shadow-lg'>
         <table className='mt-4 w-full border-separate border-spacing-0 rounded-lg border border-gray-200'>
           <tbody>

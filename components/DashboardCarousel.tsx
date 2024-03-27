@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
 
@@ -16,11 +16,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [customerId, setCustomerId] = useState(0);
   const user = useSelector(selectUser);
   useEffect(() => {
-    if (user.isLoggedin === false) {
-      setCustomerId(0);
-    } else {
-      setCustomerId(user.user.id);
-    }
+    setCustomerId(user.isLoggedin ? user.user.id : 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addProduct = async (imageForVenderId: any) => {
@@ -43,24 +39,19 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   return (
     <>
       <Head>
-        {images.map((image: any, index: any) => (
-          <Link
-            rel='preload'
-            as='image'
-            key={index}
-            href={image.imagePath}
-            prefetch={false}
-          ></Link>
-        ))}
+        <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
+        <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
+        <link rel='preload' as='image' href={images[0].imagePath}></link>
       </Head>
-      <Suspense fallback={<section className='relative h-40 w-full  sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80 bg-gray-400'></section>}>
+      <Suspense
+        fallback={
+          <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>
+        }
+      >
         <Slider {...settings}>
           {images.map((image, index) => (
-            <section
-              className='relative h-40 w-full  sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'
-              key={index}
-              aria-hidden='true'>
-              <div className='hidden md:block'>
+            <section key={index} aria-hidden='true'>
+              <div className='relative mt-4 flex h-40 w-full overflow-hidden rounded-lg sm:h-44 sm:object-cover md:mt-2 md:h-40 lg:h-60 xl:h-80'>
                 <Link
                   target='_blank'
                   href={image.eventRedirectiveUrl}
@@ -69,30 +60,22 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                   onClick={() => addProduct(image.imageForVenderId)}
                 >
                   <Image
-                    className='rounded-lg sm:h-44 sm:object-cover md:h-40 lg:h-60 lg:object-fill xl:h-80'
+                    className='hidden sm:block'
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
                     priority={true}
                     loading='eager'
                   />
-                </Link>
-              </div>
-              <div className='flex md:hidden'>
-                <Link
-                  target='_blank'
-                  href={image.eventRedirectiveUrl}
-                  passHref
-                  prefetch={false}
-                  onClick={() => addProduct(image.imageForVenderId)}
-                >
+
                   <Image
-                    className='h-40 visible w-full rounded-lg'
+                    className='block sm:hidden'
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
                     priority={true}
                     loading='eager'
+                    quality={60}
                   />
                 </Link>
               </div>
