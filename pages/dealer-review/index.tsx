@@ -87,7 +87,6 @@ export default function DealerReview({title , description ,
                           height={400}
                           width={400}
                           loading='eager'
-                          priority
                         />
                       </Link>
                     </CardHeader>
@@ -162,7 +161,6 @@ export default function DealerReview({title , description ,
                 width={500}
                 className='rounded-lg'
                 loading='eager'
-                priority
               />
             </div>
           </div>
