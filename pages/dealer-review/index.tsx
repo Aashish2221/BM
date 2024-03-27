@@ -86,7 +86,8 @@ export default function DealerReview({title , description ,
                           className='mx-auto h-24 w-24 sm:h-32 sm:w-32 md:h-36 md:w-36 lg:h-40 lg:w-40'
                           height={400}
                           width={400}
-                          loading='lazy'
+                          loading='eager'
+                          priority
                         />
                       </Link>
                     </CardHeader>
@@ -152,7 +153,7 @@ export default function DealerReview({title , description ,
             </div>
           </div>
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
-          <div className=' col-span-4 md:col-span-3 md:ml-4 md:flex lg:col-span-2 lg:ml-4'>
+          <div className='hidden sm:block col-span-4 md:col-span-3 md:ml-4 md:flex lg:col-span-2 lg:ml-4'>
             <div className='mt-0 w-full  rounded-2xl md:mt-4 md:h-full lg:mt-1 '>
               <Image
                 src='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
@@ -160,7 +161,8 @@ export default function DealerReview({title , description ,
                 height={1000}
                 width={500}
                 className='rounded-lg'
-                loading='lazy'
+                loading='eager'
+                priority
               />
             </div>
           </div>
