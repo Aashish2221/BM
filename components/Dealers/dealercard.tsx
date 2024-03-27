@@ -33,6 +33,7 @@ const DealerCard = ({ dealers }: any) => {
                 height={400}
                 width={400}
                 loading='eager'
+                priority
               />
             </Link>
           </CardHeader>

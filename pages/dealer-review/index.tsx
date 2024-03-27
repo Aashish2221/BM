@@ -5,14 +5,13 @@ import useToggle from '@/hooks/useToggle';
 import ReviewModal from '@/components/ModalForm/ReviewModal/ReviewModal';
 import data from '@/data';
 import Head from 'next/head';
-import DealerCard from '@/components/Dealers/dealercard';
-import DealersComponent from '@/components/Dealers/heading';
-
+import dynamic from 'next/dynamic';
+const DealerCard = dynamic(()=>import('@/components/Dealers/dealercard'));
+const DealersComponent = dynamic(()=>import('@/components/Dealers/heading'))
 export default function DealerReview({title , description ,
   dealers
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isOpenModalRegister, toggleModalDealersRating] = useToggle();
-  console.log(isOpenModalRegister);
   
   return (
     <>
@@ -60,6 +59,7 @@ export default function DealerReview({title , description ,
                 width={500}
                 className='rounded-lg'
                 loading='eager'
+                priority
               />
             </div>
           </div>
