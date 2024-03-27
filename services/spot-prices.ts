@@ -103,6 +103,12 @@ export const getDealers = async () => {
   );
   return res.data.data;
 };
+export const getDealer = async (size:number, pageNumber:number) => {
+  const res = await fetcher.get<ApiResponse<Dealers[]>>(
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetDealers_Temp?size=${size}&PageNumber=${pageNumber}`
+  );
+  return res.data.data;
+};
 
 // Blog
 

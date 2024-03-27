@@ -1,16 +1,7 @@
-import { getDealers } from '@/services/spot-prices';
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography
-} from '@material-tailwind/react';
+import { getDealer, getDealers } from '@/services/spot-prices';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import useToggle from '@/hooks/useToggle';
-import { TiStarFullOutline } from 'react-icons/ti';
 import ReviewModal from '@/components/ModalForm/ReviewModal/ReviewModal';
 import data from '@/data';
 import Head from 'next/head';
@@ -65,7 +56,7 @@ export default function DealerReview({title , description ,
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
-              {dealers.map((dealers) => (
+              {dealers.map((dealers:any) => (
                 <div key={dealers.id}>
                   <DealerCard dealers={dealers} />
                 </div>
@@ -94,16 +85,15 @@ export default function DealerReview({title , description ,
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  dealers: Awaited<ReturnType<typeof getDealers>>;
-}> = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ res, req }) => {
+  const isMobileDevice = req.headers['user-agent'] && /Mobi|Android/i.test(req.headers['user-agent']);
+  const size = isMobileDevice ? 4 : 15;
   res.setHeader(
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
   );
-  const dealers = await getDealers();
+ const pageNumber = 1;
+  const dealers = await getDealer(size, pageNumber)
   const title = data.site.dealerslist.page
   const description = data.site.dealerslist.description
   return {
