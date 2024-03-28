@@ -33,7 +33,7 @@ export default function DealerReview({title , description ,
         />
         {
           dealers.map((dealers:any)=>
-          <link rel='preload' as='image' href={dealers.image} />)
+          <link key={dealers.id} rel='preload' as='image' href={dealers.image} />)
         }
       </Head>
       {/* ******************** GRADIENT ******************** */}
