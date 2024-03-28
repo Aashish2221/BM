@@ -247,7 +247,8 @@ export type Observation = {
     code: string;
     name: string;
     image: string;
-    aliasName: string;
+    aliasName: string;  
+    dealerCount:number;
     detailUrl: string;
     rating: number;
     reviewCnt: number;

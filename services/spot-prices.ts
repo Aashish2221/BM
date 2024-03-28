@@ -97,15 +97,12 @@ export const getDealerSponsors = async () => {
   return res.data.data;
 };
 
-export const getDealers = async () => {
+export const getDealers = async ( 
+  size?:number,
+  PageNumber?:number
+  ) => {
   const res = await fetcher.get<ApiResponse<Dealers[]>>(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetDealers`
-  );
-  return res.data.data;
-};
-export const getDealer = async (size:number, pageNumber:number) => {
-  const res = await fetcher.get<ApiResponse<Dealers[]>>(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetDealers_Temp?size=${size}&PageNumber=${pageNumber}`
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetDealers_Temp?size=${size}&PageNumber=${PageNumber}`
   );
   return res.data.data;
 };
