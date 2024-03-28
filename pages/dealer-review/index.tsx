@@ -85,11 +85,7 @@ export default function DealerReview({title , description ,
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  dealers: Awaited<ReturnType<typeof getDealers>>;
-}> = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-control', 'public, sa-maxage=10, state-while-revalidate=59');
   const dealers = await getDealers();
   const title = data.site.dealerslist.page
