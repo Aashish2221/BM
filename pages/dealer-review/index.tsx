@@ -61,11 +61,14 @@ export default function DealerReview({
           rel='canonical'
           href={`${process.env.WEBSITE_URL}/dealer-review`}
         />
-        {
-          dealers.map((dealers:any)=>(
-            <link key={dealers.id} rel="preload" as='image'  href={dealers.image} />
-          ))
-        }
+        {dealers.map((dealers: any) => (
+          <link
+            key={dealers.id}
+            rel='preload'
+            as='image'
+            href={dealers.image}
+          />
+        ))}
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
@@ -87,17 +90,19 @@ export default function DealerReview({
             </button>
           </div>
         </div>
-        <div className='grid-col-4 container mx-auto mt-4 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
+        <div className='grid-col-4 container mx-auto mt-2 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
-          <div className=' md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
-              <InfiniteScroll
-                dataLength={dealers.length}
-                next={fetchMoreDealers}
-                hasMore={hasMore}
-                loader={<SearchSpinner />}
-                // scrollThreshold={0.7}
-                className=' grid grid-cols-2 flex-col gap-4 overflow-visible md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-              >
+          <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
+            {/* <div className='grid grid-cols-2 flex-col gap-4 overflow-visible md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'> */}
+            <InfiniteScroll
+              dataLength={dealers.length}
+              next={fetchMoreDealers}
+              hasMore={hasMore}
+              loader={<SearchSpinner />}
+              scrollThreshold={0.7}
+              className='overflow-visible'
+            >
+              <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
                 {dealers.map((dealers: any) => (
                   <div key={dealers.id}>
                     <Card
@@ -175,8 +180,8 @@ export default function DealerReview({
                     </Card>
                   </div>
                 ))}
-              </InfiniteScroll>
-            
+              </div>
+            </InfiniteScroll>
           </div>
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
           <div className=' col-span-4 hidden md:col-span-3 md:ml-4 lg:col-span-2 lg:ml-4 lg:flex'>
