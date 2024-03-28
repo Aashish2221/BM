@@ -44,7 +44,7 @@ export default function DealerReview({ title, description, dealers }: InferGetSe
             <div className='grid grid-cols-2 flex-col gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
               {dealers.map((dealer:any) => (
                 <div key={dealer.id}>
-                  <DealerCard dealer={dealer} />
+                  <DealerCard dealers={dealer} />
                 </div>
               ))}
             </div>
@@ -58,7 +58,6 @@ export default function DealerReview({ title, description, dealers }: InferGetSe
                 width={500}
                 className='rounded-lg'
                 loading='lazy' // Lazy loading
-                priority
               />
             </div>
           </div>
