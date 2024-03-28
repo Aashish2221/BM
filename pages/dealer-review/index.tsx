@@ -31,10 +31,6 @@ export default function DealerReview({title , description ,
           as='image'
           href='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
         />
-        {
-          dealers.map((dealers:any)=>
-          <link key={dealers.id} rel='preload' as='image' href={dealers.image} />)
-        }
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
