@@ -61,11 +61,11 @@ export default function DealerReview({
           rel='canonical'
           href={`${process.env.WEBSITE_URL}/dealer-review`}
         />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
-        />
+        {
+          dealers.map((dealers:any)=>(
+            <link key={dealers.id} rel="preload" as='image'  href={dealers.image} />
+          ))
+        }
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
@@ -89,15 +89,14 @@ export default function DealerReview({
         </div>
         <div className='grid-col-4 container mx-auto mt-4 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
-          <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
-            <div>
+          <div className=' md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
               <InfiniteScroll
                 dataLength={dealers.length}
                 next={fetchMoreDealers}
                 hasMore={hasMore}
                 loader={<SearchSpinner />}
                 // scrollThreshold={0.7}
-                className='grid grid-cols-2 flex-col gap-4 overflow-visible md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+                className=' grid grid-cols-2 flex-col gap-4 overflow-visible md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
               >
                 {dealers.map((dealers: any) => (
                   <div key={dealers.id}>
@@ -177,7 +176,7 @@ export default function DealerReview({
                   </div>
                 ))}
               </InfiniteScroll>
-            </div>
+            
           </div>
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
           <div className=' col-span-4 hidden md:col-span-3 md:ml-4 lg:col-span-2 lg:ml-4 lg:flex'>
