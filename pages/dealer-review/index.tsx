@@ -69,12 +69,12 @@ export default function DealerReview({title , description ,
           <div className=' col-span-4 hidden md:block md:col-span-3 md:ml-4 lg:col-span-2 lg:ml-4'>
             <div className='mt-0 w-full  rounded-2xl md:mt-4 md:h-full lg:mt-1 '>
               <Image
+              fill
                 src='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
                 alt=''
-                height={1000}
-                width={500}
                 className='rounded-lg'
                 loading='eager'
+                priority
               />
             </div>
           </div>
