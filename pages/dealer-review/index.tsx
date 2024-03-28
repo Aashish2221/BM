@@ -17,6 +17,7 @@ import { useState } from 'react';
 import SearchSpinner from '@/components/Loaders/SearchSpinner';
 import dynamic from 'next/dynamic';
 
+const SkeletonDealerReview = dynamic(()=>import('@/components/Dealers/dealerSkeleton'))
 const ReviewModal = dynamic(()=>import('@/components/ModalForm/ReviewModal/ReviewModal'))
 const DealerCardBody = dynamic(()=>import('@/components/Dealers/dealercardbody'))
 export default function DealerReview({
@@ -71,7 +72,10 @@ export default function DealerReview({
           />
         ))}
       </Head>
+      
       {/* ******************** GRADIENT ******************** */}
+      {dealers[0].length === 0 ? <SkeletonDealerReview /> :
+      <>
       <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
       <div className='-mt-28 flex flex-col gap-4 text-dark-black'>
         {/* ******************** HEADING ******************** */}
@@ -169,6 +173,8 @@ export default function DealerReview({
       {isOpenModalRegister && (
         <ReviewModal closeModal={toggleModalDealersRating} />
       )}
+      </>
+      }
     </>
   );
 }
