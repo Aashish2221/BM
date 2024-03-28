@@ -127,7 +127,7 @@ export default function DealerReview({
                             height={400}
                             width={400}
                             loading='eager'
-                            priority
+                            priority={true}
                           />
                         </Link>
                       </CardHeader>
