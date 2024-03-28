@@ -35,11 +35,11 @@ export default function DealerReview({
         if (newDealers.length === 0) {
           setHasMore(false);
         } else {
-          setDealers((prevDealers) => [...prevDealers, ...newDealers]);
+          setDealers((prevDealers: any) => [...prevDealers, ...newDealers]);
           setPageNumber((prevPageNumber) => prevPageNumber + 1);
         }
       } else {
-        setHasMore(false); 
+        setHasMore(false);
       }
     } catch (error) {
       console.error('Error fetching more dealers:', error);
@@ -96,21 +96,18 @@ export default function DealerReview({
                 next={fetchMoreDealers}
                 hasMore={hasMore}
                 loader={<SearchSpinner />}
-                scrollThreshold={0.7}
+                // scrollThreshold={0.7}
                 className='grid grid-cols-2 flex-col gap-4 overflow-visible md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
               >
-                {dealers.map((dealers) => (
+                {dealers.map((dealers: any) => (
                   <div key={dealers.id}>
                     <Card
                       className='md:h-66 mx-auto mt-6 h-52 sm:h-72 md:mt-4 lg:mb-4 lg:mt-2 
                    lg:h-64'
                     >
-                      <CardHeader
-                        floated={true}
-                        className='h-26 mx-2 -mt-2 shadow-none sm:-mt-4 sm:h-36 md:-mt-3 md:h-40 lg:-mt-7 lg:h-40'
-                      >
+                      <CardHeader className='mx-2 -mt-2 shadow-none md:-mt-3 md:h-40 lg:-mt-7 lg:h-40'>
                         <Link
-                          target={'_blank'}
+                          target='_blank'
                           href={dealers.detailUrl}
                           passHref
                           prefetch={false}
@@ -122,9 +119,11 @@ export default function DealerReview({
                             height={400}
                             width={400}
                             loading='eager'
+                            priority
                           />
                         </Link>
                       </CardHeader>
+
                       <CardBody className='mt-1 text-center sm:mt-1'>
                         <Typography variant='h6' color='blue-gray'>
                           <p className='text-xs underline line-clamp-1 hover:text-primary md:text-base lg:text-sm'>
@@ -139,25 +138,18 @@ export default function DealerReview({
                           </p>
 
                           <div className='mt-1 flex items-center justify-center md:mt-0 lg:mt-0'>
-                            {Array.from({ length: 5 }, (value, index) => {
-                              let numbers = index + 0.5;
-                              return (
-                                <span key={index}>
-                                  {dealers.rating >= index + 1 ||
-                                  dealers.rating >= numbers ? (
-                                    <TiStarFullOutline
-                                      fill='#E49E2F'
-                                      className='h-4 w-4 text-yellow-500 md:h-6 md:w-6 lg:h-6 lg:w-6'
-                                    />
-                                  ) : (
-                                    <TiStarFullOutline
-                                      fill='#C0C0C0'
-                                      className='h-4 w-4 text-yellow-500 md:h-6 md:w-6 lg:h-6 lg:w-6'
-                                    />
-                                  )}
-                                </span>
-                              );
-                            })}
+                            {[...Array(5)].map((_, index) => (
+                              <TiStarFullOutline
+                                key={index}
+                                fill={
+                                  dealers.rating >= index + 1 ||
+                                  dealers.rating >= index + 0.5
+                                    ? '#E49E2F'
+                                    : '#C0C0C0'
+                                }
+                                className='h-4 w-4 text-yellow-500 md:h-6 md:w-6 lg:h-6 lg:w-6'
+                              />
+                            ))}
                           </div>
 
                           <p className='mt-2 h-4 text-xs font-extralight md:h-3 lg:mt-1 lg:h-6 xl:mt-2 xl:h-5 2xl:h-4'>
@@ -208,23 +200,15 @@ export default function DealerReview({
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  initialDealers: Awaited<ReturnType<typeof getDealers>>;
-}> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   res.setHeader(
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
   );
-
-  const userAgent = req.headers['user-agent'];
-  let size = 15;
-
-  if (userAgent && /mobile|tablet/i.test(userAgent)) {
-    size = 6;
-  }
-
+  const isMobileDevice =
+    req.headers['user-agent'] &&
+    /Mobi|Android/i.test(req.headers['user-agent']);
+  const size = isMobileDevice ? 4 : 15;
   const PageNumber = 1;
   const initialDealers = await getDealers(size, PageNumber);
   const title = data.site.dealerslist.page;
