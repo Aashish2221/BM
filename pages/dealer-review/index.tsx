@@ -92,7 +92,7 @@ export default function DealerReview({
             </button>
           </div>
         </div>
-        <div className='grid-col-4 container mx-auto mt-2 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
+        <div className='grid-col-4 container mx-auto mt-4 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <InfiniteScroll
