@@ -11,13 +11,13 @@ const DealerReaviewList = ({dealer}:any) => {
   const [selected, setSelected] = useState(0);
   const handleSelect = (i: number) => {
   if (showMore && selected === i) {
-    setShowMore(false); // Collapse the content
-    setSelected(-1); // Reset the selected index
+    setShowMore(false); 
+    setSelected(-1);
   } else {
-    setShowMore(true); // Expand the content
-    setSelected(i); // Set the selected index
-  }
+    setShowMore(true); 
+    setSelected(i); 
 }
+  }
     return(
         <div
         className='mx-auto -mt-2 grid gap-2 overflow-y-scroll py-4 md:grid-cols-6 lg:h-auto lg:grid-cols-4'
