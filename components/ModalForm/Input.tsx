@@ -11,7 +11,7 @@ export default function Input({
     <div className="flex flex-col gap-1">
       <span className="text-dark-black lg:text-base flex flex-row items-center mt-2 text-[0.9rem] align-middle">
         <label htmlFor="name">{label}</label>
-        <p className="text-red-600">*</p>
+        <p className="text-red-600 ml-1">*</p>
       </span>
       <input
         autoComplete="off"

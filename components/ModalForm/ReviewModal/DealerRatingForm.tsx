@@ -244,7 +244,7 @@ export default function DealerRatingForm({
               {/* ******************* DEALER NAME LABEL ******************* */}
               <span className='mt-2 flex flex-row items-center align-middle text-[0.9rem] text-dark-black lg:text-base'>
                 <label htmlFor='name'>Dealer name</label>
-                <p className='text-red-600'>*</p>
+                <p className='text-red-600 ml-1'>*</p>
               </span>
               {/* ******************* DEALER NAME INPUT ******************* */}
               <select
@@ -276,7 +276,7 @@ export default function DealerRatingForm({
               {/* ******************* DEALER RATING LABEL ******************* */}
               <span className='mt-2 flex flex-row items-center align-middle text-[0.9rem] text-dark-black lg:text-base'>
                 <label htmlFor='name'>Dealer rating</label>
-                <p className='text-red-600'>*</p>
+                <p className='text-red-600 ml-1'>*</p>
               </span>
               {/* ******************* DEALER RATING INPUT ******************* */}
               <div className='flex items-end'>
@@ -414,7 +414,7 @@ export default function DealerRatingForm({
           <div className='-mt-5 flex h-28 flex-col sm:-mt-6 lg:-mt-3'>
             <span className='mt-2 flex flex-row items-center align-middle text-[0.9rem] text-dark-black lg:text-base'>
               <label htmlFor='message'>Message</label>
-              <p className='text-red-600'>*</p>
+              <p className='text-red-600 ml=1'>*</p>
             </span>
             <textarea
               id='noscroll'
