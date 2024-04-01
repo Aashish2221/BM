@@ -50,9 +50,14 @@ export default function VendorReview({
   const [showMore, setShowMore] = useState(false);
   const [selected, setSelected] = useState(0);
   const handleSelect = (i: number) => {
-    setShowMore(!showMore);
-    setSelected(i);
-  };
+  if (showMore && selected === i) {
+    setShowMore(false); // Collapse the content
+    setSelected(-1); // Reset the selected index
+  } else {
+    setShowMore(true); // Expand the content
+    setSelected(i); // Set the selected index
+  }
+}
 
   return (
     <>
@@ -106,7 +111,7 @@ export default function VendorReview({
                          } lg:px-3 lg:py-4`}
                         key={dealers.id}
                       >
-                        <div className='-mt-4 ml-4 flex items-center md:-mt-8 md:ml-7 md:flex lg:ml-10 lg:flex'>
+                        <div className='-mt-1 ml-4 flex items-center -sm:mt-5 md:ml-7 md:flex lg:ml-10 lg:flex'>
                           {Array.from({ length: 5 }, (value, index) => {
                             let numbers = index + 0.5;
                             return (
@@ -149,11 +154,11 @@ export default function VendorReview({
                           {/* ******************** REVIEW TEXT ******************** */}
                           <div className='h-auto py-2 text-base text-gray-500'>
                             {showMore === false && selected === 0
-                              ? dealers.reviewText.slice(0, 150)
+                              ? dealers.reviewText.slice(0, 120)
                               : showMore === true && selected === index
                               ? dealers.reviewText
-                              : dealers.reviewText.slice(0, 150)}
-                            {dealers.reviewText.length > 150 && (
+                              : dealers.reviewText.slice(0, 120)}
+                            {dealers.reviewText.length > 120 && (
                               <button
                                 className='text-base font-normal text-primary ml-1'
                                 onClick={() => handleSelect(index)}
@@ -167,7 +172,7 @@ export default function VendorReview({
                             )}
                           </div>
 
-                          <p className=' text-base  font-light italic text-slate-600 md:text-base lg:text-base'>
+                          <p className=' text-base -mb-1 sm:-mb-4  font-light italic text-slate-600 md:text-base lg:text-base'>
                             - {dealers.fullName}
                             ,&nbsp;
                             {new Intl.DateTimeFormat('en-US', {

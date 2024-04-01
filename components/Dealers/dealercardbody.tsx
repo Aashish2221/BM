@@ -14,7 +14,7 @@ const DealerCardBody = ({dealers}:any)=>{
               passHref
               prefetch={false}
             >
-              {dealers.aliasName}
+              {dealers.aliasName.length >= 19 ? dealers.aliasName.slice(0, 19)+'...' : dealers.aliasName}
             </Link>
           </p>
 
