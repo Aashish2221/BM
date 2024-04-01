@@ -92,7 +92,7 @@ export default function VendorReview({
                 </div>
                 {/* ******************** Review list ******************** */}
                 <div
-                  className='mx-auto mt-1 grid gap-2 overflow-y-scroll py-4 md:grid-cols-6 lg:h-auto lg:grid-cols-4'
+                  className='mx-auto -mt-2 grid gap-2 overflow-y-scroll py-4 md:grid-cols-6 lg:h-auto lg:grid-cols-4'
                   id='noscroll'
                 >
                   {dealer &&

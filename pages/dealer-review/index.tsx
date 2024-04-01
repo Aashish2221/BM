@@ -73,10 +73,10 @@ export default function DealerReview({
       {/* ******************** GRADIENT ******************** */}
       {dealers[0].length === 0 ? <SkeletonDealerReview /> :
       <>
-      <div className='h-40 bg-gradient-to-b from-secondary via-white to-white'></div>
+      <div className='h-40 bg-gradient-to-b sm:from-secondary via-white to-white'></div>
       <div className='-mt-28 flex flex-col gap-4 text-dark-black'>
         {/* ******************** HEADING ******************** */}
-        <div className='container mx-auto grid grid-cols-4 md:grid-cols-10 md:gap-4 lg:grid-cols-12 '>
+        <div className='container shadow-none mx-auto grid grid-cols-4 md:grid-cols-10 md:gap-4 lg:grid-cols-12 '>
           {/* ******************** HEADING ******************** */}
           <div className='col-span-2 md:col-span-8 md:mt-3 lg:col-span-10 lg:mt-0'>
             <h1 className='text-xl font-medium md:text-2xl'>Dealers</h1>
@@ -92,7 +92,7 @@ export default function DealerReview({
             </button>
           </div>
         </div>
-        <div className='grid-col-4 container mx-auto mt-4 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
+        <div className='grid-col-4 container mx-auto mt-0 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <InfiniteScroll
