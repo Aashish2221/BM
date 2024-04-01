@@ -3,7 +3,6 @@ import useToggle from '@/hooks/useToggle';
 import { getDealersReviews } from '@/services/spot-prices';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { TiStarFullOutline } from 'react-icons/ti';
 import data from '@/data';
 import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -40,15 +39,7 @@ export default function VendorReview({
   const canonicalUrl = data.WEBSITEUrl + formattedPath;
   const [isOpenModalRegister, toggleModalDealersRating] = useToggle();
   const [isSuccessModal, toggleSuccessModal] = useToggle();
-
   const [dealer, setDealer] = useState(dealers);
-
- 
-
-  // -------------------------------- Url break --------------------------
-  
-
-
   return (
     <>
       <Head>
@@ -120,11 +111,7 @@ export default function VendorReview({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  dealers: Awaited<ReturnType<typeof getDealersReviews>>;
-}> = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { code } = context.params as any;
   const dealers = await getDealersReviews(code);
   const title = dealers.metatitle;
