@@ -9,8 +9,8 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Advertisement from './advertisement';
 import dynamic from 'next/dynamic';
-import DealerReaviewList from '@/components/Dealers/dealerreaviewlist';
 
+const DealerReaviewList = dynamic(()=>import('@/components/Dealers/dealerreaviewlist'));
 const ReviewModal = dynamic(
   () => import('@/components/ModalForm/ReviewModal/ReviewModal')
 );
