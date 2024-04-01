@@ -100,7 +100,7 @@ export default function VendorReview({
                       <div
                         className={`mt-6 rounded-2xl border-gray-200 bg-white shadow-md shadow-slate-300 md:col-span-6 md:mt-8 md:w-full md:px-6 md:py-4 lg:col-span-2 lg:mt-8
                          ${
-                           dealer.dealerReview.length < 3
+                           dealer.dealerReview.length < 2
                              ? 'max-h-[25rem] min-h-[15rem] lg:h-min'
                              : 'max-h-[50rem] lg:h-auto'
                          } lg:px-3 lg:py-4`}
