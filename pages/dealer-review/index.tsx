@@ -96,7 +96,7 @@ export default function DealerReview({
           {/* ******************** DEALERS LIST ******************** */}
           <div className='col-span-4 -mt-1 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <InfiniteScroll
-              dataLength={dealers.length}
+              dataLength={dealers.length}  
               next={fetchMoreDealers}
               hasMore={hasMore}
               loader={<SearchSpinner />}
