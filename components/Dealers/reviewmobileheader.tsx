@@ -2,8 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { TiStarFullOutline } from 'react-icons/ti';
-import { MdLocalShipping } from 'react-icons/md';
-import { FaDotCircle } from 'react-icons/fa';
 
 const DealerHeader = ({ dealer }:any) => {
     const str: any = dealer?.detailUrl;
