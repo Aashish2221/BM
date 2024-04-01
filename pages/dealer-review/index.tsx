@@ -94,7 +94,7 @@ export default function DealerReview({
         </div>
         <div className='grid-col-4 container mx-auto mt-0 flex flex-col gap-4 lg:grid  lg:grid-cols-10 lg:flex-col'>
           {/* ******************** DEALERS LIST ******************** */}
-          <div className='col-span-4 mt-0 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
+          <div className='col-span-4 -mt-1 md:col-span-5 md:mt-2 lg:col-span-8 lg:mt-0'>
             <InfiniteScroll
               dataLength={dealers.length}
               next={fetchMoreDealers}

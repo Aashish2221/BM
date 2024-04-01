@@ -414,7 +414,7 @@ export default function DealerRatingForm({
           <div className='-mt-5 flex h-28 flex-col sm:-mt-6 lg:-mt-3'>
             <span className='mt-2 flex flex-row items-center align-middle text-[0.9rem] text-dark-black lg:text-base'>
               <label htmlFor='message'>Message</label>
-              <p className='text-red-600 ml=1'>*</p>
+              <p className='text-red-600 ml-1'>*</p>
             </span>
             <textarea
               id='noscroll'
