@@ -118,17 +118,17 @@ export default function VendorReview({
                                 ? dealers.reviewHeader
                                 : dealers.reviewHeader?.slice(0, 33) + '...'}
                             </p>
-                            <p className='hidden font-semibold md:hidden md:text-lg lg:text-lg xl:block'>
+                            {/* <p className='hidden font-semibold md:hidden md:text-lg lg:text-lg xl:block'>
                               {dealers.reviewHeader}
-                            </p>
+                            </p> */}
 
-                            <p className='hidden h-24 py-2 md:hidden lg:h-28 xl:h-24'>
+                            {/* <p className='hidden h-24 py-2 md:hidden lg:h-28 xl:h-24'>
                               {wordCount(
                                 dealers.reviewText ? dealers.reviewText : ''
                               ) <= 29
                                 ? dealers.reviewText
                                 : dealers.reviewText?.slice(0, 120) + '...'}
-                            </p>
+                            </p> */}
                             {/* ******************** REVIEW TEXT ******************** */}
                             <div className='h-auto py-2 text-base text-gray-500'>
                               {showMore === false && selected === 0
