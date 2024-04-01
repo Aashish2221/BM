@@ -10,10 +10,18 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Advertisement from './advertisement';
 import dynamic from 'next/dynamic';
 
-const ReviewModal = dynamic(()=>import('@/components/ModalForm/ReviewModal/ReviewModal'))
-const VendorReviewModal = dynamic(()=>import('@/components/ModalForm/VendorReviewModals/VendorReviewModal'))
-const DealerHeader = dynamic(()=>import('@/components/Dealers/reviewmobileheader'))
-const ReviewDesktopHeader = dynamic(()=>import('@/components/Dealers/reviewdesktopheader'))
+const ReviewModal = dynamic(
+  () => import('@/components/ModalForm/ReviewModal/ReviewModal')
+);
+const VendorReviewModal = dynamic(
+  () => import('@/components/ModalForm/VendorReviewModals/VendorReviewModal')
+);
+const DealerHeader = dynamic(
+  () => import('@/components/Dealers/reviewmobileheader')
+);
+const ReviewDesktopHeader = dynamic(
+  () => import('@/components/Dealers/reviewdesktopheader')
+);
 
 export default function VendorReview({
   title,
@@ -54,10 +62,11 @@ export default function VendorReview({
         <meta property='og:url' content={canonicalUrl} key={canonicalUrl} />
         <link rel='canonical' href={canonicalUrl} />
         <link
-          rel='preload' as='image'
+          rel='preload'
+          as='image'
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Symbol-of-Strength-and-Liberty_nc5oki.webp'
         />
-        <link rel="preload" as='image' href={dealer?.image} />
+        <link rel='preload' as='image' href={dealer?.image} />
       </Head>
       <div className='w-auto'>
         <div className='mx-auto text-dark-black'>
@@ -138,16 +147,15 @@ export default function VendorReview({
                               : dealers.reviewText?.slice(0, 120) + '...'}
                           </p>
                           {/* ******************** REVIEW TEXT ******************** */}
-                          <span className='h-auto py-2 text-base text-gray-500 '>
+                          <div className='h-auto py-2 text-base text-gray-500'>
                             {showMore === false && selected === 0
                               ? dealers.reviewText.slice(0, 150)
                               : showMore === true && selected === index
                               ? dealers.reviewText
                               : dealers.reviewText.slice(0, 150)}
-                            <br />
                             {dealers.reviewText.length > 150 && (
                               <button
-                                className='text-base font-normal text-primary'
+                                className='text-base font-normal text-primary ml-1'
                                 onClick={() => handleSelect(index)}
                               >
                                 {showMore === false && selected === 0
@@ -157,7 +165,7 @@ export default function VendorReview({
                                   : 'Read more'}
                               </button>
                             )}
-                          </span>
+                          </div>
 
                           <p className=' text-base  font-light italic text-slate-600 md:text-base lg:text-base'>
                             - {dealers.fullName}
@@ -187,7 +195,6 @@ export default function VendorReview({
                       width={500}
                       className='rounded-lg'
                       loading='lazy'
-                      
                     />
                   </div>
                 </div>
