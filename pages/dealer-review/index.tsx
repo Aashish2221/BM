@@ -1,4 +1,4 @@
-import { getDealers } from '@/services/spot-prices';
+import { getDealer} from '@/services/spot-prices';
 import {
   Card,
   CardHeader,
@@ -30,7 +30,7 @@ export default function DealerReview({
   const fetchMoreDealers = async () => {
     try {
       if (dealers.length < initialDealers[0].dealerCount) {
-        const newDealers = await getDealers(size, pageNumber);
+        const newDealers = await getDealer(size, pageNumber);
         if (newDealers.length === 0) {
           setHasMore(false);
         } else {
@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     /Mobi|Android/i.test(req.headers['user-agent']);
   const size = isMobileDevice ? 4 : 15;
   const PageNumber = 1;
-  const initialDealers = await getDealers(size, PageNumber);
+  const initialDealers = await getDealer(size, PageNumber);
   const title = data.site.dealerslist.page;
   const description = data.site.dealerslist.description;
 

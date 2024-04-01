@@ -98,6 +98,14 @@ export const getDealerSponsors = async () => {
 };
 
 export const getDealers = async ( 
+  ) => {
+  const res = await fetcher.get<ApiResponse<Dealers[]>>(
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetDealers`
+  );
+  return res.data.data;
+};
+
+export const getDealer = async ( 
   size?:number,
   PageNumber?:number
   ) => {
