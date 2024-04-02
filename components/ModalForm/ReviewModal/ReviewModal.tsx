@@ -42,7 +42,7 @@ export default function ReviewModal({ closeModal }: ReviewModalProps) {
                 !user.user.name
                 ? 'mt-12 h-[31rem] md:mx-2 lg:mt-8'
                 : formType === 'success'
-                  ? 'mx-2 my-2 h-60 px-2 md:h-48'
+                  ? 'mx-2 my-2 h-52 px-2 md:h-48'
                   : formType === 'share'
                     ? 'h-96 px-4 py-4 sm:h-72'
                     : ''
