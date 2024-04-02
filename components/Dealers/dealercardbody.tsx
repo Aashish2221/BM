@@ -33,7 +33,7 @@ const DealerCardBody = ({dealers}:any)=>{
             ))}
           </div>
 
-          <p className='mt-2 px-5 h-4 text-xs font-extralight md:h-3 lg:mt-1 lg:h-6 xl:mt-2 xl:h-5 2xl:h-4'>
+          <p className='mt-2 px-3 h-4 text-xs font-extralight md:h-3 lg:mt-1 lg:h-6 xl:mt-2 xl:h-5 2xl:h-4'>
             {dealers.shippingDescription}
           </p>
         </Typography>
