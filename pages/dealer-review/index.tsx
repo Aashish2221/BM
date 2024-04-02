@@ -26,7 +26,7 @@ export default function DealerReview({
   const [dealers, setDealers] = useState(initialDealers);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
-  const size = 6;
+  const size = 5;
   const fetchMoreDealers = async () => {
     try {
       if (dealers.length < initialDealers[0].dealerCount) {
@@ -169,7 +169,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const isMobileDevice =
     req.headers['user-agent'] &&
     /Mobi|Android/i.test(req.headers['user-agent']);
-  const size = isMobileDevice ? 4 : 15;
+  const size = isMobileDevice ? 5 : 15;
   const PageNumber = 1;
   const initialDealers = await getDealer(size, PageNumber);
   const title = data.site.dealerslist.page;
