@@ -195,7 +195,7 @@ export default function Advertisement({ dealer, code }: advertisementProps) {
             <div className='flex h-full w-full flex-col gap-1 lg:-mt-1'>
               <span className='flex flex-row items-center pt-2 align-middle text-sm text-dark-black lg:text-base'>
                 <label htmlFor='name'>Dealer rating</label>
-                <p className='text-red-600'>*</p>
+                <p className='text-red-600 ml-1'>*</p>
               </span>
               <div className='mb-4 flex items-end'>
                 {[...Array(5)].map((star, index) => {
@@ -340,7 +340,7 @@ export default function Advertisement({ dealer, code }: advertisementProps) {
           <div className='flex h-28 flex-col'>
             <span className='mt-2 flex flex-row items-center align-middle text-[0.9rem] text-dark-black lg:text-base'>
               <label htmlFor='message'>Message</label>
-              <p className='text-red-600'>*</p>
+              <p className='text-red-600 ml-1'>*</p>
             </span>
             <textarea
               id='noscroll'
