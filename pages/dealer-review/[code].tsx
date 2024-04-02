@@ -41,10 +41,6 @@ export default function VendorReview({
   const [isSuccessModal, toggleSuccessModal] = useToggle();
   const [dealer, setDealer] = useState(dealers);
 
-  
-
- 
-
   return (
     <>
       <Head>
@@ -71,7 +67,7 @@ export default function VendorReview({
                 <DealerHeader dealer={dealer} />
                 {/* ******************** Review list title ******************** */}
                 <div className='mx-auto mt-4 grid grid-cols-6 gap-2 md:mt-5 md:grid-cols-10 md:gap-4 lg:mt-2 lg:grid-cols-12 lg:gap-4'>
-                  <h1 className='col-span-4 mt-1 lg:-mt-6 text-lg font-semibold text-dark-black md:col-span-8 md:text-xl lg:col-span-10'>
+                  <h1 className='col-span-4 mt-1 text-lg font-semibold text-dark-black md:col-span-8 md:text-xl lg:col-span-10 lg:-mt-4'>
                     Review List
                   </h1>
                   <button
