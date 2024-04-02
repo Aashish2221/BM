@@ -1,6 +1,8 @@
 import { useState } from "react";
-import ReviewRating from "./ReaviewRwating";
-import ReviewHeader from "./ReviewHeader";
+import dynamic from "next/dynamic";
+
+const ReviewHeader = dynamic(()=>import("./ReviewHeader"))
+const ReviewRating = dynamic(()=>import("./ReaviewRwating"))
 const ReviewList = ({dealer}:any)=>{
     const [showMore, setShowMore] = useState(false);
     const [selected, setSelected] = useState(0);

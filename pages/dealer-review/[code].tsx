@@ -8,7 +8,6 @@ import Head from 'next/head';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Advertisement from './advertisement';
 import dynamic from 'next/dynamic';
-import ReviewList from '@/components/Dealers/ReviewList';
 
 const ReviewModal = dynamic(
   () => import('@/components/ModalForm/ReviewModal/ReviewModal')
@@ -22,7 +21,7 @@ const DealerHeader = dynamic(
 const ReviewDesktopHeader = dynamic(
   () => import('@/components/Dealers/reviewdesktopheader')
 );
-
+const ReviewList = dynamic(()=>import('@/components/Dealers/ReviewList'))
 export default function VendorReview({
   title,
   description,
