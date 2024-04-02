@@ -10,6 +10,7 @@ import Advertisement from './advertisement';
 import dynamic from 'next/dynamic';
 import { TiStarFullOutline } from 'react-icons/ti';
 import ReviewRating from '@/components/Dealers/ReaviewRwating';
+import ReviewHeader from '@/components/Dealers/ReviewHeader';
 
 const ReviewModal = dynamic(
   () => import('@/components/ModalForm/ReviewModal/ReviewModal')
@@ -42,9 +43,7 @@ export default function VendorReview({
   const [isSuccessModal, toggleSuccessModal] = useToggle();
   const [dealer, setDealer] = useState(dealers);
 
-  const wordCount = (str: string) => {
-    return str.split(' ').length;
-  };
+  
 
   const [showMore, setShowMore] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -111,26 +110,9 @@ export default function VendorReview({
                             } lg:px-3 lg:py-4`}
                           key={dealers.id}
                         >
-                          <ReviewRating dealers={dealer} />
+                          <ReviewRating dealers={dealers} />
                           <div className='py-2 px-4 text-sm md:px-6 md:py-4 md:text-base lg:px-6 lg:py-2 lg:text-base'>
-                            <p className='block font-semibold xl:hidden'>
-                              {wordCount(
-                                dealers.reviewHeader ? dealers.reviewHeader : ''
-                              ) <= 6
-                                ? dealers.reviewHeader
-                                : dealers.reviewHeader?.slice(0, 33) + '...'}
-                            </p>
-                            <p className='hidden font-semibold md:hidden md:text-lg lg:text-lg xl:block'>
-                              {dealers.reviewHeader}
-                            </p>
-
-                            {/* <p className='hidden h-24 py-2 md:hidden lg:h-28 xl:h-24'>
-                              {wordCount(
-                                dealers.reviewText ? dealers.reviewText : ''
-                              ) <= 29
-                                ? dealers.reviewText
-                                : dealers.reviewText?.slice(0, 120) + '...'}
-                            </p> */}
+                           <ReviewHeader dealers={dealer} />
                             {/* ******************** REVIEW TEXT ******************** */}
                             <div className='h-auto py-2 text-base text-gray-500'>
                               {showMore === false && selected === 0
