@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { FaDotCircle } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { TiStarFullOutline } from "react-icons/ti";
@@ -13,14 +12,13 @@ const ReviewDesktopHeader = ({dealer}:any)=>{
         <div className='grid h-24 w-auto grid-cols-8 items-center md:h-44 lg:h-52 lg:grid-cols-8 '>
           {/* --------------------- LOGO -------------------------------- */}
           <div className='col-span-1 flex w-full' key={dealer?.id}>
-            <Image
+            <img
               src={dealer?.image ?? ''}
               height={123}
               width={136}
               alt={dealer?.image ?? ''}
               className='mt-2 h-24 w-24 object-contain md:mt-0 md:h-52 md:w-auto md:pt-3 lg:h-48 lg:w-auto lg:pt-10'
               loading='eager'
-              priority={true}
             />
           </div>
           {/* --------------------- DEALERS NAME -------------------------------- */}

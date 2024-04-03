@@ -33,9 +33,6 @@ export default function VendorReview({
   const [isOpenModalRegister, toggleModalDealersRating] = useToggle();
   const [isSuccessModal, toggleSuccessModal] = useToggle();
   const [dealer, setDealer] = useState(dealers);
-
-  
-
   const [showMore, setShowMore] = useState(false);
   const [selected, setSelected] = useState(0);
   const handleSelect = (i: number) => {

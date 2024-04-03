@@ -1,5 +1,4 @@
 // DealerHeader.js
-import Image from 'next/image';
 import Link from 'next/link';
 import { TiStarFullOutline } from 'react-icons/ti';
 
@@ -15,14 +14,13 @@ const DealerHeader = ({ dealer }:any) => {
           className='col-span-2 grid xl:col-span-4'
           key={dealer?.id}
         >
-          <Image
+          <img
             src={dealer?.image ?? ''}
             height={100}
             width={100}
             alt={dealer?.image ?? ''}
             className='mt-2 h-24 w-24 object-contain md:mt-0 md:h-52 md:w-auto md:pt-3 lg:h-60 lg:w-64 lg:pt-10'
             loading='eager'
-            priority={true}
           />
         </div>
         {/* --------------- DEALERS NAME, SHIPPING & URL ------------------- */}
@@ -69,6 +67,5 @@ const DealerHeader = ({ dealer }:any) => {
 
     )
     };
-
 
 export default DealerHeader;
