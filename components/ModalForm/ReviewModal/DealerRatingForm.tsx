@@ -44,7 +44,7 @@ export default function DealerRatingForm({
   }
   useEffect(() => {
     const initFetch = async () => {
-      const res = await getDealers();
+      const res = await getDealers(150, 1);
       setDealers(res ?? []);  
     };
     initFetch();

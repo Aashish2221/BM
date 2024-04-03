@@ -1,4 +1,4 @@
-import { getDealer} from '@/services/spot-prices';
+import { getDealers} from '@/services/spot-prices';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import useToggle from '@/hooks/useToggle';
@@ -26,7 +26,7 @@ export default function DealerReview({
   const fetchMoreDealers = async () => {
     try {
       if (dealers.length < initialDealers[0].dealerCount) {
-        const newDealers = await getDealer(size, pageNumber);
+        const newDealers = await getDealers(size, pageNumber);
         if (newDealers.length === 0) {
           setHasMore(false);
         } else {
@@ -111,7 +111,7 @@ export default function DealerReview({
           {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
           <div className=' col-span-4 hidden md:col-span-3 md:ml-4 lg:col-span-2 lg:ml-4 lg:flex'>
             <div className='mt-0 w-full  rounded-2xl md:mt-4 md:h-full lg:mt-1 '>
-              <Image
+              <img
                 src='https://res.cloudinary.com/bullionmentor/image/upload/v1689160172/Infographics/Bullion-Investment-Benefits_ghwffm.webp'
                 alt=''
                 height={1000}
@@ -141,15 +141,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     /Mobi|Android/i.test(req.headers['user-agent']);
   const size = isMobileDevice ? 5 : 15;
   const PageNumber = 1;
-  const initialDealers = await getDealer(size, PageNumber);
+  const initialDealers = await getDealers(size, PageNumber);
   const title = data.site.dealerslist.page;
   const description = data.site.dealerslist.description;
-
-  return {
-    props: {
-      title,
-      description,
-      initialDealers
-    }
-  };
+  return { props: {title, description, initialDealers}};
 };

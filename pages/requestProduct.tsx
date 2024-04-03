@@ -38,20 +38,7 @@ export default function RequestProduct({
     const initFetch = async () => {
       setStatus('loading');
       try {
-        const res = await fetch(`/api/dealers`);
-
-        const isJson = res.headers
-          .get('content-type')
-          ?.includes('application/json');
-
-        const data: Awaited<ReturnType<typeof getDealers>> | null = isJson
-          ? await res.json()
-          : null;
-
-        if (!res.ok) {
-          throw new Error(res.statusText);
-        }
-
+        const data = await getDealers(150, 1);
         setDealers(data ?? []);
         setStatus('success');
       } catch (error) {

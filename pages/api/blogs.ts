@@ -1,9 +1,13 @@
-import { getBlogData } from "@/services/spot-prices";
+import { getBlogsData } from "@/services/spot-prices";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getHandler(req: NextApiRequest, res: NextApiResponse) {
-    const data = await getBlogData();
-    return res.send(data);
+        const { size, pageNumber } = req.query;
+        const pageSize = parseInt(size as string) || 10; // Default page size: 10
+        const page = parseInt(pageNumber as string) || 1; // Default page number: 1
+        const offset = (page - 1) * pageSize;
+        const data = await getBlogsData(pageSize, offset);
+        return res.send(data );
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -11,6 +15,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         case "GET":
             return getHandler(req, res);
         default:
-            return res.status(405).send({ message: "method not allowed" });
+            return res.status(405).send({ message: "Method not allowed" });
     }
 }
