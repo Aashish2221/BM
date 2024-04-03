@@ -143,7 +143,7 @@ export default function VendorReview({
                   <Advertisement dealer={dealer} code={code as string} />
                   {/********************* INFOGRAPHICS ********************  */}
                   <div className='item-center mt-6 w-full  justify-center rounded-2xl  md:mt-10 lg:mt-10'>
-                    <Image
+                    <img
                       src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Symbol-of-Strength-and-Liberty_nc5oki.webp'
                       alt=''
                       height={500}
