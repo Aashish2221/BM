@@ -22,61 +22,30 @@ export default function Search({
   const [canonicalUrl, setCanonicalUrl] = useState('');
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
   const [hydrated, setHydrated] = useState(false);
-  const [products, setProducts] = useState(initialProducts);
+  const [hasMore, setHasMore] = useState(true);
   const [fetchedProducts, setFetchedProducts] = useState(
     initialProducts.data.searchProducts
   );
   const [searchObject, setSearchObject] = useState({ query: query });
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const Length = initialProducts.data.countOfProducts.numberOfPages;
   const fetchMoreProducts = async () => {
-    try {
-      const nextPage = page + 1;
-      const newProducts = await search(query, PAGE_SIZE, nextPage);
+    const nextPage = page + 1;
+    const newProducts = await search(query, PAGE_SIZE, nextPage);
+    if (newProducts.data.searchProducts.length === 0) {
+      setHasMore(false);
+    } else {
       setFetchedProducts((prevProducts: any) => [
         ...prevProducts,
         ...newProducts.data.searchProducts
       ]);
       setPage(nextPage);
-      if (
-        newProducts.data.searchProducts.length === 0 ||
-        fetchedProducts.length >= newProducts.data.countOfProducts.noOfItems
-      ) {
-        return;
-      }
-    } catch (error) {
-      console.error('Error fetching more products:', error);
     }
   };
   useEffect(() => {
     setSearchObject({ query: query });
-  }, [query]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const newProducts = await search(query, PAGE_SIZE, 1);
-        setProducts(newProducts);
-        setFetchedProducts(newProducts.data.searchProducts);
-        setPage(1);
-        setHydrated(true);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [query]);
-
+  }, [query]);  
   useEffect(() => {
     setHydrated(true);
-  }, [products]);
-
-  useEffect(() => {
     setCanonicalUrl(window.location.href.toString());
   });
   /**************** IF PRODUCTS ARE AVAILABLE ****************/
@@ -244,46 +213,30 @@ export default function Search({
                   </div>
                   {/***************** PRODUCT LIST *****************/}
                   <>
-                    {loading ? (
-                      <SearchSpinner />
-                    ) : (
-                      <Suspense fallback={<GridViewSkeleton />}>
-                        {initialProducts.data.countOfProducts.noOfItems ===
-                        0 ? (
-                          <EmptyCard />
-                        ) : (
-                          <>
-                            <InfiniteScroll
-                              className='overflow-hidden'
-                              dataLength={fetchedProducts.length}
-                              next={fetchMoreProducts}
-                              hasMore={
-                                fetchedProducts.length <
-                                initialProducts.data.countOfProducts.noOfItems
-                              }
-                              loader={page < Length ? <SearchSpinner /> : ''}
-                              scrollThreshold={0.3}
-                            >
-                              <div
-                                className={`mx-1  mb-5 grid gap-4 ${
-                                  view === 'detailed'
-                                    ? 'grid-cols-1 xl:grid-cols-2'
-                                    : 'grid-cols-2 xl:grid-cols-3'
-                                }`}
-                              >
-                                {fetchedProducts.map((product: any) => (
-                                  <TopProductItem
-                                    view={view}
-                                    key={product.productId}
-                                    {...product}
-                                  />
-                                ))}
-                              </div>
-                            </InfiniteScroll>
-                          </>
-                        )}
-                      </Suspense>
-                    )}
+                    <InfiniteScroll
+                      className='overflow-hidden'
+                      dataLength={fetchedProducts.length}
+                      next={fetchMoreProducts}
+                      hasMore={hasMore}
+                      loader={<SearchSpinner />}
+                      scrollThreshold={0.3}
+                    >
+                      <div
+                        className={`mx-1  mb-5 grid gap-4 ${
+                          view === 'detailed'
+                            ? 'grid-cols-1 xl:grid-cols-2'
+                            : 'grid-cols-2 xl:grid-cols-3'
+                        }`}
+                      >
+                        {fetchedProducts.map((product: any) => (
+                          <TopProductItem
+                            view={view}
+                            key={product.productId}
+                            {...product}
+                          />
+                        ))}
+                      </div>
+                    </InfiniteScroll>
                   </>
                 </div>
                 {/***************** LEFT ADVERTISEMENT FOR MOBILE VIEW *****************/}
